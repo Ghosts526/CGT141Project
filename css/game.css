@@ -1,0 +1,23 @@
+body
+{
+    min-width: 750px;
+    min-height: 500px;
+    margin: 0;
+    background-color: lightgray;
+}
+
+#gameScreen
+{
+    background-image: url("../images/SpaceBackground256x256.png");
+    background-size: auto;
+    background-repeat: repeat;
+    width: 75vh;
+    height: 75vh;
+    border: 0;
+    margin: 0;
+}
+
+.UI.buttons
+{
+    float: left;
+}
