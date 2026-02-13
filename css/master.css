@@ -19,21 +19,6 @@ img {
   height: auto;
 }
 
-#PlayButton
-{
-    width: 128px;
-    height: 128px;
-    background-color: transparent;
-    border-color: transparent;
-    border: 0px;
-    padding: 0px;
-    border-radius: 100%;
-    overflow:hidden; /*Makes sure that the you can only click the button and not outside of it, etc. sqaure boundary*/
-    position: absolute;
-    top: 40%;
-    left: 45%;
-}
-
 #Section1
 {
     float: right;
@@ -73,6 +58,26 @@ img {
 #myCanvas
 {
     border: 1px solid gray;
+}
+
+.buttons
+{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+}
+
+.button
+{
+    width: 300px;
+    height: 50px;
+    background: darkgray;
+    border: solid;
+    border-color: gray;
+    border-width: 5px;
+    border-radius: 15px;
+    padding: 0px;
+    overflow: hidden; /*Makes sure that the you can only click the button and not outside of it, etc. sqaure boundary*/
 }
 
 .MyButton
