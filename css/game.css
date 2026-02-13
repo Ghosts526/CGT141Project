@@ -11,9 +11,9 @@ body
     background-image: url("../images/SpaceBackground256x256.png");
     background-size: auto;
     background-repeat: repeat;
-    width: 75vh;
-    height: 75vh;
-    border: 0;
+    border-style: solid;
+    border-width: 10px;
+    border-color: gray;
     margin: 0;
 }
 
