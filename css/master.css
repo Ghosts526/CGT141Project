@@ -10,15 +10,15 @@ body
 
 h1
 {
-    width: 400px;
-    height: 20px;
+    width: 500px;
+    height: 40pt;
     color: yellow;
-    font-size: 30pt;
+    font-size: 40pt;
     font-family: serif;
     text-align: center;
-    margin-top: 100px;
-    margin-left: calc(50vw - 200px);
-    margin-bottom: 75px;   
+    margin-top: 80px;
+    margin-left: calc(50vw - 250px);
+    margin-bottom: 50px;   
     border-width: 0; 
 }
 
@@ -44,15 +44,13 @@ h1
     padding: 0px;
     cursor: pointer;
     transition: background 0.5s;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: x-large;
 }
 
 .button:hover
 {
     background: gold;
     border-color: goldenrod;
-}
-
-.MyButton
-{
-    color: blue;
 }
