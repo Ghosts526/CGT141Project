@@ -1,6 +1,6 @@
 body
 {
-    min-width: 1000px;
+    min-width: 500px;
     min-height: 500px;
     margin: 10px;
     background-image: url("../images/SpaceBackground256x256.png");
@@ -10,58 +10,23 @@ body
 
 h1
 {
-    width: 1000px;
-    height: 50px;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-#Section1
-{
-    float: right;
-    margin-right:25dvw;
-    margin-top: 50dvh;
-    background-color: red;
-}
-
-#Section2
-{
-    float: left;
-    background-color: red;
-}
-
-#UpgradeButton
-{
-   border-color: red;
-}
-
-#HowToPlayButton
-{
-    margin-top: 10%;
-    border-color: red;
-}
-
-#LeaderBoardButton
-{
-    border-color: red;
-}
-
-#CreditButton
-{
-    margin-top: 10%;
-    border-color: red;
-}
-
-#myCanvas
-{
-    border: 1px solid gray;
+    width: 400px;
+    height: 20px;
+    color: yellow;
+    font-size: 30pt;
+    font-family: serif;
+    text-align: center;
+    margin-top: 100px;
+    margin-left: calc(50vw - 200px);
+    margin-bottom: 75px;   
+    border-width: 0; 
 }
 
 .buttons
 {
+    margin-left: calc(50vw - 150px);
+    justify-content: center;
+    align-items: center;
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 10px;
@@ -77,7 +42,14 @@ img {
     border-width: 5px;
     border-radius: 15px;
     padding: 0px;
-    overflow: hidden; /*Makes sure that the you can only click the button and not outside of it, etc. sqaure boundary*/
+    cursor: pointer;
+    transition: background 0.5s;
+}
+
+.button:hover
+{
+    background: gold;
+    border-color: goldenrod;
 }
 
 .MyButton
