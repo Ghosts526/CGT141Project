@@ -74,6 +74,15 @@ function startGame()
 {
     myGameArea.start();
     myGamePiece = new component(30, 30, "red", 10, 10);
+    document.getElementById("gameButton").onclick = restartGame;
+    document.getElementById("gameButton").innerText = "Restart Game";
+}
+
+function restartGame()
+{
+    console.log("Game Restarted");
+    myGamePiece = new component(30, 30, "red", 10, 10);
+    updateGameArea();
 }
 
 var myGameArea = {
