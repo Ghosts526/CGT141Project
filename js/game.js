@@ -10,7 +10,7 @@ var starty = 200;
 function startGame()
 {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "../images/PlayButton.png", (startx - 30), (starty - 30), "image");
+    myGamePiece = new component(30, 30, "images/PlayButton.png", (startx - 30), (starty - 30), "image");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
 }
@@ -18,7 +18,7 @@ function startGame()
 function restartGame()
 {
     console.log("Game Restarted");
-    myGamePiece = new component(30, 30, "red", startx, starty, "../images/PlayButton.png");
+    myGamePiece = new component(30, 30, "images/PlayButton.png", (startx - 30), (starty - 30), "image");
     updateGameArea();
 }
 
@@ -32,13 +32,11 @@ var myGameArea = {
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function(e) {
             if (e.key === 'w') myGamePiece.speedUp = -1;
-            if (e.key === 's') myGamePiece.speedDown = 1;
             if (e.key === 'a') myGamePiece.speedLeft = -1;
             if (e.key === 'd') myGamePiece.speedRight = 1;
         })
         window.addEventListener('keyup', function(e) {
             if (e.key === 'w') myGamePiece.speedUp = 0;
-            if (e.key === 's') myGamePiece.speedDown = 0;
             if (e.key === 'a') myGamePiece.speedLeft = 0;
             if (e.key === 'd') myGamePiece.speedRight = 0;
         })
@@ -59,10 +57,8 @@ function component(width, height, color, x, y, type)
     this.width = width;
     this.height = height;
     this.angle = 0;
-    this.speed = 1;
     this.moveAngle = 0;
     this.speedUp = 0;
-    this.speedDown = 0;
     this.speedLeft = 0;
     this.speedRight = 0;
     this.x = x;
@@ -85,15 +81,15 @@ function component(width, height, color, x, y, type)
     }
     this.newPos = function()
     {
-        if (this.speedLeft + this.speedRight != 0 || this.speedUp + this.speedDown) {
-            this.image.src = "../images/PlayButton.png";
+        if (this.speedLeft + this.speedRight != 0 || this.speedUp) {
+            this.image.src = "images/PlayButton.png";
         } else {
-            this.image.src = "../images/PlayButtonV7.png";
+            this.image.src = "images/PlayButtonV7.png";
         }
         this.moveAngle = this.speedLeft + this.speedRight;
         this.angle += this.moveAngle * Math.PI / 180;
-        this.x -= (this.speedUp + this.speedDown) * Math.sin(this.angle);
-        this.y += (this.speedUp + this.speedDown) * Math.cos(this.angle);
+        this.x -= this.speedUp * Math.sin(this.angle);
+        this.y += this.speedUp * Math.cos(this.angle);
     }
 }
 
