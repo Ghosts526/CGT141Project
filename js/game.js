@@ -3,77 +3,14 @@ function mainMenu()
     window.location.href = 'index.html';
 }
 
-/* Creating Objects + Canvas Basic
-context.fillStyle = "red";
-context.fillRect(100, 50, 20, 20);
-
-context.beginPath();
-context.strokeStyle = "blue";
-context.lineWidth = 20;
-context.arc(100, 100, 50, 0, Math.PI * 2, false);
-context.stroke();
-context.closePath(); */
-
-/* Creating classes and object circles dynamic */
-/* Fonts and Text in Canvas and Objects */ /*
-class Circle 
-{
-    constructor(xpos, ypos, radius, color, text)
-    {
-        this.xpos = xpos;
-        this.ypos = ypos;
-        this.radius = radius;
-        this.color = color;
-        this.text = text;
-    }
-
-    draw(context)
-    {
-        context.beginPath();
-
-        context.strokeStyle = this.color;
-        context.textAlign = "center";
-        context.textBaseline = "middle";
-        context.font = "20px Arial";
-        //context.fillText(this.text, this.xpos , this.ypos);
-        context.strokeText(this.text, this.xpos, this.ypos);
-
-        context.lineWidth = 5;
-        context.arc(this.xpos, this.ypos, this.radius, 0, Math.PI * 2, false);
-        context.stroke();
-        context.closePath();
-    }
-}
-
-let circle_counter = 1;
-
-let all_circle = [];
-
-let createCircle = function(circle)
-{
-    circle.draw(context);
-}
-
-for (var numbers = 0; numbers < 10; numbers++)
-{
-    let random_x = Math.random() * 300
-    let random_y = Math.random() * 125;
-
-    let my_circle = new Circle(random_x, random_y, 10, "red", circle_counter);
-    all_circle.push(my_circle);
-    createCircle(all_circle[numbers])
-    circle_counter++;
-}
-
-console.log(all_circle);
-*/
-
 var myGamePiece;
+var startx = 325;
+var starty = 200;
 
 function startGame()
 {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "red", 10, 10);
+    myGamePiece = new component(30, 30, "../images/PlayButton.png", (startx - 30), (starty - 30), "image");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
 }
@@ -81,7 +18,7 @@ function startGame()
 function restartGame()
 {
     console.log("Game Restarted");
-    myGamePiece = new component(30, 30, "red", 10, 10);
+    myGamePiece = new component(30, 30, "red", startx, starty, "../images/PlayButton.png");
     updateGameArea();
 }
 
@@ -96,7 +33,7 @@ var myGameArea = {
         window.addEventListener('keydown', function(e) {
             if (e.key === 'w') myGamePiece.speedUp = -1;
             if (e.key === 's') myGamePiece.speedDown = 1;
-            if (e.key === 'a') myGamePiece.speedLeft = -1
+            if (e.key === 'a') myGamePiece.speedLeft = -1;
             if (e.key === 'd') myGamePiece.speedRight = 1;
         })
         window.addEventListener('keyup', function(e) {
@@ -112,10 +49,18 @@ var myGameArea = {
     }
 }
 
-function component(width, height, color, x, y) 
+function component(width, height, color, x, y, type) 
 {
+    this.type = type;
+    if (type == "image") {
+        this.image = new Image();
+        this.image.src = color;
+    }
     this.width = width;
     this.height = height;
+    this.angle = 0;
+    this.speed = 1;
+    this.moveAngle = 0;
     this.speedUp = 0;
     this.speedDown = 0;
     this.speedLeft = 0;
@@ -125,13 +70,30 @@ function component(width, height, color, x, y)
     this.update = function() 
     {
         ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        if (type == "image") {
+            ctx.drawImage(this.image,
+            -this.width/2, -this.height/2,
+            this.width, this.height);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
+        }
+        ctx.restore();
     }
     this.newPos = function()
     {
-        this.x += this.speedLeft + this.speedRight;
-        this.y += this.speedUp + this.speedDown;
+        if (this.speedLeft + this.speedRight != 0 || this.speedUp + this.speedDown) {
+            this.image.src = "../images/PlayButton.png";
+        } else {
+            this.image.src = "../images/PlayButtonV7.png";
+        }
+        this.moveAngle = this.speedLeft + this.speedRight;
+        this.angle += this.moveAngle * Math.PI / 180;
+        this.x -= (this.speedUp + this.speedDown) * Math.sin(this.angle);
+        this.y += (this.speedUp + this.speedDown) * Math.cos(this.angle);
     }
 }
 
