@@ -6,6 +6,7 @@ function mainMenu()
 var myGamePiece;
 var startx = 325;
 var starty = 200;
+const bullets = [];
 
 function startGame()
 {
@@ -34,11 +35,19 @@ var myGameArea = {
             if (e.key === 'w') myGamePiece.moveUp = -1;
             if (e.key === 'a') myGamePiece.moveLeft = -1;
             if (e.key === 'd') myGamePiece.moveRight = 1;
+            if (e.key === 'space') {
+                e.preventDefault();
+                myGamePiece.shoot = true;
+            }
         })
         window.addEventListener('keyup', function(e) {
             if (e.key === 'w') myGamePiece.moveUp = 0;
             if (e.key === 'a') myGamePiece.moveLeft = 0;
             if (e.key === 'd') myGamePiece.moveRight = 0;
+            if (e.key === 'space') {
+                myGamePiece.shoot = false;
+                myGamePiece.hasShot = false;
+            }
         })
     }, 
     clear : function()
@@ -62,8 +71,11 @@ function component(width, height, color, x, y, type)
     this.moveLeft = 0;
     this.moveRight = 0;
     this.speed = 2;
+    this.shoot = false;
+    this.hasShot = false;
     this.x = x;
     this.y = y;
+
     this.update = function() 
     {
         ctx = myGameArea.context;
@@ -78,8 +90,13 @@ function component(width, height, color, x, y, type)
             ctx.fillStyle = color;
             ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
         }
+        if (this.shoot && !this.hasShot)
+        {
+            this.hasShot = true;
+        }
         ctx.restore();
     }
+
     this.newPos = function()
     {
         if (this.moveLeft + this.moveRight != 0 || this.moveUp) {
@@ -91,6 +108,24 @@ function component(width, height, color, x, y, type)
         this.angle += this.moveAngle * Math.PI / 180 * this.speed * 1.5;
         this.x -= this.moveUp * Math.sin(this.angle) * this.speed;
         this.y += this.moveUp * Math.cos(this.angle) * this.speed;
+    }
+}
+
+class Bullet 
+{
+    constructor(x, y, angle)
+    {
+
+    }
+
+    update()
+    {
+
+    }
+
+    draw(ctx) 
+    {
+
     }
 }
 
