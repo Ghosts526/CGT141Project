@@ -10,7 +10,7 @@ var starty = 200;
 function startGame()
 {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "images/PlayButton.png", (startx - 30), (starty - 30), "image");
+    myGamePiece = new component(30, 30, "images/Spaceship.png", (startx - 30), (starty - 30), "image");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
 }
@@ -18,7 +18,7 @@ function startGame()
 function restartGame()
 {
     console.log("Game Restarted");
-    myGamePiece = new component(30, 30, "images/PlayButton.png", (startx - 30), (starty - 30), "image");
+    myGamePiece = new component(30, 30, "images/Spaceship.png", (startx - 30), (starty - 30), "image");
     updateGameArea();
 }
 
@@ -31,14 +31,14 @@ var myGameArea = {
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
         window.addEventListener('keydown', function(e) {
-            if (e.key === 'w') myGamePiece.speedUp = -1;
-            if (e.key === 'a') myGamePiece.speedLeft = -1;
-            if (e.key === 'd') myGamePiece.speedRight = 1;
+            if (e.key === 'w') myGamePiece.moveUp = -1;
+            if (e.key === 'a') myGamePiece.moveLeft = -1;
+            if (e.key === 'd') myGamePiece.moveRight = 1;
         })
         window.addEventListener('keyup', function(e) {
-            if (e.key === 'w') myGamePiece.speedUp = 0;
-            if (e.key === 'a') myGamePiece.speedLeft = 0;
-            if (e.key === 'd') myGamePiece.speedRight = 0;
+            if (e.key === 'w') myGamePiece.moveUp = 0;
+            if (e.key === 'a') myGamePiece.moveLeft = 0;
+            if (e.key === 'd') myGamePiece.moveRight = 0;
         })
     }, 
     clear : function()
@@ -58,9 +58,10 @@ function component(width, height, color, x, y, type)
     this.height = height;
     this.angle = 0;
     this.moveAngle = 0;
-    this.speedUp = 0;
-    this.speedLeft = 0;
-    this.speedRight = 0;
+    this.moveUp = 0;
+    this.moveLeft = 0;
+    this.moveRight = 0;
+    this.speed = 2;
     this.x = x;
     this.y = y;
     this.update = function() 
@@ -81,15 +82,15 @@ function component(width, height, color, x, y, type)
     }
     this.newPos = function()
     {
-        if (this.speedLeft + this.speedRight != 0 || this.speedUp) {
-            this.image.src = "images/PlayButton.png";
+        if (this.moveLeft + this.moveRight != 0 || this.moveUp) {
+            this.image.src = "images/SpaceshipMoving.png";
         } else {
-            this.image.src = "images/PlayButtonV7.png";
+            this.image.src = "images/Spaceship.png";
         }
-        this.moveAngle = this.speedLeft + this.speedRight;
-        this.angle += this.moveAngle * Math.PI / 180;
-        this.x -= this.speedUp * Math.sin(this.angle);
-        this.y += this.speedUp * Math.cos(this.angle);
+        this.moveAngle = this.moveLeft + this.moveRight;
+        this.angle += this.moveAngle * Math.PI / 180 * this.speed * 1.5;
+        this.x -= this.moveUp * Math.sin(this.angle) * this.speed;
+        this.y += this.moveUp * Math.cos(this.angle) * this.speed;
     }
 }
 
