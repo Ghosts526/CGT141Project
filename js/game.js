@@ -11,14 +11,14 @@ const bullets = [];
 function startGame()
 {
     myGameArea.start();
-    myGamePiece = new component(30, 30, "images/Spaceship.png", (startx - 30), (starty - 30), "image");
+    myGamePiece = new player((startx - 30), (starty - 30), "images/Spaceship.png", 30, 30, "image");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
 }
 
 function restartGame()
 {
-    myGamePiece = new component(30, 30, "images/Spaceship.png", (startx - 30), (starty - 30), "image");
+    myGamePiece = new player((startx - 30), (starty - 30), "images/Spaceship.png", 30, 30, "image");
     bullets.length = 0;
     updateGameArea();
 }
@@ -56,7 +56,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, image, x, y) 
+function player(x, y, image, width, height) 
 {
     // Set up variables for the player
     this.image = new Image();
