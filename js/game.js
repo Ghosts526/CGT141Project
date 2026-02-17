@@ -18,7 +18,6 @@ function startGame()
 
 function restartGame()
 {
-    console.log("Game Restarted");
     myGamePiece = new component(30, 30, "images/Spaceship.png", (startx - 30), (starty - 30), "image");
     bullets.length = 0;
     updateGameArea();
@@ -39,7 +38,6 @@ var myGameArea = {
             if (e.key === ' ') {
                 e.preventDefault();
                 myGamePiece.shoot = true;
-                console.log("shoot = true");
             }
         })
         window.addEventListener('keyup', function(e) {
@@ -49,7 +47,6 @@ var myGameArea = {
             if (e.key === ' ') {
                 myGamePiece.shoot = false;
                 myGamePiece.hasShot = false;
-                console.log("shoot = false and hasShot = false");
             }
         })
     }, 
@@ -89,7 +86,6 @@ function component(width, height, image, x, y)
 
         if (this.shoot && !this.hasShot)
         {
-            console.log("Shooting and hasShot = true");
             this.hasShot = true;
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png"));
         }
@@ -121,7 +117,7 @@ class Bullet
         this.width = width;
         this.height = height;
         this.angle = angle
-        this.speed = 7;
+        this.speed = 10;
         this.addX = Math.sin(angle) * this.speed;
         this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image();
@@ -152,17 +148,18 @@ class Bullet
 function updateGameArea()
 {
     myGameArea.clear();
-    myGamePiece.newPos();
-    myGamePiece.update();
 
     bullets.forEach((bullet, index) => {
         bullet.newPos();
         bullet.update();
 
         // Remove if off-screen
-        if (bullet.x < 0 || bullet.x > canvas.width || bullet.y < 0 || bullet.y > canvas.height) 
+        if (bullet.x < 0 || bullet.x > myGameArea.canvas.width || bullet.y < 0 || bullet.y > myGameArea.canvas.height) 
         {
             bullets.splice(index, 1);
         }
     });
+
+    myGamePiece.newPos();
+    myGamePiece.update();
 }
