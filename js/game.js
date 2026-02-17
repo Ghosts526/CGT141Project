@@ -4,33 +4,46 @@ function mainMenu()
 }
 
 var myGamePiece;
-var startx = 325;
-var starty = 200;
+var startx;
+var starty;
 const bullets = [];
+var wave = 0;
+const enemies = [];
+var enemiesSpawning = 0;
+const d = new Date();
+var currHr = 0;
+var currMin = 0;
+var currSec = 0;
 
 function startGame()
 {
     myGameArea.start();
-    myGamePiece = new player((startx - 30), (starty - 30), "images/Spaceship.png", 30, 30, "image");
+    myGamePiece = new player((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
 }
 
 function restartGame()
 {
-    myGamePiece = new player((startx - 30), (starty - 30), "images/Spaceship.png", 30, 30, "image");
+    myGamePiece = new player((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     bullets.length = 0;
+    wave = 0;
+    enemies.length = 0;
+    enemiesSpawning = 0;
     updateGameArea();
 }
 
 var myGameArea = {
     canvas : document.getElementById("gameScreen"),
     start : function() {
-        this.canvas.width = 650;
-        this.canvas.height = 400;
+        this.canvas.width = 980;
+        this.canvas.height = 600;
+        startx = this.canvas.width/2;
+        starty = this.canvas.height/2;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 20);
+
         window.addEventListener('keydown', function(e) {
             if (e.key === 'w') myGamePiece.moveUp = -1;
             if (e.key === 'a') myGamePiece.moveLeft = -1;
@@ -40,6 +53,7 @@ var myGameArea = {
                 myGamePiece.shoot = true;
             }
         })
+
         window.addEventListener('keyup', function(e) {
             if (e.key === 'w') myGamePiece.moveUp = 0;
             if (e.key === 'a') myGamePiece.moveLeft = 0;
@@ -56,7 +70,7 @@ var myGameArea = {
     }
 }
 
-function player(x, y, image, width, height) 
+function player(x, y, width, height, image) 
 {
     // Set up variables for the player
     this.image = new Image();
@@ -87,7 +101,7 @@ function player(x, y, image, width, height)
         if (this.shoot && !this.hasShot)
         {
             this.hasShot = true;
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png"));
+            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
         }
         ctx.restore();
     }
@@ -107,10 +121,11 @@ function player(x, y, image, width, height)
     }
 }
 
+// A bullet class to create projectiles
 class Bullet 
 {
     // A constructor for the bullet class
-    constructor(x, y, width, height, angle, image)
+    constructor(x, y, width, height, angle, image, source)
     {
         this.x = x;
         this.y = y;
@@ -122,6 +137,7 @@ class Bullet
         this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image();
         this.image.src = image;
+        this.source = source;
     }
 
     // Updates the bullet location based by its angle and speed
@@ -145,6 +161,92 @@ class Bullet
     }
 }
 
+class Enemy
+{
+    // A constructor for the enemy class
+    constructor(x, y, width, height, angle, image)
+    {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.angle = angle
+        this.speed = 0;
+        this.addX = Math.sin(angle) * this.speed;
+        this.addY = -Math.cos(angle) * this.speed;
+        this.image = new Image();
+        this.image.src = image;
+    }
+
+    // Updates the enemy location based by its angle and speed
+    newPos()
+    {
+        this.x += this.addX;
+        this.y += this.addY;
+    }
+
+    // Draws the enemy to its current position and rotation
+    update() 
+    {
+        ctx = myGameArea.context;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+
+        ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+
+        ctx.restore();
+    }
+
+    followPlayer()
+    {
+
+    }
+
+    shoot()
+    {
+
+    }
+}
+
+function waveSystem()
+{
+    if (enemies.length == 0 && enemiesSpawning == 0)
+    {
+        wave++;
+        enemiesSpawning = 3 * wave + 2;
+        console.log("Wave: " + wave + "\nEnemies Spawning: " + enemiesSpawning);
+    }
+
+    if (enemiesSpawning > 0)
+    {
+        let x = 0, y = 0, angle = 0;
+        let i = Math.floor(Math.random() * 4);
+
+        if (i == 0) {
+            x = Math.floor(Math.random() * myGameArea.canvas.width);
+            y = 0;
+            angle = Math.PI;
+        } else if (i == 1) {
+            x = Math.floor(Math.random() * myGameArea.canvas.width);
+            y = myGameArea.canvas.height;
+            angle = 0;
+        } else if (i == 2) {
+            x = 0;
+            y = Math.floor(Math.random() * myGameArea.canvas.height);
+            angle = Math.PI / 2;
+        } else {
+            x = myGameArea.canvas.width;
+            y = Math.floor(Math.random() * myGameArea.canvas.height);
+            angle = Math.PI / -2
+        }
+
+        enemies.push(new Enemy(x, y, 30, 30, angle, "images/Spaceship.png")); // Need to add the width, height, and angle
+        enemiesSpawning--;
+        console.log("Enemy Pos (" + x + ", " + y + ")");
+    }
+}
+
 function updateGameArea()
 {
     myGameArea.clear();
@@ -162,4 +264,11 @@ function updateGameArea()
 
     myGamePiece.newPos();
     myGamePiece.update();
+
+    waveSystem();
+    
+    enemies.forEach((enemy, index) => {
+        enemy.newPos();
+        enemy.update();
+    });
 }
