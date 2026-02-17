@@ -3,7 +3,7 @@ function mainMenu()
     window.location.href = 'index.html';
 }
 
-var myGamePiece;
+var player;
 var startx;
 var starty;
 const bullets = [];
@@ -18,14 +18,14 @@ var currSec = 0;
 function startGame()
 {
     myGameArea.start();
-    myGamePiece = new player((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
+    player = new playerFunction((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
 }
 
 function restartGame()
 {
-    myGamePiece = new player((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
+    player = new playerFunction((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     bullets.length = 0;
     wave = 0;
     enemies.length = 0;
@@ -45,22 +45,22 @@ var myGameArea = {
         this.interval = setInterval(updateGameArea, 20);
 
         window.addEventListener('keydown', function(e) {
-            if (e.key === 'w') myGamePiece.moveUp = -1;
-            if (e.key === 'a') myGamePiece.moveLeft = -1;
-            if (e.key === 'd') myGamePiece.moveRight = 1;
+            if (e.key === 'w') player.moveUp = -1;
+            if (e.key === 'a') player.moveLeft = -1;
+            if (e.key === 'd') player.moveRight = 1;
             if (e.key === ' ') {
                 e.preventDefault();
-                myGamePiece.shoot = true;
+                player.shoot = true;
             }
         })
 
         window.addEventListener('keyup', function(e) {
-            if (e.key === 'w') myGamePiece.moveUp = 0;
-            if (e.key === 'a') myGamePiece.moveLeft = 0;
-            if (e.key === 'd') myGamePiece.moveRight = 0;
+            if (e.key === 'w') player.moveUp = 0;
+            if (e.key === 'a') player.moveLeft = 0;
+            if (e.key === 'd') player.moveRight = 0;
             if (e.key === ' ') {
-                myGamePiece.shoot = false;
-                myGamePiece.hasShot = false;
+                player.shoot = false;
+                player.hasShot = false;
             }
         })
     }, 
@@ -70,7 +70,7 @@ var myGameArea = {
     }
 }
 
-function player(x, y, width, height, image) 
+function playerFunction(x, y, width, height, image) 
 {
     // Set up variables for the player
     this.image = new Image();
@@ -171,7 +171,7 @@ class Enemy
         this.width = width;
         this.height = height;
         this.angle = angle
-        this.speed = 0;
+        this.speed = 1;
         this.addX = Math.sin(angle) * this.speed;
         this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image();
@@ -181,6 +181,7 @@ class Enemy
     // Updates the enemy location based by its angle and speed
     newPos()
     {
+        this.followPlayer();
         this.x += this.addX;
         this.y += this.addY;
     }
@@ -200,7 +201,9 @@ class Enemy
 
     followPlayer()
     {
-
+        this.angle = Math.atan2(player.y - this.y, player.x - this.x) + Math.PI / 2;
+        this.addX = Math.sin(this.angle) * this.speed;
+        this.addY = -Math.cos(this.angle) * this.speed;
     }
 
     shoot()
@@ -262,12 +265,12 @@ function updateGameArea()
         }
     });
 
-    myGamePiece.newPos();
-    myGamePiece.update();
+    player.newPos();
+    player.update();
 
     waveSystem();
     
-    enemies.forEach((enemy, index) => {
+    enemies.forEach((enemy) => {
         enemy.newPos();
         enemy.update();
     });
