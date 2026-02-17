@@ -10,10 +10,7 @@ const bullets = [];
 var wave = 0;
 const enemies = [];
 var enemiesSpawning = 0;
-const d = new Date();
-var currHr = 0;
-var currMin = 0;
-var currSec = 0;
+var oldTime = 0;
 
 function startGame()
 {
@@ -184,6 +181,12 @@ class Enemy
         this.followPlayer();
         this.x += this.addX;
         this.y += this.addY;
+        if (this.addX != 0 || this.addY != 0)
+        {
+            this.image.src = "images/SpaceshipMoving.png";
+        } else {
+            this.image.src = "image/Spaceship.png";
+        }
     }
 
     // Draws the enemy to its current position and rotation
@@ -219,9 +222,12 @@ function waveSystem()
         wave++;
         enemiesSpawning = 3 * wave + 2;
         console.log("Wave: " + wave + "\nEnemies Spawning: " + enemiesSpawning);
+        timer = 0;
     }
+    
+    timer += 1;
 
-    if (enemiesSpawning > 0)
+    if (enemiesSpawning > 0 && timer >= 100)
     {
         let x = 0, y = 0, angle = 0;
         let i = Math.floor(Math.random() * 4);
@@ -247,6 +253,7 @@ function waveSystem()
         enemies.push(new Enemy(x, y, 30, 30, angle, "images/Spaceship.png")); // Need to add the width, height, and angle
         enemiesSpawning--;
         console.log("Enemy Pos (" + x + ", " + y + ")");
+        timer = 0;
     }
 }
 
