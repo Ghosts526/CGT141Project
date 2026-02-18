@@ -295,6 +295,7 @@ function dot(a, b)
     return a.x * b.x + a.y * b.y;
 }
 
+// Creates a u and v vector
 function computeAxes(rect)
 {
     const c = Math.cos(rect.angle);
@@ -304,7 +305,7 @@ function computeAxes(rect)
     rect.v = {x: -s, y: c};
 }
 
-// Rect A, Rect B, Vec2 L
+// Returns true if it overlaps and false if it doesn't
 function overlapOnAxis(A, B, L)
 {
     const projA = dot(A.center, L);
@@ -318,10 +319,10 @@ function overlapOnAxis(A, B, L)
         B.hw * Math.abs(dot(B.u, L)) + 
         B.hh * Math.abs(dot(B.v, L));
 
-    return (Math.abs(projA - projB) <= (rA + rB))
+    return (Math.abs(projA - projB) <= (rA + rB));
 }
 
-function collisionCheck()
+function collisionCheck() // Using Separating Axis Theorem (SAT)
 {
     for (let i = 0; i < bullets.length; i++) {
 
