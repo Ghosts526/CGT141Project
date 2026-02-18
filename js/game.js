@@ -324,10 +324,6 @@ function overlapOnAxis(A, B, L)
 function collisionCheck()
 {
     for (let i = 0; i < bullets.length; i++) {
-        
-
-        let hw = bullets[i].width / 2;
-        let hh = bullets[i].height / 2;
 
         let A = {
             center: { x: bullets[i].x, y: bullets[i].y },
