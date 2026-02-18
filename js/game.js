@@ -1,3 +1,5 @@
+import * as math from 'mathjs';
+
 function mainMenu()
 {
     window.location.href = 'index.html';
@@ -19,6 +21,7 @@ function startGame()
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
     pause = false;
+    
 }
 
 function restartGame()
@@ -100,6 +103,7 @@ function playerFunction(x, y, width, height, image)
     this.hasShot = false;
     this.x = x;
     this.y = y;
+    this.hp = 100;
 
     // Updates the player image to its current position
     this.update = function() 
@@ -191,6 +195,7 @@ class Enemy
         this.image.src = image;
         this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20;
         this.shootTimer = 0;
+        this.hp = 25;
     }
 
     // Updates the enemy location based by its angle and speed
@@ -246,7 +251,7 @@ function waveSystem()
     if (enemies.length == 0 && enemiesSpawning == 0)
     {
         wave++;
-        enemiesSpawning = 3 * wave + 2;
+        enemiesSpawning = 1 //3 * wave + 2;
         console.log("Wave: " + wave + "\nEnemies Spawning: " + enemiesSpawning);
         timer = 0;
     }
@@ -283,6 +288,54 @@ function waveSystem()
     }
 }
 
+function collisionCheck()
+{
+    bullets.forEach((bullet) => {
+        // All based on bullet type (Player or Enemy bullets)
+        // 1 (top left) 2 (top right) 3 (bottom left) 4 (bottom right)
+        let x1 = bullet.x, y1 = bullet.y;
+        let x2 = bullet.x + Math.sin(bullet.angle) * bullet.width, y2 = bullet.y + Math.cos(bullet.angle) * bullet.height;
+        let x3 = bullet.x - Math.cos(bullet.angle) * bullet.width, y3 = bullet.y + Math.sin(bullet.angle) * bullet.height;
+        let x4 = x3 + (x2 - x1), y4 = y3 + (y2 - y1);
+        let xA = [x1, x2, x3, x4];
+        let yA = [y1, y2, y3, y4];
+
+        let normals = [];
+        for (let i = 0; i < 4; i++)
+        {
+            let j = (i == 3) ? 0 : i + 1;
+            normals.push([-(yA[j] - yA[i]), (xA[j] - xA[i])]);
+        }
+
+        if (bullet.source == "Enemy") { // Enemy bullet
+            // Check player collision
+            let px1 = player.x, py1 = player.y;
+            let px2 = player.x + Math.sin(player.angle) * player.width, py2 = player.y + Math.cos(player.angle) * player.height;
+            let px3 = player.x - Math.cos(player.angle) * player.width, py3 = player.y + Math.sin(player.angle) * player.height;
+            let px4 = px3 + (px2 - px1), py4 = py3 + (py2 - py1);
+            let xB = [px1, px2, px3, px4];
+            let yB = [py1, py2, py3, py4];
+
+            let collide = false;
+            for (let i = 0; i < 4; i++)
+            {
+                let j = (i == 3) ? 0 : i + 1;
+                normals.push([-(yB[j] - yB[i]), (xB[j] - xB[i])]);
+            }
+
+            if (collide)
+            {
+                console.log("Hit!");
+            }
+        } else { // Players Bullet
+            // Check all enemies collision
+            enemies.forEach((enemy) => {
+
+            });
+        }
+    });
+}
+
 function updateGameArea()
 {
     if (pause == true)
@@ -313,4 +366,6 @@ function updateGameArea()
         enemy.update();
         enemy.tryShoot();
     });
+
+    collisionCheck();
 }
