@@ -98,7 +98,7 @@ function playerFunction(x, y, width, height, image)
     this.moveUp = 0;
     this.moveLeft = 0;
     this.moveRight = 0;
-    this.speed = 2;
+    this.speed = 3;
     this.shoot = false;
     this.hasShot = false;
     this.x = x;
@@ -119,8 +119,6 @@ function playerFunction(x, y, width, height, image)
         ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height); // Draw the border rectangle
 
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
-
-        console.log("Player: (" + this.x + ", " + this.y + ") \n" + -this.width/2 + "\n" + -this.height/2 + "\n" + this.width + "\n" + this.height + "\n");
 
         if (this.shoot && !this.hasShot)
         {
@@ -242,6 +240,7 @@ class Enemy
 
     followPlayer()
     {
+        
         this.angle = Math.atan2(player.y - this.y, player.x - this.x) + Math.PI / 2;
         this.addX = Math.sin(this.angle) * this.speed;
         this.addY = -Math.cos(this.angle) * this.speed;
@@ -251,7 +250,10 @@ class Enemy
     {
         this.shootTimer++;
         if (this.shootTimer >= this.shootAt) {
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
+            let xr = Math.floor(Math.random() * 61) - 30, yr = Math.floor(Math.random() * 61) - 30; // +/- 30 accuracy
+            console.log("Accuracy x/y: " + xr + "/" + yr);
+            let newAngle = Math.atan2(player.y - this.y + yr, player.x - this.x + xr) + Math.PI / 2;
+            bullets.push(new Bullet(this.x, this.y, 5, 20, newAngle, "images/Blaster.png", "Enemy"));
             this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20; //error
             this.shootTimer = 0;
             console.log("Shooting");
@@ -298,7 +300,6 @@ function waveSystem()
 
         enemies.push(new Enemy(x, y, 30, 30, angle, "images/Spaceship.png")); // Need to add the width, height, and angle
         enemiesSpawning--;
-        console.log("Enemy Pos (" + x + ", " + y + ")");
         timer = 0;
     }
 }
@@ -306,48 +307,11 @@ function waveSystem()
 function collisionCheck()
 {
     for (i = 0; i < bullets.length; i++) {
-    //bullets.forEach((bullet) => {
-        // All based on bullet type (Player or Enemy bullets)
-        // 1 (top left) 2 (top right) 3 (bottom left) 4 (bottom right)
-        // Based on the center
-        let bullet = bullets[i];
-        let x1 = bullet.x, y1 = bullet.y;
-        let x2 = bullet.x + Math.sin(bullet.angle) * bullet.width, y2 = bullet.y + Math.cos(bullet.angle) * bullet.height;
-        let x3 = bullet.x - Math.cos(bullet.angle) * bullet.width, y3 = bullet.y + Math.sin(bullet.angle) * bullet.height;
-        let x4 = x3 + (x2 - x1), y4 = y3 + (y2 - y1);
-        let xA = [x1, x2, x3, x4];
-        let yA = [y1, y2, y3, y4];
 
-        let normals = [];
-        for (let i = 0; i < 4; i++)
-        {
-            let j = (i == 3) ? 0 : i + 1;
-            normals.push([-(yA[j] - yA[i]), (xA[j] - xA[i])]);
-        }
 
-        if (bullet.source == "Enemy") { // Enemy bullet
-            // Check player collision
-            let px1 = player.x, py1 = player.y;
-            let px2 = player.x + Math.sin(player.angle) * player.width, py2 = player.y + Math.cos(player.angle) * player.height;
-            let px3 = player.x - Math.cos(player.angle) * player.width, py3 = player.y + Math.sin(player.angle) * player.height;
-            let px4 = px3 + (px2 - px1), py4 = py3 + (py2 - py1);
-            let xB = [px1, px2, px3, px4];
-            let yB = [py1, py2, py3, py4];
+        if (bullets[i].source == "Enemy") { // Enemy bullet
 
-            let collide = false;
-            for (let i = 0; i < 4; i++)
-            {
-                let j = (i == 3) ? 0 : i + 1;
-                normals.push([-(yB[j] - yB[i]), (xB[j] - xB[i])]);
-            }
-
-            if (collide)
-            {
-                console.log("Hit!");
-                player.hp -= 25;
-                bullets.splice(i, 1);
-                pauseGame();
-            }
+            
         } else { // Players Bullet
             // Check all enemies collision
             enemies.forEach((enemy) => {
