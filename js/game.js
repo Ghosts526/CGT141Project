@@ -110,10 +110,17 @@ function playerFunction(x, y, width, height, image)
     {
         ctx = myGameArea.context;
         ctx.save();
+
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
+        ctx.lineWidth = 4;       // Border thickness
+        ctx.strokeStyle = 'red'; // Border color
+        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height); // Draw the border rectangle
+
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+
+        console.log("Player: (" + this.x + ", " + this.y + ") \n" + -this.width/2 + "\n" + -this.height/2 + "\n" + this.width + "\n" + this.height + "\n");
 
         if (this.shoot && !this.hasShot)
         {
@@ -172,6 +179,10 @@ class Bullet
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
+        ctx.lineWidth = 4;       // Border thickness
+        ctx.strokeStyle = 'red'; // Border color
+        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height); // Draw the border rectangle
+
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
 
         ctx.restore();
@@ -219,6 +230,10 @@ class Enemy
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
+
+        ctx.lineWidth = 4;       // Border thickness
+        ctx.strokeStyle = 'red'; // Border color
+        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height); // Draw the border rectangle
 
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
 
