@@ -10,7 +10,7 @@ const bullets = [];
 var wave = 0;
 const enemies = [];
 var enemiesSpawning = 0;
-var oldTime = 0;
+var pause = false;
 
 function startGame()
 {
@@ -18,6 +18,7 @@ function startGame()
     player = new playerFunction((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
+    pause = false;
 }
 
 function restartGame()
@@ -27,7 +28,22 @@ function restartGame()
     wave = 0;
     enemies.length = 0;
     enemiesSpawning = 0;
+    pause = false;
     updateGameArea();
+}
+
+function pauseGame()
+{
+    pause = true;
+    document.getElementById("pauseButton").onclick = resumeGame;
+    document.getElementById("pauseButton").innerText = "Resume Game";
+}
+
+function resumeGame()
+{
+    pause = false;
+    document.getElementById("pauseButton").onclick = pauseGame;
+    document.getElementById("pauseButton").innerText = "Pause Game";
 }
 
 var myGameArea = {
@@ -173,6 +189,8 @@ class Enemy
         this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image();
         this.image.src = image;
+        this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20;
+        this.shootTimer = 0;
     }
 
     // Updates the enemy location based by its angle and speed
@@ -209,11 +227,19 @@ class Enemy
         this.addY = -Math.cos(this.angle) * this.speed;
     }
 
-    shoot()
+    tryShoot()
     {
-
+        this.shootTimer++;
+        if (this.shootTimer >= this.shootAt) {
+            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
+            this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20; //error
+            this.shootTimer = 0;
+            console.log("Shooting");
+        }
     }
 }
+
+var timer = 0;
 
 function waveSystem()
 {
@@ -259,6 +285,11 @@ function waveSystem()
 
 function updateGameArea()
 {
+    if (pause == true)
+    {
+        return;
+    }
+
     myGameArea.clear();
 
     bullets.forEach((bullet, index) => {
@@ -280,5 +311,6 @@ function updateGameArea()
     enemies.forEach((enemy) => {
         enemy.newPos();
         enemy.update();
+        enemy.tryShoot();
     });
 }
