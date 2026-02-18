@@ -1,4 +1,5 @@
 //import * as math from 'mathjs';
+import Player from './player.js';
 
 function mainMenu()
 {
@@ -305,9 +306,12 @@ function waveSystem()
 
 function collisionCheck()
 {
-    bullets.forEach((bullet) => {
+    for (i = 0; i < bullets.length; i++) {
+    //bullets.forEach((bullet) => {
         // All based on bullet type (Player or Enemy bullets)
         // 1 (top left) 2 (top right) 3 (bottom left) 4 (bottom right)
+        // Based on the center
+        let bullet = bullets[i];
         let x1 = bullet.x, y1 = bullet.y;
         let x2 = bullet.x + Math.sin(bullet.angle) * bullet.width, y2 = bullet.y + Math.cos(bullet.angle) * bullet.height;
         let x3 = bullet.x - Math.cos(bullet.angle) * bullet.width, y3 = bullet.y + Math.sin(bullet.angle) * bullet.height;
@@ -341,6 +345,9 @@ function collisionCheck()
             if (collide)
             {
                 console.log("Hit!");
+                player.hp -= 25;
+                bullets.splice(i, 1);
+                pauseGame();
             }
         } else { // Players Bullet
             // Check all enemies collision
@@ -348,7 +355,8 @@ function collisionCheck()
 
             });
         }
-    });
+    //});
+    }
 }
 
 function updateGameArea()
