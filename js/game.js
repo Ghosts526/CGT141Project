@@ -1,5 +1,4 @@
 //import * as math from 'mathjs';
-import Player from './player.js';
 
 function mainMenu()
 {
