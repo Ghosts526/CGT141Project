@@ -251,12 +251,10 @@ class Enemy
         this.shootTimer++;
         if (this.shootTimer >= this.shootAt) {
             let xr = Math.floor(Math.random() * 61) - 30, yr = Math.floor(Math.random() * 61) - 30; // +/- 30 accuracy
-            console.log("Accuracy x/y: " + xr + "/" + yr);
             let newAngle = Math.atan2(player.y - this.y + yr, player.x - this.x + xr) + Math.PI / 2;
             bullets.push(new Bullet(this.x, this.y, 5, 20, newAngle, "images/Blaster.png", "Enemy"));
             this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20; //error
             this.shootTimer = 0;
-            console.log("Shooting");
         }
     }
 }
@@ -269,7 +267,6 @@ function waveSystem()
     {
         wave++;
         enemiesSpawning = 1 //3 * wave + 2;
-        console.log("Wave: " + wave + "\nEnemies Spawning: " + enemiesSpawning);
         timer = 0;
     }
     
@@ -304,21 +301,118 @@ function waveSystem()
     }
 }
 
+// Dot Product
+function dot(a, b) 
+{
+    return a.x * b.x + a.y * b.y;
+}
+
+function computeAxes(rect)
+{
+    const c = Math.cos(rect.angle);
+    const s = Math.sin(rect.angle);
+
+    rect.u = {x:  c, y: s};
+    rect.v = {x: -s, y: c};
+}
+
+// Rect A, Rect B, Vec2 L
+function overlapOnAxis(A, B, L)
+{
+    const projA = dot(A.center, L);
+    const projB = dot(B.center, L);
+
+    const rA = 
+        A.hw * Math.abs(dot(A.u, L)) + 
+        A.hh * Math.abs(dot(A.v, L));
+    
+    const rB = 
+        B.hw * Math.abs(dot(B.u, L)) + 
+        B.hh * Math.abs(dot(B.v, L));
+
+    return (Math.abs(projA - projB) <= (rA + rB))
+}
+
 function collisionCheck()
 {
-    for (i = 0; i < bullets.length; i++) {
+    for (let i = 0; i < bullets.length; i++) {
+        
 
+        let hw = bullets[i].width / 2;
+        let hh = bullets[i].height / 2;
+
+        let A = {
+            center: { x: bullets[i].x, y: bullets[i].y },
+            hw: bullets[i].width / 2,
+            hh: bullets[i].height / 2,
+            angle: bullets[i].angle
+        };
 
         if (bullets[i].source == "Enemy") { // Enemy bullet
+
+            let B = {
+                center: { x: player.x, y: player.y },
+                hw: player.width / 2,
+                hh: player.height / 2,
+                angle: player.angle
+            };
+
+            computeAxes(A);
+            computeAxes(B);
+
+            const axes = [A.u, A.v, B.u, B.v];
+            let collision = true;
+
+            for (let L of axes) {
+                if (!overlapOnAxis(A, B, L)) {
+                    collision = false;
+                    break;  
+                }
+            }
+
+            if (collision) {
+                player.hp -= 25;
+                console.log("HIT!");
+                bullets.splice(i, 1);
+            }
 
             
         } else { // Players Bullet
             // Check all enemies collision
-            enemies.forEach((enemy) => {
+            for (let i = 0; i < enemies.length; i++) {
+                const enemy = enemies[i];
 
-            });
+                let B = {
+                    center: { x: enemy.x, y: enemy.y },
+                    hw: enemy.width / 2,
+                    hh: enemy.height / 2,
+                    angle: enemy.angle
+                };
+
+                computeAxes(A);
+                computeAxes(B);
+
+                const axes = [A.u, A.v, B.u, B.v];
+                let collision = true;
+
+                for (let L of axes) {
+                    if (!overlapOnAxis(A, B, L)) {
+                        collision = false;
+                        break;  
+                    }
+                }
+
+                if (collision) {
+                    enemy.hp -= 25;
+                    console.log("Enemy HIT!");
+                    bullets.splice(i, 1);
+
+                    if (enemy.hp <= 0) {
+                        enemies.splice(i, 1);
+                    }
+                }
+            }
         }
-    //});
     }
 }
 
