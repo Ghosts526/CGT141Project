@@ -114,10 +114,6 @@ function playerFunction(x, y, width, height, image)
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        ctx.lineWidth = 4;       // Border thickness
-        ctx.strokeStyle = 'red'; // Border color
-        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height); // Draw the border rectangle
-
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
 
         if (this.shoot && !this.hasShot)
@@ -177,10 +173,6 @@ class Bullet
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        ctx.lineWidth = 4;       // Border thickness
-        ctx.strokeStyle = 'red'; // Border color
-        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height); // Draw the border rectangle
-
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
 
         ctx.restore();
@@ -228,10 +220,6 @@ class Enemy
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
-
-        ctx.lineWidth = 4;       // Border thickness
-        ctx.strokeStyle = 'red'; // Border color
-        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height); // Draw the border rectangle
 
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
 
@@ -372,7 +360,6 @@ function collisionCheck()
 
             if (collision) {
                 player.hp -= 25;
-                console.log("HIT!");
                 bullets.splice(i, 1);
             }
 
@@ -404,7 +391,6 @@ function collisionCheck()
 
                 if (collision) {
                     enemy.hp -= 25;
-                    console.log("Enemy HIT!");
                     bullets.splice(i, 1);
 
                     if (enemy.hp <= 0) {
