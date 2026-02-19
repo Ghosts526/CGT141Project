@@ -1,6 +1,7 @@
-//import * as math from 'mathjs';
 import { Player } from "./Player.js";
 import { Enemy } from "./Enemy.js";
+import { GameArea } from "./GameArea.js";
+import { WaveSystem } from "./WaveSystem.js";
 
 function mainMenu()
 {
@@ -11,11 +12,11 @@ var player;
 var startx;
 var starty;
 const bullets = [];
-var wave = 0;
 const enemies = [];
-var enemiesSpawning = 0;
 var pause = false;
 var isGameOver = false;
+var myGameArea = new GameArea(document.getElementById("gameScreen"));
+var waveSystem = new WaveSystem();
 
 function startGame()
 {
@@ -31,11 +32,10 @@ function restartGame()
 {
     player = new Player((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     bullets.length = 0;
-    wave = 0;
     enemies.length = 0;
-    enemiesSpawning = 0;
     pause = false;
     isGameOver = false;
+    waveSystem = new WaveSystem();
     resumeGame();
     updateGameArea();
 }
@@ -71,85 +71,6 @@ function gameOver()
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText("Game Over!", ctx.canvas.width/2, ctx.canvas.height/2);
-}
-
-var myGameArea = {
-    canvas : document.getElementById("gameScreen"),
-    start : function() {
-        this.canvas.width = 980;
-        this.canvas.height = 600;
-        startx = this.canvas.width/2;
-        starty = this.canvas.height/2;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
-
-        window.addEventListener('keydown', function(e) {
-            if (e.key === 'w') player.moveUp = -1;
-            if (e.key === 'a') player.moveLeft = -1;
-            if (e.key === 'd') player.moveRight = 1;
-            if (e.key === ' ') {
-                e.preventDefault();
-                player.shoot = true;
-            }
-        })
-
-        window.addEventListener('keyup', function(e) {
-            if (e.key === 'w') player.moveUp = 0;
-            if (e.key === 'a') player.moveLeft = 0;
-            if (e.key === 'd') player.moveRight = 0;
-            if (e.key === ' ') {
-                player.shoot = false;
-                player.fireTimer = 0;
-            }
-        })
-    }, 
-    clear : function()
-    {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
-
-var timer = 0;
-
-function waveSystem()
-{
-    if (enemies.length == 0 && enemiesSpawning == 0)
-    {
-        wave++;
-        enemiesSpawning = 2 * wave + 2;
-        timer = 0;
-    }
-    
-    timer += 1;
-
-    if (enemiesSpawning > 0 && timer >= 100)
-    {
-        let x = 0, y = 0, angle = 0;
-        let i = Math.floor(Math.random() * 4);
-
-        if (i == 0) {
-            x = Math.floor(Math.random() * myGameArea.canvas.width);
-            y = 0;
-            angle = Math.PI;
-        } else if (i == 1) {
-            x = Math.floor(Math.random() * myGameArea.canvas.width);
-            y = myGameArea.canvas.height;
-            angle = 0;
-        } else if (i == 2) {
-            x = 0;
-            y = Math.floor(Math.random() * myGameArea.canvas.height);
-            angle = Math.PI / 2;
-        } else {
-            x = myGameArea.canvas.width;
-            y = Math.floor(Math.random() * myGameArea.canvas.height);
-            angle = Math.PI / -2
-        }
-
-        enemies.push(new Enemy(x, y, 40, 40, angle, "images/Spaceship.png")); // Need to add the width, height, and angle
-        enemiesSpawning--;
-        timer = 0;
-    }
 }
 
 // Dot Product
@@ -268,7 +189,7 @@ function updateGameArea()
     player.newPos();
     player.update(myGameArea.context, bullets);
 
-    waveSystem();
+    waveSystem.waves(myGameArea.context, enemies);
     
     enemies.forEach((enemy) => {
         enemy.newPos(player);
