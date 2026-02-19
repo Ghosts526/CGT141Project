@@ -1,5 +1,4 @@
 import { Player } from "./Player.js";
-import { Enemy } from "./Enemy.js";
 import { GameArea } from "./GameArea.js";
 import { WaveSystem } from "./WaveSystem.js";
 
