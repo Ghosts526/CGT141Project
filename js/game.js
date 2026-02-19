@@ -336,40 +336,41 @@ function overlapOnAxis(A, B, L)
     return (Math.abs(projA - projB) <= (rA + rB));
 }
 
-function collisionCheck() // Using Separating Axis Theorem (SAT)
+// Returning true or false when collided
+function SAT(objA, objB) // Using Separating Axis Theorem (SAT)
+{
+    let A = {
+        center: { x: objA.x, y: objA.y },
+        hw: objA.width / 2,
+        hh: objA.height / 2,
+        angle: objA.angle
+    };
+
+    let B = {
+        center: { x: objB.x, y: objB.y },
+        hw: objB.width / 2,
+        hh: objB.height / 2,
+        angle: objB.angle
+    };
+
+    computeAxes(A);
+    computeAxes(B);
+
+    const axes = [A.u, A.v, B.u, B.v];
+
+    for (let L of axes) {
+        if (!overlapOnAxis(A, B, L)) {
+            return false; // No Collision
+        }
+    }
+    return true; // Collision
+}
+
+function collisionCheck() 
 {
     for (let i = 0; i < bullets.length; i++) {
-
-        let A = {
-            center: { x: bullets[i].x, y: bullets[i].y },
-            hw: bullets[i].width / 2,
-            hh: bullets[i].height / 2,
-            angle: bullets[i].angle
-        };
-
         if (bullets[i].source == "Enemy") { // Enemy bullet
-
-            let B = {
-                center: { x: player.x, y: player.y },
-                hw: player.width / 2,
-                hh: player.height / 2,
-                angle: player.angle
-            };
-
-            computeAxes(A);
-            computeAxes(B);
-
-            const axes = [A.u, A.v, B.u, B.v];
-            let collision = true;
-
-            for (let L of axes) {
-                if (!overlapOnAxis(A, B, L)) {
-                    collision = false;
-                    break;  
-                }
-            }
-
-            if (collision) {
+            if (SAT(bullets[i], player)) {
                 player.hp -= 25;
                 bullets.splice(i, 1);
 
@@ -378,39 +379,16 @@ function collisionCheck() // Using Separating Axis Theorem (SAT)
                     gameOver();
                 }
             }
-
             
         } else { // Players Bullet
             // Check all enemies collision
-            for (let i = 0; i < enemies.length; i++) {
-                const enemy = enemies[i];
-
-                let B = {
-                    center: { x: enemy.x, y: enemy.y },
-                    hw: enemy.width / 2,
-                    hh: enemy.height / 2,
-                    angle: enemy.angle
-                };
-
-                computeAxes(A);
-                computeAxes(B);
-
-                const axes = [A.u, A.v, B.u, B.v];
-                let collision = true;
-
-                for (let L of axes) {
-                    if (!overlapOnAxis(A, B, L)) {
-                        collision = false;
-                        break;  
-                    }
-                }
-
-                if (collision) {
-                    enemy.hp -= 25;
+            for (let j = 0; j < enemies.length; j++) {
+                if (SAT(bullets[i], enemies[j])) {
+                    enemies[j].hp -= 25;
                     bullets.splice(i, 1);
 
-                    if (enemy.hp <= 0) {
-                        enemies.splice(i, 1);
+                    if (enemies[j].hp <= 0) {
+                        enemies.splice(j, 1);
                     }
                 }
             }
