@@ -13,25 +13,28 @@ var wave = 0;
 const enemies = [];
 var enemiesSpawning = 0;
 var pause = false;
+var isGameOver = false;
 
 function startGame()
 {
     myGameArea.start();
-    player = new playerFunction((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
+    player = new Player((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
     pause = false;
-    
+    isGameOver = false;
 }
 
 function restartGame()
 {
-    player = new playerFunction((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
+    player = new Player((startx - 30), (starty - 30), 30, 30, "images/Spaceship.png");
     bullets.length = 0;
     wave = 0;
     enemies.length = 0;
     enemiesSpawning = 0;
     pause = false;
+    isGameOver = false;
+    resumeGame();
     updateGameArea();
 }
 
@@ -44,9 +47,22 @@ function pauseGame()
 
 function resumeGame()
 {
+    if (isGameOver) return;
     pause = false;
     document.getElementById("pauseButton").onclick = pauseGame;
     document.getElementById("pauseButton").innerText = "Pause Game";
+}
+
+function gameOver()
+{
+    isGameOver = true;
+    pauseGame();
+    let ctx = myGameArea.context;
+    ctx.font = "60px Arial";
+    ctx.fillStyle = "red";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("Game Over!", ctx.canvas.width/2, ctx.canvas.height/2);
 }
 
 var myGameArea = {
@@ -86,47 +102,28 @@ var myGameArea = {
     }
 }
 
-function playerFunction(x, y, width, height, image) 
-{
-    // Set up variables for the player
-    this.image = new Image();
-    this.image.src = image;
-    this.width = width;
-    this.height = height;
-    this.angle = 0;
-    this.moveAngle = 0;
-    this.moveUp = 0;
-    this.moveLeft = 0;
-    this.moveRight = 0;
-    this.speed = 3;
-    this.shoot = false;
-    this.hasShot = false;
-    this.x = x;
-    this.y = y;
-    this.hp = 100;
-
-    // Updates the player image to its current position
-    this.update = function() 
-    {
-        ctx = myGameArea.context;
-        ctx.save();
-
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-
-        ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
-
-        if (this.shoot && !this.hasShot)
-        {
-            this.hasShot = true;
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
-        }
-        ctx.restore();
+class Player {
+    constructor(x, y, width, height, image) {
+        // Set up variables for the player
+        this.image = new Image();
+        this.image.src = image;
+        this.width = width;
+        this.height = height;
+        this.angle = 0;
+        this.moveAngle = 0;
+        this.moveUp = 0;
+        this.moveLeft = 0;
+        this.moveRight = 0;
+        this.speed = 3;
+        this.shoot = false;
+        this.hasShot = false;
+        this.x = x;
+        this.y = y;
+        this.hp = 100;
     }
 
     // Updates the position and angle of the player
-    this.newPos = function()
-    {
+    newPos() {
         if (this.moveLeft + this.moveRight != 0 || this.moveUp) {
             this.image.src = "images/SpaceshipMoving.png";
         } else {
@@ -136,6 +133,23 @@ function playerFunction(x, y, width, height, image)
         this.angle += this.moveAngle * Math.PI / 180 * this.speed * 1.5;
         this.x -= this.moveUp * Math.sin(this.angle) * this.speed;
         this.y += this.moveUp * Math.cos(this.angle) * this.speed;
+    }
+
+    // Updates the player image to its current position
+    update() {
+        let ctx = myGameArea.context;
+        ctx.save();
+
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+
+        ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
+
+        if (this.shoot && !this.hasShot) {
+            this.hasShot = true;
+            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
+        }
+        ctx.restore();
     }
 }
 
@@ -168,7 +182,7 @@ class Bullet
     // Draws the bullet to its current position and rotation
     update() 
     {
-        ctx = myGameArea.context;
+        let ctx = myGameArea.context;
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
@@ -216,7 +230,7 @@ class Enemy
     // Draws the enemy to its current position and rotation
     update() 
     {
-        ctx = myGameArea.context;
+        let ctx = myGameArea.context;
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
@@ -238,7 +252,7 @@ class Enemy
     {
         this.shootTimer++;
         if (this.shootTimer >= this.shootAt) {
-            let xr = Math.floor(Math.random() * 61) - 30, yr = Math.floor(Math.random() * 61) - 30; // +/- 30 accuracy
+            let xr = Math.floor(Math.random() * 101) - 50, yr = Math.floor(Math.random() * 101) - 50; // +/- 50 accuracy
             let newAngle = Math.atan2(player.y - this.y + yr, player.x - this.x + xr) + Math.PI / 2;
             bullets.push(new Bullet(this.x, this.y, 5, 20, newAngle, "images/Blaster.png", "Enemy"));
             this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20; //error
@@ -254,7 +268,7 @@ function waveSystem()
     if (enemies.length == 0 && enemiesSpawning == 0)
     {
         wave++;
-        enemiesSpawning = 1 //3 * wave + 2;
+        enemiesSpawning = 2 * wave + 2;
         timer = 0;
     }
     
@@ -283,7 +297,7 @@ function waveSystem()
             angle = Math.PI / -2
         }
 
-        enemies.push(new Enemy(x, y, 30, 30, angle, "images/Spaceship.png")); // Need to add the width, height, and angle
+        enemies.push(new Enemy(x, y, 40, 40, angle, "images/Spaceship.png")); // Need to add the width, height, and angle
         enemiesSpawning--;
         timer = 0;
     }
@@ -358,6 +372,11 @@ function collisionCheck() // Using Separating Axis Theorem (SAT)
             if (collision) {
                 player.hp -= 25;
                 bullets.splice(i, 1);
+
+                if (player.hp <= 0)
+                {
+                    gameOver();
+                }
             }
 
             
