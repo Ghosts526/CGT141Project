@@ -1,3 +1,5 @@
+import { Bullet } from "./Bullet.js";
+
 export class Player {
     constructor(x, y, width, height, image) {
         // Set up variables for the player
@@ -33,7 +35,7 @@ export class Player {
     }
 
     // Updates the player image to its current position
-    update(context) {
+    update(context, bullets) {
         let ctx = context;
         ctx.save();
 
