@@ -14,6 +14,8 @@ const enemies = [];
 var enemiesSpawning = 0;
 var pause = false;
 var isGameOver = false;
+var fireDelay = 10; // Delay between shooting
+var fireTimer = 0; // Current time for shooting
 
 function startGame()
 {
@@ -92,7 +94,7 @@ var myGameArea = {
             if (e.key === 'd') player.moveRight = 0;
             if (e.key === ' ') {
                 player.shoot = false;
-                player.hasShot = false;
+                fireTimer = 0;
             }
         })
     }, 
@@ -116,7 +118,6 @@ class Player {
         this.moveRight = 0;
         this.speed = 3;
         this.shoot = false;
-        this.hasShot = false;
         this.x = x;
         this.y = y;
         this.hp = 100;
@@ -145,10 +146,15 @@ class Player {
 
         ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
 
-        if (this.shoot && !this.hasShot) {
-            this.hasShot = true;
+        if (this.shoot && fireTimer == 0) {
+            fireTimer++;
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
-        }
+        } else if (this.shoot && fireTimer >= fireDelay) {
+            fireTimer = 0;
+        } else if (this.shoot || (!this.shoot && fireTimer != 0)) {
+            fireTimer++;
+        } 
+
         ctx.restore();
     }
 }
