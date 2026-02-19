@@ -1,4 +1,5 @@
 //import * as math from 'mathjs';
+import { Player } from "./Player.js";
 
 function mainMenu()
 {
@@ -14,8 +15,6 @@ const enemies = [];
 var enemiesSpawning = 0;
 var pause = false;
 var isGameOver = false;
-var fireDelay = 10; // Delay between shooting
-var fireTimer = 0; // Current time for shooting
 
 function startGame()
 {
@@ -54,6 +53,12 @@ function resumeGame()
     document.getElementById("pauseButton").onclick = pauseGame;
     document.getElementById("pauseButton").innerText = "Pause Game";
 }
+
+window.mainMenu = mainMenu;
+window.startGame = startGame;
+window.restartGame = restartGame;
+window.pauseGame = pauseGame;
+window.resumeGame = resumeGame;
 
 function gameOver()
 {
@@ -94,68 +99,13 @@ var myGameArea = {
             if (e.key === 'd') player.moveRight = 0;
             if (e.key === ' ') {
                 player.shoot = false;
-                fireTimer = 0;
+                player.fireTimer = 0;
             }
         })
     }, 
     clear : function()
     {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-}
-
-class Player {
-    constructor(x, y, width, height, image) {
-        // Set up variables for the player
-        this.image = new Image();
-        this.image.src = image;
-        this.width = width;
-        this.height = height;
-        this.angle = 0;
-        this.moveAngle = 0;
-        this.moveUp = 0;
-        this.moveLeft = 0;
-        this.moveRight = 0;
-        this.speed = 3;
-        this.shoot = false;
-        this.x = x;
-        this.y = y;
-        this.hp = 100;
-    }
-
-    // Updates the position and angle of the player
-    newPos() {
-        if (this.moveLeft + this.moveRight != 0 || this.moveUp) {
-            this.image.src = "images/SpaceshipMoving.png";
-        } else {
-            this.image.src = "images/Spaceship.png";
-        }
-        this.moveAngle = this.moveLeft + this.moveRight;
-        this.angle += this.moveAngle * Math.PI / 180 * this.speed * 1.5;
-        this.x -= this.moveUp * Math.sin(this.angle) * this.speed;
-        this.y += this.moveUp * Math.cos(this.angle) * this.speed;
-    }
-
-    // Updates the player image to its current position
-    update() {
-        let ctx = myGameArea.context;
-        ctx.save();
-
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-
-        ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
-
-        if (this.shoot && fireTimer == 0) {
-            fireTimer++;
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
-        } else if (this.shoot && fireTimer >= fireDelay) {
-            fireTimer = 0;
-        } else if (this.shoot || (!this.shoot && fireTimer != 0)) {
-            fireTimer++;
-        } 
-
-        ctx.restore();
     }
 }
 
@@ -423,7 +373,7 @@ function updateGameArea()
     });
 
     player.newPos();
-    player.update();
+    player.update(myGameArea.context);
 
     waveSystem();
     

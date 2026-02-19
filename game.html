@@ -4,13 +4,14 @@
     <head>
         <title>Game</title>
         <link rel="stylesheet" href="css/game.css" />
-        <script src="js/Game.js" defer></script>
+        <script type="module" src="js/Player.js" defer></script>
+        <script type="module" src="js/Game.js" defer></script>
     </head>
 
     <body>
         <canvas id="gameScreen"></canvas>
         <div class="UI Buttons">
-            <button class="MyButton" onClick="mainMenu()" type="button">Main Menu</button>
+            <button class="MyButton" id="menuButton" onClick="mainMenu()" type="button">Main Menu</button>
             <button class="MyButton" id="gameButton" onClick="startGame()" type="button">Start Game</button>
             <button class="MyButton" id="pauseButton" onClick="pauseGame()" type="button">Pause Game</button>
         </div>
