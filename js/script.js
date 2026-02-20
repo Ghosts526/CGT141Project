@@ -1,3 +1,7 @@
+/**
+ * Main Menu script to connect the user to each content page
+ */
+
 function playGame()
 {
     window.location.href = "game.html";

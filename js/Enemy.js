@@ -1,20 +1,20 @@
 import { Bullet } from "./Bullet.js";
 
+/**
+ * This class handles the creation, movement, shooting, and rendering 
+ */
+
 export class Enemy
 {
     // A constructor for the enemy class
     constructor(x, y, width, height, angle, image)
     {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        this.x = x, this.y = y;
+        this.width = width, this.height = height;
         this.angle = angle
         this.speed = 1;
-        this.addX = Math.sin(angle) * this.speed;
-        this.addY = -Math.cos(angle) * this.speed;
-        this.image = new Image();
-        this.image.src = image;
+        this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
+        this.image = new Image(), this.image.src = image;
         this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20;
         this.shootTimer = 0;
         this.hp = 25;
@@ -24,8 +24,7 @@ export class Enemy
     newPos(player)
     {
         this.followPlayer(player);
-        this.x += this.addX;
-        this.y += this.addY;
+        this.x += this.addX, this.y += this.addY;
         if (this.addX != 0 || this.addY != 0)
         {
             this.image.src = "images/SpaceshipMoving.png";

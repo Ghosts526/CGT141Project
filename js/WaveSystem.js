@@ -1,5 +1,9 @@
 import { Enemy } from "./Enemy.js";
 
+/**
+ * Manages enemy wave spawing and progression logic
+ */
+
 export class WaveSystem {
     constructor() {
         this.timer = 0;

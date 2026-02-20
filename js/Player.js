@@ -1,21 +1,19 @@
 import { Bullet } from "./Bullet.js";
 
+/**
+ * This class handles the creation, movement, shooting, and rendering 
+ */
+
 export class Player {
     constructor(x, y, width, height, image) {
         // Set up variables for the player
-        this.image = new Image();
-        this.image.src = image;
-        this.width = width;
-        this.height = height;
-        this.angle = 0;
-        this.moveAngle = 0;
-        this.moveUp = 0;
-        this.moveLeft = 0;
-        this.moveRight = 0;
+        this.x = x, this.y = y;
+        this.width = width, this.height = height;
+        this.angle = 0, this.moveAngle = 0;
+        this.moveUp = 0, this.turnLeft = 0, this.turnRight = 0;
         this.speed = 3;
+        this.image = new Image(), this.image.src = image;
         this.shoot = false;
-        this.x = x;
-        this.y = y;
         this.hp = 100;
         this.fireDelay = 10; // Delay between shooting
         this.fireTimer = 0; // Current time for shooting
@@ -23,12 +21,12 @@ export class Player {
 
     // Updates the position and angle of the player
     newPos() {
-        if (this.moveLeft + this.moveRight != 0 || this.moveUp) {
+        if (this.turnLeft + this.turnRight != 0 || this.moveUp) {
             this.image.src = "images/SpaceshipMoving.png";
         } else {
             this.image.src = "images/Spaceship.png";
         }
-        this.moveAngle = this.moveLeft + this.moveRight;
+        this.moveAngle = this.turnLeft + this.turnRight;
         this.angle += this.moveAngle * Math.PI / 180 * this.speed * 1.5;
         this.x -= this.moveUp * Math.sin(this.angle) * this.speed;
         this.y += this.moveUp * Math.cos(this.angle) * this.speed;

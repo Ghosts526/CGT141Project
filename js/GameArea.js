@@ -1,5 +1,12 @@
 import { Collision } from "./Collision.js";
 
+/**
+ * Manages the canvas, rendering, and the main game loop.
+ * 
+ * Handles drawing, clearing the screen, and updating all game
+ * objects each frame
+ */
+
 export class GameArea {
     constructor(canvas) {
         this.canvas = canvas;
@@ -7,13 +14,16 @@ export class GameArea {
         this.collision = new Collision();
     }
 
-    start(player, enemies, bullets, pause) {
+    setUp() {
         this.canvas.width = 980;
         this.canvas.height = 600;
         this.startX = this.canvas.width/2;
         this.startY = this.canvas.height/2;
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(this.updateGameArea(pause, bullets, player, enemies), 20);
+    }
+
+    start(player, enemies, bullets, pause) {
+        this.interval = setInterval(() => this.updateGameArea(pause, bullets, player, enemies), 20);
 
         window.addEventListener('keydown', function(e) {
             if (e.key === 'w') player.moveUp = -1;
