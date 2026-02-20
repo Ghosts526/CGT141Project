@@ -66,7 +66,7 @@ export class Collision {
         return true; // Collision
     }
 
-    collisionCheck() 
+    collisionCheck(bullets, enemies, player) 
     {
         for (let i = bullets.length - 1; i >= 0; i--) {
             if (bullets[i].source == "Enemy") { // Enemy bullet
@@ -76,7 +76,7 @@ export class Collision {
 
                     if (player.hp <= 0)
                     {
-                        gameOver();
+                        gameOver(); // Does it work???
                     }
                 }
             } else { // Player's Bullet
