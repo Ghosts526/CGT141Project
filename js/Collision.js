@@ -6,23 +6,25 @@
  */
 
 export class Collision {
-    collisionCheck(bullets, enemies, player) 
+    collisionCheck(bullets, player, enemies, gameOver) 
     {
         for (let i = bullets.length - 1; i >= 0; i--) {
             if (bullets[i].source == "Enemy") { // Enemy bullet
-                if (SAT(bullets[i], player)) {
+                if (this.SAT(bullets[i], player)) {
                     player.hp -= 25;
+                    console.log("HP: " + player.hp);
                     bullets.splice(i, 1);
 
                     if (player.hp <= 0)
                     {
-                        gameOver(); // Does it work???
+                        console.log("Player Died")
+                        gameOver();
                     }
                 }
             } else { // Player's Bullet
                 // Check all enemies collision
                 for (let j = enemies.length - 1; j >= 0; j--) {
-                    if (SAT(bullets[i], enemies[j])) {
+                    if (this.SAT(bullets[i], enemies[j])) {
                         enemies[j].hp -= 25;
                         bullets.splice(i, 1);
 
@@ -53,13 +55,13 @@ export class Collision {
             angle: objB.angle
         };
 
-        computeAxes(A);
-        computeAxes(B);
+        this.computeAxes(A);
+        this.computeAxes(B);
 
         const axes = [A.u, A.v, B.u, B.v];
 
         for (let L of axes) {
-            if (!overlapOnAxis(A, B, L)) {
+            if (!this.overlapOnAxis(A, B, L)) {
                 return false; // No Collision
             }
         }
@@ -79,16 +81,16 @@ export class Collision {
     // Returns true if it overlaps and false if it doesn't
     overlapOnAxis(A, B, L)
     {
-        const projA = dot(A.center, L);
-        const projB = dot(B.center, L);
+        const projA = this.dot(A.center, L);
+        const projB = this.dot(B.center, L);
 
         const rA = 
-            A.hw * Math.abs(dot(A.u, L)) + 
-            A.hh * Math.abs(dot(A.v, L));
+            A.hw * Math.abs(this.dot(A.u, L)) + 
+            A.hh * Math.abs(this.dot(A.v, L));
         
         const rB = 
-            B.hw * Math.abs(dot(B.u, L)) + 
-            B.hh * Math.abs(dot(B.v, L));
+            B.hw * Math.abs(this.dot(B.u, L)) + 
+            B.hh * Math.abs(this.dot(B.v, L));
 
         return (Math.abs(projA - projB) <= (rA + rB));
     }

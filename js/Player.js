@@ -7,12 +7,17 @@ import { Bullet } from "./Bullet.js";
 export class Player {
     constructor(x, y, width, height, image) {
         // Set up variables for the player
-        this.x = x, this.y = y;
+        this.restart(x, y);
         this.width = width, this.height = height;
-        this.angle = 0, this.moveAngle = 0;
-        this.moveUp = 0, this.turnLeft = 0, this.turnRight = 0;
         this.speed = 3;
         this.image = new Image(), this.image.src = image;
+    }
+
+    // Restarts the player location
+    restart(x, y) {
+        this.x = x, this.y = y;
+        this.angle = 0, this.moveAngle = 0;
+        this.moveUp = 0, this.turnLeft = 0, this.turnRight = 0;
         this.shoot = false;
         this.hp = 100;
         this.fireDelay = 10; // Delay between shooting

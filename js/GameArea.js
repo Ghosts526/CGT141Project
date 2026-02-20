@@ -8,27 +8,31 @@ import { Collision } from "./Collision.js";
  */
 
 export class GameArea {
-    constructor(canvas) {
-        this.canvas = canvas;
+    constructor(doc) {
+        this.document = doc;
+        this.canvas = this.document.getElementById("gameScreen");
         this.context = this.canvas.getContext("2d");
         this.collision = new Collision();
+        this.pause = false; 
+        this.isGameOver = false;
     }
 
-    setUp() {
+    setUp(waveSystem) {
         this.canvas.width = 980;
         this.canvas.height = 600;
         this.startX = this.canvas.width/2;
         this.startY = this.canvas.height/2;
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.document.body.insertBefore(this.canvas, this.document.body.childNodes[0]);
+        this.waveSystem = waveSystem;
     }
 
-    start(player, enemies, bullets, pause) {
-        this.interval = setInterval(() => this.updateGameArea(pause, bullets, player, enemies), 20);
+    start(player, enemies, bullets) {
+        this.interval = setInterval(() => this.updateGameArea(bullets, player, enemies), 20);
 
         window.addEventListener('keydown', function(e) {
             if (e.key === 'w') player.moveUp = -1;
-            if (e.key === 'a') player.moveLeft = -1;
-            if (e.key === 'd') player.moveRight = 1;
+            if (e.key === 'a') player.turnLeft = -1;
+            if (e.key === 'd') player.turnRight = 1;
             if (e.key === ' ') {
                 e.preventDefault();
                 player.shoot = true;
@@ -37,8 +41,8 @@ export class GameArea {
 
         window.addEventListener('keyup', function(e) {
             if (e.key === 'w') player.moveUp = 0;
-            if (e.key === 'a') player.moveLeft = 0;
-            if (e.key === 'd') player.moveRight = 0;
+            if (e.key === 'a') player.turnLeft = 0;
+            if (e.key === 'd') player.turnRight = 0;
             if (e.key === ' ') {
                 player.shoot = false;
                 player.fireTimer = 0;
@@ -50,14 +54,14 @@ export class GameArea {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    updateGameArea(pause, bullets, player, enemies)
+    updateGameArea(bullets, player, enemies)
     {
-        if (pause == true)
+        if (this.pause)
         {
             return;
         }
 
-        this.clearGameArea;
+        this.clearGameArea();
 
         for (let i = bullets.length - 1; i >= 0; i--) {
             bullets[i].newPos();
@@ -73,7 +77,7 @@ export class GameArea {
         player.newPos();
         player.update(this.context, bullets);
 
-        waveSystem.waves(this.context, enemies);
+        this.waveSystem.waves(this.context, enemies);
 
         for (let i = enemies.length - 1; i >= 0; i--) {
             enemies[i].newPos(player);
@@ -81,6 +85,33 @@ export class GameArea {
             enemies[i].tryShoot(bullets, player);
         }
 
-        this.collision.collisionCheck();
+        this.collision.collisionCheck(bullets, player, enemies, () => this.gameOver());
+    }
+
+    pauseGame()
+    {
+        this.pause = true;
+        this.document.getElementById("pauseButton").onclick = () => this.resumeGame();
+        this.document.getElementById("pauseButton").innerText = "Resume Game";
+    }
+
+    resumeGame()
+    {
+        if (this.isGameOver) return;
+        this.pause = false;
+        this.document.getElementById("pauseButton").onclick = () => this.pauseGame();
+        this.document.getElementById("pauseButton").innerText = "Pause Game";
+    }
+
+    gameOver()
+    {
+        this.isGameOver = true;
+        this.pauseGame();
+        let ctx = this.context;
+        ctx.font = "60px Arial";
+        ctx.fillStyle = "red";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("Game Over!", ctx.canvas.width/2, ctx.canvas.height/2);
     }
 }
