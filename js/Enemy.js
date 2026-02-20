@@ -58,7 +58,7 @@ export class Enemy
     {
         this.shootTimer++;
         if (this.shootTimer >= this.shootAt) {
-            let accuracy = 45; // +/- 30 accuracy
+            let accuracy = 45; // +/- 45 accuracy
             let xr = Math.floor(Math.random() * (accuracy * 2 + 1)) - accuracy, yr = Math.floor(Math.random() * (accuracy * 2 + 1)) - accuracy; 
             let newAngle = Math.atan2(player.y - this.y + yr, player.x - this.x + xr) + Math.PI / 2;
             bullets.push(new Bullet(this.x, this.y, 5, 20, newAngle, "images/Blaster.png", "Enemy"));
