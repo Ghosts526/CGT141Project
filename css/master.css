@@ -11,14 +11,14 @@ body
 h1
 {
     width: 500px;
-    height: 40pt;
+    height: 120px;
     color: yellow;
     font-size: 40pt;
     font-family: serif;
     text-align: center;
     margin-top: 80px;
     margin-left: calc(50vw - 250px);
-    margin-bottom: 50px;   
+    margin-bottom: 25px;   
     border-width: 0; 
 }
 

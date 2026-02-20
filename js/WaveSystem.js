@@ -6,13 +6,16 @@ import { Enemy } from "./Enemy.js";
 
 export class WaveSystem {
     constructor() {
+        this.restart();
+    }
+
+    restart() {
         this.timer = 0;
         this.wave = 0;
         this.enemiesSpawning = 0;
     }
 
-    waves(gameArea, enemies)
-    {
+    waves(gameArea, enemies) {
         if (enemies.length == 0 && this.enemiesSpawning == 0)
         {
             this.wave++;
