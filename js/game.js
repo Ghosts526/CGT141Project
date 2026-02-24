@@ -26,7 +26,7 @@ function startGame()
 {
     gameArea.setUp(waveSystem);
     let playerWidth = 30, playerHeight = 30;
-    startX = gameArea.startX - playerWidth;
+    startX = playerWidth + 30;
     startY = gameArea.startY - playerHeight;
     player = new Player(startX, startY, playerWidth, playerHeight, "images/Spaceship.png");
     gameArea.start(player, enemies, bullets);
