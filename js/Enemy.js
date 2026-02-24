@@ -21,7 +21,7 @@ export class Enemy
     }
 
     // Updates the enemy location based by its angle and speed
-    newPos()
+    newPos(player)
     {
         this.followPlayer(player);
         this.x += this.addX, this.y += this.addY;

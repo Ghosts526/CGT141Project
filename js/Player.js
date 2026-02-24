@@ -26,11 +26,6 @@ export class Player {
 
     // Updates the position and angle of the player
     newPos() {
-        if (this.moveUp + this.moveDown != 0) {
-            this.image.src = "images/SpaceshipMoving.png";
-        } else {
-            this.image.src = "images/Spaceship.png";
-        }
         this.y += (this.moveUp + this.moveDown) * this.speed;
     }
 

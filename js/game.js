@@ -16,6 +16,7 @@ var startX, startY;
 const bullets = [], enemies = [];
 var gameArea = new GameArea(document);
 var waveSystem = new WaveSystem();
+console.log("Game Started v3");
 
 function mainMenu()
 {
@@ -23,12 +24,14 @@ function mainMenu()
 }
 
 function startGame()
-{
+{   
+    console.log("Game Started v3");
     gameArea.setUp(waveSystem);
     let playerWidth = 30, playerHeight = 30;
-    startX = playerWidth + 30;
+    startX = playerWidth;
     startY = gameArea.startY - playerHeight;
-    player = new Player(startX, startY, playerWidth, playerHeight, "images/Spaceship.png");
+    console.log(startX + ", " + startY);
+    player = new Player(startX, startY, playerWidth, playerHeight, "images/SpaceshipMoving.png");
     gameArea.start(player, enemies, bullets);
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
