@@ -12,7 +12,10 @@ export class Collision {
             if (bullets[i].source == "Enemy") { // Enemy bullet
                 if (this.SAT(bullets[i], player)) {
                     player.hp -= 25;
-                    console.log("HP: " + player.hp);
+                    console.log("1");
+                    //console.log("HP: " + player.hp);
+                    console.log(player.x);
+                    console.log("2");
                     bullets.splice(i, 1);
 
                     if (player.hp <= 0)
