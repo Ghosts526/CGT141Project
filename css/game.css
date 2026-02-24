@@ -6,9 +6,17 @@ body
     background-color: black;
 }
 
+h1
+{
+    position: absolute;
+    top: 10px;
+    left: calc(50vw);
+    color: yellow;
+}
+
 #gameScreen
 {
-    background-image: url("../images/SpaceBackground256x256.png");
+    background-color: black;
     background-size: auto;
     background-repeat: repeat;
     border-style: solid;

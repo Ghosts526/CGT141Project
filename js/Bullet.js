@@ -12,7 +12,7 @@ export class Bullet
         this.x = x, this.y = y;
         this.width = width, this.height = height;
         this.angle = angle
-        this.speed = 10;
+        this.speed = 20;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
         this.source = source; // What object created the bullet

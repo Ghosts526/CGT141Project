@@ -12,18 +12,17 @@ export class Enemy
         this.x = x, this.y = y;
         this.width = width, this.height = height;
         this.angle = angle
-        this.speed = 1;
+        this.speed = 4;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
-        this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20;
+        this.shootAt = (Math.floor(Math.random() * 3) + 1) * 20;
         this.shootTimer = 0;
         this.hp = 25;
     }
 
     // Updates the enemy location based by its angle and speed
-    newPos(player)
+    newPos()
     {
-        this.followPlayer(player);
         this.x += this.addX, this.y += this.addY;
         if (this.addX != 0 || this.addY != 0)
         {
@@ -46,23 +45,12 @@ export class Enemy
         ctx.restore();
     }
 
-    followPlayer(player)
-    {
-        
-        this.angle = Math.atan2(player.y - this.y, player.x - this.x) + Math.PI / 2;
-        this.addX = Math.sin(this.angle) * this.speed;
-        this.addY = -Math.cos(this.angle) * this.speed;
-    }
-
-    tryShoot(bullets, player)
+    tryShoot(bullets)
     {
         this.shootTimer++;
         if (this.shootTimer >= this.shootAt) {
-            let accuracy = 45; // +/- 45 accuracy
-            let xr = Math.floor(Math.random() * (accuracy * 2 + 1)) - accuracy, yr = Math.floor(Math.random() * (accuracy * 2 + 1)) - accuracy; 
-            let newAngle = Math.atan2(player.y - this.y + yr, player.x - this.x + xr) + Math.PI / 2;
-            bullets.push(new Bullet(this.x, this.y, 5, 20, newAngle, "images/Blaster.png", "Enemy"));
-            this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20; //error
+            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
+            this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20;
             this.shootTimer = 0;
         }
     }

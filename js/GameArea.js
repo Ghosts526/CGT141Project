@@ -15,6 +15,11 @@ export class GameArea {
         this.collision = new Collision();
         this.pause = false; 
         this.isGameOver = false;
+        this.backgroundSpeed = 5;
+        this.backgroundX = 0;
+        this.backgroundY = 0;
+        this.backgroundImage = new Image();
+        this.backgroundImage.src = "images/SpaceBackground256x256.png"; // Your image path
     }
 
     setUp(waveSystem) {
@@ -52,6 +57,34 @@ export class GameArea {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
+    drawBackground() {
+        // 256 x 256 image
+        const img = this.backgroundImage;
+        const imgW = img.width;
+        const imgH = img.height;
+
+        // How many tiles we need to cover the canvas
+        const tiles = Math.ceil(this.canvas.width / imgW) + 1;
+        // How many rows we need to cover the canvas
+        const rows = Math.ceil(this.canvas.height / imgH);
+
+        for (let i = 0; i < tiles; i++) {
+            for (let j = 0; j < rows; j++) {
+                const x = this.backgroundX + i * imgW;
+                const y = this.backgroundY + j * imgH;
+                this.context.drawImage(img, x, y, imgW, imgH);
+            }
+        }
+
+        // Scroll
+        this.backgroundX -= this.backgroundSpeed;
+
+        // Reset when one tile fully leaves the screen
+        if (this.backgroundX <= -imgW) {
+            this.backgroundX += imgW;
+        }
+    }
+
     updateGameArea(bullets, player, enemies)
     {
         if (this.pause)
@@ -60,6 +93,8 @@ export class GameArea {
         }
 
         this.clearGameArea();
+
+        this.drawBackground();
 
         for (let i = bullets.length - 1; i >= 0; i--) {
             bullets[i].newPos();
@@ -73,14 +108,25 @@ export class GameArea {
         }
 
         player.newPos();
+        if (player.y - player.height/2 <= 0) {
+            player.y = player.height/2;
+        }
+        if (player.y + player.height/2 >= this.canvas.height) {
+            player.y = this.canvas.height - player.height/2;
+        }
         player.update(this.context, bullets);
+
 
         this.waveSystem.waves(this.context, enemies);
 
         for (let i = enemies.length - 1; i >= 0; i--) {
-            enemies[i].newPos(player);
+            enemies[i].newPos();
             enemies[i].update(this.context, bullets);
             enemies[i].tryShoot(bullets, player);
+
+            if (enemies[i].x + (enemies[i].width / 2) <= 0) {
+                enemies[i].x = this.canvas.width + (enemies[i].width / 2);
+            }
         }
 
         this.collision.collisionCheck(bullets, player, enemies, () => this.gameOver());

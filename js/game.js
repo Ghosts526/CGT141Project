@@ -27,8 +27,8 @@ function startGame()
 {   
     console.log("Game Started");
     gameArea.setUp(waveSystem);
-    let playerWidth = 30, playerHeight = 30;
-    startX = playerWidth;
+    let playerWidth = 50, playerHeight = 50;
+    startX = playerWidth + 50;
     startY = gameArea.startY - playerHeight;
     console.log(startX + ", " + startY);
     player = new Player(startX, startY, playerWidth, playerHeight, "images/SpaceshipMoving.png");
