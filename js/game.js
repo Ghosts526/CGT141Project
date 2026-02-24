@@ -44,6 +44,7 @@ function restartGame()
     enemies.length = 0;
     waveSystem = new WaveSystem();
     gameArea.isGameOver = false;
+    gameArea.collision.score = 0;
     gameArea.resumeGame();
     gameArea.updateGameArea(bullets, player, enemies);
 }

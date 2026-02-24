@@ -130,6 +130,7 @@ export class GameArea {
         }
 
         this.collision.collisionCheck(bullets, player, enemies, () => this.gameOver());
+        this.document.getElementById("score").innerText = "Score: " + this.collision.score;
     }
 
     pauseGame()

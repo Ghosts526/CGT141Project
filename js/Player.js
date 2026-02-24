@@ -9,7 +9,7 @@ export class Player {
         // Set up variables for the player
         this.restart(x, y);
         this.width = width, this.height = height;
-        this.speed = 5;
+        this.speed = 7;
         this.image = new Image(), this.image.src = image;
     }
 

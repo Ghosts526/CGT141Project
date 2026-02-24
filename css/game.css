@@ -6,11 +6,11 @@ body
     background-color: black;
 }
 
-h1
+#score
 {
-    position: absolute;
-    top: 10px;
-    left: calc(50vw);
+    position:absolute;
+    top:590px;
+    left: 15px;
     color: yellow;
 }
 

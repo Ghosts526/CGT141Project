@@ -7,7 +7,7 @@ import { Bullet } from "./Bullet.js";
 export class Enemy
 {
     // A constructor for the enemy class
-    constructor(x, y, width, height, angle, image)
+    constructor(x, y, width, height, angle, image, score)
     {
         this.x = x, this.y = y;
         this.width = width, this.height = height;
@@ -15,9 +15,10 @@ export class Enemy
         this.speed = 4;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
-        this.shootAt = (Math.floor(Math.random() * 3) + 1) * 20;
+        this.shootAt = (Math.floor(Math.random() * 2) + 1) * 20; // 1-2 seconds
         this.shootTimer = 0;
         this.hp = 25;
+        this.score = score;
     }
 
     // Updates the enemy location based by its angle and speed
@@ -40,8 +41,11 @@ export class Enemy
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+        ctx.strokeStyle = 'red';
+        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
 
+        ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+        
         ctx.restore();
     }
 
@@ -50,7 +54,7 @@ export class Enemy
         this.shootTimer++;
         if (this.shootTimer >= this.shootAt) {
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
-            this.shootAt = (Math.floor(Math.random() * 3) + 3) * 20;
+            this.shootAt = (Math.floor(Math.random() * 3) + 1) * 20; // 1-3 seconds
             this.shootTimer = 0;
         }
     }

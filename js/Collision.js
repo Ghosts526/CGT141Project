@@ -6,16 +6,18 @@
  */
 
 export class Collision {
+    constructor() 
+    {
+        this.score = 0;
+    }
+
     collisionCheck(bullets, player, enemies, gameOver) 
     {
         for (let i = bullets.length - 1; i >= 0; i--) {
             if (bullets[i].source == "Enemy") { // Enemy bullet
                 if (this.SAT(bullets[i], player)) {
-                    player.hp -= 25;
-                    console.log("1");
-                    //console.log("HP: " + player.hp);
-                    console.log(player.x);
-                    console.log("2");
+                    player.hp -= 0;
+                    console.log("HP: " + player.hp);
                     bullets.splice(i, 1);
 
                     if (player.hp <= 0)
@@ -32,6 +34,7 @@ export class Collision {
                         bullets.splice(i, 1);
 
                         if (enemies[j].hp <= 0) {
+                            this.score += enemies[j].score;
                             enemies.splice(j, 1);
                         }
                         break; // Exit enemy loop after bullet is removed

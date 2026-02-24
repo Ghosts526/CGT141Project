@@ -31,7 +31,7 @@ export class WaveSystem {
             let y = Math.floor(Math.random() * (gameArea.canvas.height - 60)) + 30;
             let angle = -Math.PI / 2;
 
-            enemies.push(new Enemy(x, y, 60, 60, angle, "images/Spaceship.png")); // Need to add the width, height, and angle
+            enemies.push(new Enemy(x, y, 60, 60, angle, "images/Spaceship.png", 1)); // Need to add the width, height, and angle
             this.enemiesSpawning--;
             this.timer = 0;
         }
