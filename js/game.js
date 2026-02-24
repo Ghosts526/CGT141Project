@@ -16,7 +16,7 @@ var startX, startY;
 const bullets = [], enemies = [];
 var gameArea = new GameArea(document);
 var waveSystem = new WaveSystem();
-console.log("Game Started v3");
+console.log("Game Started");
 
 function mainMenu()
 {
@@ -25,7 +25,7 @@ function mainMenu()
 
 function startGame()
 {   
-    console.log("Game Started v3");
+    console.log("Game Started");
     gameArea.setUp(waveSystem);
     let playerWidth = 30, playerHeight = 30;
     startX = playerWidth;
