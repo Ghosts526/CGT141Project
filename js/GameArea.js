@@ -31,8 +31,7 @@ export class GameArea {
 
         window.addEventListener('keydown', function(e) {
             if (e.key === 'w') player.moveUp = -1;
-            if (e.key === 'a') player.turnLeft = -1;
-            if (e.key === 'd') player.turnRight = 1;
+            if (e.key === 's') player.moveDown = 1;
             if (e.key === ' ') {
                 e.preventDefault();
                 player.shoot = true;
@@ -41,8 +40,7 @@ export class GameArea {
 
         window.addEventListener('keyup', function(e) {
             if (e.key === 'w') player.moveUp = 0;
-            if (e.key === 'a') player.turnLeft = 0;
-            if (e.key === 'd') player.turnRight = 0;
+            if (e.key === 's') player.moveDown = 0;
             if (e.key === ' ') {
                 player.shoot = false;
                 player.fireTimer = 0;
