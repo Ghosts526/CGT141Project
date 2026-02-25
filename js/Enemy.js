@@ -41,9 +41,6 @@ export class Enemy
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        ctx.strokeStyle = 'red';
-        ctx.strokeRect(-this.width/2, -this.height/2, this.width, this.height);
-
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
         
         ctx.restore();

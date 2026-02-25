@@ -20,6 +20,7 @@ export class GameArea {
         this.backgroundY = 0;
         this.backgroundImage = new Image();
         this.backgroundImage.src = "images/SpaceBackground256x256.png"; // Your image path
+        this.lastTime = 0;
     }
 
     setUp(waveSystem) {
@@ -35,8 +36,8 @@ export class GameArea {
         this.interval = setInterval(() => this.updateGameArea(bullets, player, enemies), 20);
 
         window.addEventListener('keydown', function(e) {
-            if (e.key === 'w') player.moveUp = -1;
-            if (e.key === 's') player.moveDown = 1;
+            if (e.key.toLowerCase() === 'w') player.moveUp = -1;
+            if (e.key.toLowerCase() === 's') player.moveDown = 1;
             if (e.key === ' ') {
                 e.preventDefault();
                 player.shoot = true;
@@ -44,8 +45,8 @@ export class GameArea {
         })
 
         window.addEventListener('keyup', function(e) {
-            if (e.key === 'w') player.moveUp = 0;
-            if (e.key === 's') player.moveDown = 0;
+            if (e.key.toLowerCase() === 'w') player.moveUp = 0;
+            if (e.key.toLowerCase() === 's') player.moveDown = 0;
             if (e.key === ' ') {
                 player.shoot = false;
                 player.fireTimer = 0;

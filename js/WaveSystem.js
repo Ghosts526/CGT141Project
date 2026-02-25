@@ -25,7 +25,7 @@ export class WaveSystem {
         
         this.timer += 1;
 
-        if (this.enemiesSpawning > 0 && this.timer >= 100)
+        if (this.enemiesSpawning > 0 && this.timer >= 20 * 2)
         {
             let x = gameArea.canvas.width;
             let y = Math.floor(Math.random() * (gameArea.canvas.height - 60)) + 30;
