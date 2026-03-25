@@ -19,7 +19,7 @@ export class Player {
         this.angle = Math.PI/2, this.moveAngle = 0;
         this.moveUp = 0, this.moveDown = 0;
         this.shoot = false;
-        this.hp = 100;
+        this.hp = 5;
         this.fireDelay = 10; // Delay between shooting
         this.fireTimer = 0; // Current time for shooting
     }
