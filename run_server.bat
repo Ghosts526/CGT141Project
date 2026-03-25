@@ -1,5 +1,6 @@
 REM This is a program to run the game on a local server
-REM This is meant for testing
+REM This is meant for testing purposes
+REM This does require Python to be installed on your computer
 
 @echo off
 cls
