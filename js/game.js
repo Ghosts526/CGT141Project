@@ -17,6 +17,7 @@ const bullets = [], enemies = [];
 var gameArea = new GameArea(document);
 var waveSystem = new WaveSystem();
 console.log("Game Started");
+var isGod = false;
 
 function mainMenu()
 {
@@ -49,8 +50,21 @@ function restartGame()
     gameArea.updateGameArea(bullets, player, enemies);
 }
 
+function godMode()
+{
+    if (isGod)
+    {
+        isGod = false;
+        player.hp = player.maxHp;
+    } else {
+        isGod = true;
+        player.hp = 99999;
+    }
+}
+
 window.mainMenu = mainMenu;
 window.startGame = startGame;
 window.restartGame = restartGame;
 window.pauseGame = gameArea.pauseGame();
 window.resumeGame = gameArea.resumeGame();
+window.godMode = godMode;
