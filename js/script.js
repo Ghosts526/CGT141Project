@@ -7,6 +7,11 @@ function playGame()
     window.location.href = "game.html";
 }
 
+function gameMenu()
+{
+    window.location.href = "gameMenu.html"
+}
+
 function upgrade()
 {
     window.location.href = "upgrade.html"
@@ -29,5 +34,10 @@ function credits()
 
 function mainMenu()
 {
-    window.location.href = 'index.html';
+    window.location.href = "index.html";
+}
+
+function settings()
+{
+    window.location.href = "settings.html"
 }

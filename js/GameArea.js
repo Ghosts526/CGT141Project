@@ -91,13 +91,15 @@ export class GameArea {
         this.context.save();
         this.context.translate(10, 10);
 
-        let length = 300;
-        let hp = (player.hp / player.maxHp * length).toFixed(2);
+        let barLength = 300;
+        let hp = (player.hp / player.maxHp * barLength).toFixed(2);
 
         this.context.fillStyle = "red";
         this.context.fillRect(0, 0, hp, 30);
         this.context.fillStyle = "gray";
-        this.context.fillRect(hp, 0, length - hp, 30);
+        this.context.fillRect(hp, 0, barLength - hp, 30);
+
+        //this.context.drawImage(img, x, y, imgW, imgH); // Health Bar Overlay
 
         this.context.restore();
     }
