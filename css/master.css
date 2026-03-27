@@ -22,6 +22,20 @@ h1
     border-width: 0; 
 }
 
+h2
+{
+    width: 500px;
+    height: 120px;
+    color: yellow;
+    font-size: 40pt;
+    font-family: serif;
+    text-align: center;
+    margin-top: 80px;
+    margin-left: calc(50vw - 250px);
+    margin-bottom: 0;   
+    border-width: 0; 
+}
+
 .buttons
 {
     margin-left: calc(50vw - 150px);
@@ -32,10 +46,20 @@ h1
     gap: 10px;
 }
 
+.buttonsLeft
+{
+    margin-left: calc(50px);
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+}
+
 .button
 {
     width: 300px;
-    height: 60px;
+    height: 65px;
     background: darkgray;
     border: solid;
     border-color: gray;
