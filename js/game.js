@@ -43,7 +43,7 @@ function restartGame()
     player.restart(startX, startY);
     bullets.length = 0;
     enemies.length = 0;
-    waveSystem = new WaveSystem();
+    waveSystem.restart();
     gameArea.isGameOver = false;
     gameArea.collision.score = 0;
     gameArea.resumeGame();
@@ -56,9 +56,11 @@ function godMode()
     {
         isGod = false;
         player.hp = player.maxHp;
+        document.getElementById("godModeButton").innerText = "God Mode (Disabled)";
     } else {
         isGod = true;
         player.hp = 99999;
+        document.getElementById("godModeButton").innerText = "God Mode (Enabled)";
     }
 }
 

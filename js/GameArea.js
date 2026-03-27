@@ -86,6 +86,23 @@ export class GameArea {
         }
     }
 
+    drawHealth(player)
+    {
+        this.context.save();
+        this.context.translate(10, 10);
+
+        let length = 300;
+        let hp = (player.hp / player.maxHp * length).toFixed(2);
+
+        this.context.fillStyle = "red";
+        this.context.fillRect(0, 0, hp, 30);
+        this.context.fillStyle = "gray";
+        this.context.fillRect(hp, 0, length - hp, 30);
+
+        this.context.restore();
+    }
+
+    // Draws all the images on the canvas
     updateGameArea(bullets, player, enemies)
     {
         if (this.pause)
@@ -131,8 +148,12 @@ export class GameArea {
         }
 
         this.collision.collisionCheck(bullets, player, enemies, () => this.gameOver());
+
         this.document.getElementById("score").innerText = "Score: " + this.collision.score;
+
+        this.drawHealth(player);
     }
+
 
     pauseGame()
     {
