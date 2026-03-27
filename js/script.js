@@ -12,9 +12,9 @@ function gameMenu()
     window.location.href = "gameMenu.html"
 }
 
-function upgrade()
+function upgrades()
 {
-    window.location.href = "upgrade.html"
+    window.location.href = "upgrades.html"
 }
 
 function howToPlay()
