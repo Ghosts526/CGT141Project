@@ -8,14 +8,16 @@
     <script src="js/Upgrades.js" defer></script>
 </head>
 <body>
-    <h2>Credits: 0000</h2>
+    <h2 id="creditsDisplay">Credits: 0000</h2>
     <div class="buttonsLeft">
-        <button class="button" id="upgradeHealthButton" onclick="" type="button">Upgrade Health</button>
-        <button class="button" id="upgradeFireRateButton" onclick="" type="button">Upgrade Fire Rate</button>
-        <button class="button" id="upgradeMissleCooldownButton" onclick="" type="button">Upgrade Missles Cooldown</button>
-        <button class="button" id="upgradeShieldHealthButton" onclick="" type="button">Upgrade Shield Health</button>
-        <button class="button" id="upgradeShieldCooldownButton" onclick="" type="button">Upgrade Shield Cooldown</button>
+        <button class="button" id="upgradeHealthButton" onclick="upgrade(1)" type="button">Upgrade Health</button>
+        <button class="button" id="upgradeFireRateButton" onclick="upgrade(2)" type="button">Upgrade Fire Rate</button>
+        <button class="button" id="upgradeMissleCooldownButton" onclick="upgrade(3)" type="button">Upgrade Missles Cooldown</button>
+        <button class="button" id="upgradeShieldHealthButton" onclick="upgrade(4)" type="button">Upgrade Shield Health</button>
+        <button class="button" id="upgradeShieldCooldownButton" onclick="upgrade(5)" type="button">Upgrade Shield Cooldown</button>
         <button class="button" id="backButton" onclick="gameMenu()" type="button">Back</button>
+        <button class="button" onclick="money()" type="button">Money</button>
+        <button class="button" onclick="reset()" type="button">Reset</button>
     </div>
 </body>
 </html>
