@@ -182,5 +182,9 @@ export class GameArea {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText("Game Over!", ctx.canvas.width/2, ctx.canvas.height/2);
+        if (parseInt(localStorage.getItem("topScore"), 10) < this.collision.score) 
+        {
+            localStorage.setItem("topScore", this.collision.score.toString());
+        }
     }
 }
