@@ -33,9 +33,6 @@ function upgrade(buttonNum)
             newLV = (parseInt(localStorage.getItem("shieldCooldownLV"), 10) + 1).toString();
             localStorage.setItem("shieldCooldownLV", newLV);
             break;
-        default:
-            console.log("Default");
-            break;
     }
     updateDisplay();
 }
@@ -44,20 +41,11 @@ function money()
 {
     localStorage.setItem("credits", "99999");
     updateDisplay();
-}
-
-function reset()
-{
-    localStorage.setItem("credits", "0");
-    updateDisplay();   
+    console.log("Added 99999 Credits")
 }
 
 function updateDisplay()
 {
-    if (localStorage.getItem("credits") == null) 
-    {
-        reset();
-    }
     document.getElementById("creditsDisplay").innerText = "Credits: " + localStorage.getItem("credits");
 }
 
