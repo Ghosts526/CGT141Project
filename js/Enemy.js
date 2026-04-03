@@ -51,7 +51,7 @@ export class Enemy
         this.shootTimer++;
         if (this.shootTimer >= this.shootAt) {
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
-            this.shootAt = (Math.floor(Math.random() * 3) + 1) * 20; // 1-3 seconds
+            this.shootAt = (Math.floor(Math.random() * 2) + 2) * 20; // 2-3 seconds
             this.shootTimer = 0;
         }
     }
