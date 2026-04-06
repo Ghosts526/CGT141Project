@@ -49,13 +49,6 @@ function purchase(cost)
     return false;
 }
 
-function money()
-{
-    localStorage.setItem("credits", "99999");
-    updateDisplay();
-    console.log("Added 99999 Credits")
-}
-
 function updateDisplay()
 {
     document.getElementById("creditsDisplay").innerText = "Credits: " + localStorage.getItem("credits");

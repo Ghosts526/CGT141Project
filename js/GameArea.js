@@ -186,5 +186,6 @@ export class GameArea {
         {
             localStorage.setItem("topScore", this.collision.score.toString());
         }
+        localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + this.collision.score).toString());
     }
 }
