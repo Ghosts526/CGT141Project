@@ -49,7 +49,8 @@
 **Controls**
 
 * W/S - Moves your ship up and down
-* Space - Fires your primary weapon
+* Space - Fires your primary weapon (Blaster)
+* E - Fires your secondary weapon (Missile)
 
 **Objective**
 <p>Survive as long as possible while defeating waves of enemies and by upgrading your ship. Each wave becomes progressively harder, introducing tougher enemies and faster spawn rates.</p>
