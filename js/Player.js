@@ -1,4 +1,5 @@
 import { Bullet } from "./Bullet.js";
+import { Missile } from "./Missile.js";
 
 /**
  * This class handles the creation, movement, shooting, and rendering 
@@ -19,10 +20,14 @@ export class Player {
         this.angle = Math.PI/2, this.moveAngle = 0;
         this.moveUp = 0, this.moveDown = 0;
         this.shoot = false;
+        this.shootMissile = false;
+        this.missileReady = true;
         this.maxHp = 10;
         this.hp = 10;
         this.fireDelay = 10; // Delay between shooting
         this.fireTimer = 0; // Current time for shooting
+        this.missileDelay = 100;
+        this.missileTimer = 0;
     }
 
     // Updates the position and angle of the player
@@ -48,6 +53,17 @@ export class Player {
         } else if (this.shoot || (!this.shoot && this.fireTimer != 0)) {
             this.fireTimer++;
         } 
+
+        if (this.shootMissile && this.missileReady)
+        {
+            this.missileReady = false;
+            bullets.push(new Missile(this.x, this.y, 5, 20, this.angle, "images/MissileProjectile.png", "Player Missile"));
+        } else if (this.missileTimer >= this.missileDelay) {
+            this.missileTimer = 0;
+            this.missileReady = true;
+        } else if (!this.missileReady && this.missileTimer < this.missileDelay) {
+            this.missileTimer++;
+        }
 
         ctx.restore();
     }

@@ -52,6 +52,19 @@ function purchase(cost)
 function updateDisplay()
 {
     document.getElementById("creditsDisplay").innerText = "Credits: " + localStorage.getItem("credits");
+    document.getElementById("healthLV").innerText = "LV: " + localStorage.getItem("healthLV");
+
+    const statLV = ["healthLV", "fireRateLV", "missleCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
+    for(let i = 0; i < statLV.length; i++)
+    {
+        document.getElementById(statLV[i]).innerText = "LV: " + localStorage.getItem(statLV[i]);
+    }
+
+    // Current effect
+
+    // Next effect increase by
+
+    // Cost
 }
 
 window.onload = function(){updateDisplay()};

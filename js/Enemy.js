@@ -17,7 +17,7 @@ export class Enemy
         this.image = new Image(), this.image.src = image;
         this.shootAt = (Math.floor(Math.random() * 2) + 1) * 20; // 1-2 seconds
         this.shootTimer = 0;
-        this.hp = 25;
+        this.hp = 5;
         this.score = score;
     }
 

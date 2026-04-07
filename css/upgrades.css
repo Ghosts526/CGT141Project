@@ -1,0 +1,151 @@
+body
+{
+    min-width: 500px;
+    min-height: 500px;
+    margin: 10px;
+    background-image: url("../images/SpaceBackground256x256.png");
+    background-size: auto;
+    background-repeat: repeat;
+}
+
+h2
+{
+    width: 500px;
+    height: 120px;
+    color: yellow;
+    font-size: 40pt;
+    font-family: serif;
+    text-align: center;
+    margin-top: 80px;
+    margin-left: calc(50vw - 250px);
+    margin-bottom: 0;   
+    border-width: 0; 
+    text-shadow: 1px 1px 3px gold;
+}
+
+#backButton
+{
+    width: 65px;
+    height: 65px;
+    background: darkgray;
+    border: solid;
+    border-color: gray;
+    border-width: 5px;
+    border-radius: 15px;
+    padding: 0px;
+    cursor: pointer;
+    transition: background 0.5s;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: x-large;
+    text-shadow: 1px 1px 3px white;
+    position: absolute;
+    margin: 0;
+    top: 80px;
+    left: 8%;
+}
+
+#backButton:hover
+{
+    background: gold;
+    border-color: goldenrod;
+}
+
+.upgradesList
+{
+    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.upgradeButton
+{
+    width: 750px;
+    height: 65px;
+    background: darkgray;
+    border: solid;
+    border-color: gray;
+    border-width: 5px;
+    border-radius: 15px;
+    padding: 0px;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: x-large;
+    color: white;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.buyButton
+{
+    width: 175px;
+    height: 50px;
+    background: darkgray;
+    border: solid;
+    border-color: gray;
+    border-width: 5px;
+    border-radius: 15px;
+    padding: 0px;
+    cursor: pointer;
+    transition: background 0.5s;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: x-large;
+    color: yellow;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    right: 1%;
+    transform: translate(0, -50%);
+    text-shadow: 1px 1px 3px black;
+}
+
+.buyButton:hover
+{
+    background: gold;
+    border-color: goldenrod;
+}
+
+.statTitle
+{
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 1%;
+    transform: translate(0, -50%);
+    text-shadow: 1px 1px 3px black;
+}
+
+.statLV
+{
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 40%;
+    transform: translate(0, -50%);
+    text-shadow: 1px 1px 3px black;
+}
+
+.currentStat
+{
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 55%;
+    transform: translate(0%, -50%);
+    color: limegreen;
+    text-shadow: 1px 1px 3px black;
+}
+
+.nextStat
+{
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 65%;
+    transform: translate(0%, -50%);
+    color: yellow;
+    text-shadow: 1px 1px 3px black;
+}

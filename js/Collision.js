@@ -1,3 +1,5 @@
+import { Explosion } from "./Explosion.js";
+
 /**
  * This class checks for collision between bullets, enemies, and player.
  */
@@ -21,11 +23,45 @@ export class Collision {
                         gameOver();
                     }
                 }
-            } else { // Player's Bullet
+            } else if (bullets[i].source == "Player Missile") { // Player Missile
                 // Check all enemies collision
                 for (let j = enemies.length - 1; j >= 0; j--) {
                     if (this.overlap(bullets[i], enemies[j])) {
+                        //bullets[i].explode(); // Creates a explosion area effect
+                        bullets.push(new Explosion(bullets[i].x, bullets[i].y, 200, 200, -Math.PI / 2, "images/ExplosionV1.png", "Explosion"));
+                        bullets.splice(i, 1);
+                        break; // Exit enemy loop after missile explodes
+                    }
+                }
+            } else if (bullets[i].source == "Explosion") { // Explosion caused by a explosive projectile
+                if (bullets[i].state >= 4) {
+                    bullets.splice(i, 1);
+                    break;
+                }
+                if (this.overlap(bullets[i], player)) {
+                    player.hp -= 25;
+
+                    if (player.hp <= 0)
+                    {
+                        gameOver();
+                    }
+                }
+                for (let j = enemies.length - 1; j >= 0; j--) {
+                    if (this.overlap(bullets[i], enemies[j])) {
                         enemies[j].hp -= 25;
+
+                        if (enemies[j].hp <= 0) {
+                            this.score += enemies[j].score;
+                            enemies.splice(j, 1);
+                        }
+                        break; // Exit enemy loop after bullet is removed
+                    }
+                }                
+            }else { // Player's Bullet
+                // Check all enemies collision
+                for (let j = enemies.length - 1; j >= 0; j--) {
+                    if (this.overlap(bullets[i], enemies[j])) {
+                        enemies[j].hp -= 5;
                         bullets.splice(i, 1);
 
                         if (enemies[j].hp <= 0) {

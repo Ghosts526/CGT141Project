@@ -42,6 +42,7 @@ export class GameArea {
                 e.preventDefault();
                 player.shoot = true;
             }
+            if (e.key.toLowerCase() === 'e') player.shootMissile = true;
         })
 
         window.addEventListener('keyup', function(e) {
@@ -51,6 +52,8 @@ export class GameArea {
                 player.shoot = false;
                 player.fireTimer = 0;
             }
+            if (e.key.toLowerCase() === 'e') player.shootMissile = false;
+               
         })
     }
 

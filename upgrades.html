@@ -3,19 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Operation Breakpoint: Upgrades</title>
-    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/upgrades.css">
     <script src="js/Script.js" defer></script>
     <script src="js/Upgrades.js" defer></script>
 </head>
 <body>
+    <button id="backButton" onclick="gameMenu()" type="button">⨉</button>
     <h2 id="creditsDisplay">Credits: 0000</h2>
-    <div class="buttonsLeft">
-        <button class="button" id="upgradeHealthButton" onclick="upgrade(1)" type="button">Upgrade Health</button>
-        <button class="button" id="upgradeFireRateButton" onclick="upgrade(2)" type="button">Upgrade Fire Rate</button>
-        <button class="button" id="upgradeMissleCooldownButton" onclick="upgrade(3)" type="button">Upgrade Missles Cooldown</button>
-        <button class="button" id="upgradeShieldHealthButton" onclick="upgrade(4)" type="button">Upgrade Shield Health</button>
-        <button class="button" id="upgradeShieldCooldownButton" onclick="upgrade(5)" type="button">Upgrade Shield Cooldown</button>
-        <button class="button" id="backButton" onclick="gameMenu()" type="button">Back</button>
+    <div class="upgradesList">
+        <div class="upgradeButton" id="upgradeHealth">
+            <p class="statTitle">Health Points</p>
+            <p class="statLV" id="healthLV">LV: 00</p>
+            <p class="currentStat">000</p>
+            <p class="nextStat">+000</p>
+            <button class="buyButton" id="upgradeHealthButton" onclick="upgrade(1)" type="button">0000 Credits</button>
+        </div>
+        <div class="upgradeButton" id="upgradeFireRate">
+            <p class="statTitle">Fire Rate</p>
+            <p class="statLV" id="fireRateLV">LV: 1</p>
+            <p class="currentStat">10</p>
+            <p class="nextStat">+1</p>
+            <button class="buyButton" id="upgradeFireRateButton" onclick="upgrade(2)" type="button">0000 Credits</button>
+        </div>
+        <div class="upgradeButton" id="upgradeMissileCooldown">
+            <p class="statTitle">Missile Cooldown</p>
+            <p class="statLV" id="missleCooldownLV">LV: 1</p>
+            <p class="currentStat">10</p>
+            <p class="nextStat">+1</p>
+            <button class="buyButton" id="upgradeMissleCooldownButton" onclick="upgrade(3)" type="button">0000 Credits</button>
+        </div>
+        <div class="upgradeButton" id="upgradeShieldHealth">
+            <p class="statTitle">Shield Health Points</p>
+            <p class="statLV" id="shieldHealthLV">LV: 1</p>
+            <p class="currentStat">10</p>
+            <p class="nextStat">+1</p>
+            <button class="buyButton" id="upgradeShieldHealthButton" onclick="upgrade(4)" type="button">0000 Credits</button>
+        </div>
+        <div class="upgradeButton" id="upgradeShieldCooldown">
+            <p class="statTitle">Shield Cooldown</p>
+            <p class="statLV" id="shieldCooldownLV">LV: 1</p>
+            <p class="currentStat">10</p>
+            <p class="nextStat">+1</p>
+            <button class="buyButton" id="upgradeShieldCooldown" onclick="upgrade(5)" type="button">0000 Credits</button>
+        </div>
     </div>
 </body>
 </html>
