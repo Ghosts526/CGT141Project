@@ -31,7 +31,7 @@
 
 * Increased Health
 * Increased Firerate
-* Decreased Missle Cooldown
+* Decreased Missile Cooldown
 * Increase Shield Health
 * Decreased Shield Cooldown
 
@@ -68,7 +68,7 @@
 
 * Increased Health
 * Increased Firerate
-* Decreased Missle Cooldown
+* Decreased Missile Cooldown
 * Increase Shield Health
 * Decreased Shield Cooldown
 

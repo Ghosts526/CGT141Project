@@ -28,7 +28,7 @@ h2
     width: 500px;
     height: 120px;
     color: yellow;
-    font-size: 40pt;
+    font-size: 20pt;
     font-family: serif;
     text-align: center;
     margin-top: 80px;
@@ -36,6 +36,23 @@ h2
     margin-bottom: 0;   
     border-width: 0; 
     text-shadow: 1px 1px 3px gray;
+}
+
+ul {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+li
+{
+    color: white;
+    text-shadow: 1px 1px 3px yellow;     
+}
+
+p
+{
+    color: white;
+    text-shadow: 1px 1px 3px yellow; 
 }
 
 .buttons
