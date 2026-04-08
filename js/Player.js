@@ -24,10 +24,12 @@ export class Player {
         this.missileReady = true;
         this.maxHp = 10;
         this.hp = 10;
-        this.fireDelay = 10; // Delay between shooting
+        // Time is using frames which is at 20
+        this.fireDelay = 20 * 0.1; // (Sec) Delay between shooting
         this.fireTimer = 0; // Current time for shooting
-        this.missileDelay = 100;
+        this.missileDelay = 20 * 2.5; // (Sec)
         this.missileTimer = 0;
+        this.imageState = 1;
     }
 
     // Updates the position and angle of the player
@@ -66,5 +68,26 @@ export class Player {
         }
 
         ctx.restore();
+    }
+
+    movingEffect()
+    {
+        switch (this.imageState) {
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            default:
+                this.imageState = 1;
+                break;
+        }
     }
 }

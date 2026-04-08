@@ -17,6 +17,11 @@ function upgrades()
     window.location.href = "upgrades.html"
 }
 
+function perks()
+{
+    window.location.href = "perks.html"
+}
+
 function howToPlay()
 {
     window.location.href = "howToPlay.html"

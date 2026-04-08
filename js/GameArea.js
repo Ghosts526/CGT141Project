@@ -185,10 +185,14 @@ export class GameArea {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.fillText("Game Over!", ctx.canvas.width/2, ctx.canvas.height/2);
+        ctx.fillStyle = "yellow";
+        ctx.font = "30px Arial";
+        ctx.fillText("Credits Earned: " + parseInt(this.collision.score / 3, 10), ctx.canvas.width/2, ctx.canvas.height/2 + 60);
+        "Credits Earned: " + parseInt(this.collision.score / 3, 10)
         if (parseInt(localStorage.getItem("topScore"), 10) < this.collision.score) 
         {
             localStorage.setItem("topScore", this.collision.score.toString());
         }
-        localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + this.collision.score).toString());
+        localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + parseInt(this.collision.score / 3, 10)).toString());
     }
 }

@@ -46,12 +46,13 @@ export class Explosion
     {
         this.timer = 0;
         this.state++;
-        if (this.state == 2)
-        {
-            this.image.src = "../images/ExplosionV2.png";
-        } else if (this.state == 3)
-        {
-            this.image.src = "../images/ExplosionV3.png";
+        switch (this.state) {
+            case 2:
+                this.image.src = "../images/ExplosionV2.png";
+                break;
+            case 3:
+                this.image.src = "../images/ExplosionV3.png";
+                break
         }
     }
 }
