@@ -81,7 +81,7 @@
 
 * How to Play - Quick reference for controls and mechanics
 * Settings - Adjust audio and gameplay preferences
-* Upgrades - Improve you ship between runs
+* Upgrades - Improve your shipship between runs
 * Credits - Acknowledgements and project contributors
 
 ## Running the Game
