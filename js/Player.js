@@ -13,7 +13,7 @@ export class Player {
         this.speed = 7;
         this.image = new Image(), this.image.src = image;
     }
-
+    // const names = ["topScore", "credits", "healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
     // Restarts the player location
     restart(x, y) {
         this.x = x, this.y = y;
@@ -22,14 +22,17 @@ export class Player {
         this.shoot = false;
         this.shootMissile = false;
         this.missileReady = true;
-        this.maxHp = 10;
-        this.hp = 10;
-        // Time is using frames which is at 20
-        this.fireDelay = 20 * 0.1; // (Sec) Delay between shooting
-        this.fireTimer = 0; // Current time for shooting
-        this.missileDelay = 20 * 2.5; // (Sec)
-        this.missileTimer = 0;
+        this.maxHp = 4 + parseInt(localStorage.getItem("healthLV"));
+        this.hp = 4 + parseInt(localStorage.getItem("healthLV"));
         this.imageState = 1;
+        // Time is using frames which is at 20
+        this.fireDelay = 20 * (1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1)); // (Sec) Delay between shooting
+        this.fireTimer = 0; // Current time for shooting
+        this.missileDelay = 20 * (10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3);
+        this.missileTimer = 0;
+        this.shieldHP = parseInt(localStorage.getItem("shieldHealthLV")) - 1;
+        this.shieldDelay = 20 * (31 - parseInt(localStorage.getItem("shieldCooldownLV")));
+        this.shieldTimer = 0;
     }
 
     // Updates the position and angle of the player

@@ -1,10 +1,24 @@
 function clearData()
 {
-    for (let i = 0; i < localStorage.length; i++)
-    {
-        localStorage.setItem(localStorage.key(i), "0");
-    }
+    localStorage.clear();
     console.log("Data Cleared");
+
+    const data = ["topScore", "credits"];
+    const lv = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
+
+    for (let i = 0; i < data.length; i++) {
+        if (localStorage.getItem(data[i]) == null)
+        {
+            localStorage.setItem(data[i], "0");
+        }
+    }
+
+    for (let i = 0; i < lv.length; i++) {
+        if (localStorage.getItem(lv[i]) == null)
+        {
+            localStorage.setItem(lv[i], "1");
+        }
+    }
 }
 
 function printData()

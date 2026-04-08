@@ -12,7 +12,7 @@ export class Missile
         this.x = x, this.y = y;
         this.width = width * 3, this.height = height * 3;
         this.angle = angle
-        this.speed = 10;
+        this.speed = 15;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
         this.source = source; // What object created the missile
