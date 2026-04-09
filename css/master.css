@@ -28,11 +28,11 @@ h2
     width: auto;
     height: auto;
     color: yellow;
-    font-size: 20pt;
+    font-size: 30pt;
     font-family: serif;
     text-align: center;
-    margin-top: 40px;
-    margin-bottom: 15px;   
+    margin-top: 80px;
+    margin-bottom: 25px;   
     border-width: 0; 
     text-shadow: 1px 1px 3px gray;
 }
@@ -57,7 +57,7 @@ ul {
 a, p, li
 {
     color: white;
-    text-shadow: 1px 1px 3px yellow;    
+    text-shadow: 1px 1px 3px lightskyblue;    
     font-size: 15pt; 
 }
 
@@ -114,4 +114,10 @@ a, p, li
 {
     background: gold;
     border-color: goldenrod;
+}
+
+.staticButton
+{
+    position:static;
+    float: left;
 }

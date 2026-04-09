@@ -35,6 +35,14 @@ export class Bullet
 
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
 
+        // Display Hitbox
+        if (this.showBox == "true") {
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.stroke();
+        }
+
         ctx.restore();
     }
 }

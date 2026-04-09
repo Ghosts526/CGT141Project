@@ -77,17 +77,8 @@ export class Collision {
 
     overlap(objA, objB)
     {
-        let A = { // Bullet Object
-            center: { x: objA.x, y: objA.y },
-            hw: objA.width / 2,
-            hh: objA.height / 2
-        };
-
-        let B = { // Player or Enemy Object
-            center: { x: objB.x, y: objB.y },
-            hw: objB.width / 2,
-            hh: objB.height / 2
-        };
+        let A = this.setTrueLengths(objA);
+        let B = this.setTrueLengths(objB);
 
         // Checks the height if out of bounds
         if (A.center.y + A.hh >= B.center.y - B.hh && A.center.y - A.hh <= B.center.y + B.hh) 
@@ -98,5 +89,25 @@ export class Collision {
             }
         }
         return false;
+    }
+
+    // Due to rotations, if you rotate an obj that isn't a square then its width and height are different when detecting collisions
+    // This function gives back the True width and height for a correct collision check
+    setTrueLengths(obj)
+    {
+        if (obj.angle % Math.PI == 0)
+        {
+            return {
+                center: { x: obj.x, y: obj.y },
+                hw: obj.width / 2,
+                hh: obj.height / 2
+            };
+        } else {
+            return {
+                center: { x: obj.x, y: obj.y },
+                hw: obj.height / 2,
+                hh: obj.width / 2
+            };
+        }
     }
 }

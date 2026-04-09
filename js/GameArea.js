@@ -89,6 +89,7 @@ export class GameArea {
         }
     }
 
+    // Bars is 10:1 ratio
     drawHealth(player)
     {
         this.context.save();
@@ -98,11 +99,29 @@ export class GameArea {
         let hp = (player.hp / player.maxHp * barLength).toFixed(2);
 
         this.context.fillStyle = "red";
-        this.context.fillRect(0, 0, hp, 30);
+        this.context.fillRect(0, 0, (hp >= 0) ? hp : 0, 30);
         this.context.fillStyle = "gray";
-        this.context.fillRect(hp, 0, barLength - hp, 30);
+        this.context.fillRect(300, 0, (hp - barLength >= -300) ? hp - barLength : -300, 30);
 
         //this.context.drawImage(img, x, y, imgW, imgH); // Health Bar Overlay
+
+        this.context.restore();
+    }
+
+    drawShieldHealth(player)
+    {
+        this.context.save();
+        this.context.translate(10, 50);
+
+        let barLength = 300;
+        let hp = (player.shieldHP / player.maxShieldHP * barLength).toFixed(2);
+
+        this.context.fillStyle = "blue";
+        this.context.fillRect(0, 0, (hp >= 0) ? hp : 0, 30);
+        this.context.fillStyle = "gray";
+        this.context.fillRect(300, 0, (hp - barLength >= -300) ? hp - barLength : -300, 30);
+
+        //this.context.drawImage(img, x, y, imgW, imgH); // Shield Bar Overlay
 
         this.context.restore();
     }
@@ -157,6 +176,8 @@ export class GameArea {
         this.document.getElementById("score").innerText = "Score: " + this.collision.score;
 
         this.drawHealth(player);
+
+        this.drawShieldHealth(player);
     }
 
 

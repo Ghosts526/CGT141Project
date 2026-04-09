@@ -6,12 +6,13 @@ import { Missile } from "./Missile.js";
  */
 
 export class Player {
-    constructor(x, y, width, height, image) {
+    constructor(x, y, width, height, image, widthMultiplyer) {
         // Set up variables for the player
         this.restart(x, y);
         this.width = width, this.height = height;
         this.speed = 7;
         this.image = new Image(), this.image.src = image;
+        this.widthMultiplyer = widthMultiplyer;
     }
     // const names = ["topScore", "credits", "healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
     // Restarts the player location
@@ -22,17 +23,24 @@ export class Player {
         this.shoot = false;
         this.shootMissile = false;
         this.missileReady = true;
-        this.maxHp = 4 + parseInt(localStorage.getItem("healthLV"));
-        this.hp = 4 + parseInt(localStorage.getItem("healthLV"));
+        if (localStorage.getItem("godMode") == "false") {
+            this.maxHp = 4 + parseInt(localStorage.getItem("healthLV"));
+            this.hp = 4 + parseInt(localStorage.getItem("healthLV"));
+        } else {
+            this.maxHp = 99999;
+            this.hp = 99999;
+        }
         this.imageState = 1;
         // Time is using frames which is at 20
         this.fireDelay = 20 * (1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1)); // (Sec) Delay between shooting
         this.fireTimer = 0; // Current time for shooting
         this.missileDelay = 20 * (10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3);
         this.missileTimer = 0;
+        this.maxShieldHP = parseInt(localStorage.getItem("shieldHealthLV")) - 1;
         this.shieldHP = parseInt(localStorage.getItem("shieldHealthLV")) - 1;
         this.shieldDelay = 20 * (31 - parseInt(localStorage.getItem("shieldCooldownLV")));
         this.shieldTimer = 0;
+        this.showBox = localStorage.getItem("showCollisionBox");
     }
 
     // Updates the position and angle of the player
@@ -48,7 +56,17 @@ export class Player {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        ctx.drawImage(this.image, -this.width / 2, -this.height / 2, this.width, this.height);
+        this.movingEffect();
+
+        ctx.drawImage(this.image, -this.width / 2 / this.widthMultiplyer, -this.height / 2, this.width / this.widthMultiplyer, this.height);
+
+        // Display Hitbox
+        if (this.showBox == "true") {
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.stroke();
+        }
 
         if (this.shoot && this.fireTimer == 0) {
             this.fireTimer++;
@@ -77,20 +95,25 @@ export class Player {
     {
         switch (this.imageState) {
             case 1:
-
+                this.image.src = "../images/SpaceshipV3.2.png";
                 break;
-            case 2:
-
+            case 10:
+                this.image.src = "../images/SpaceshipV3.3.png";
                 break;
-            case 3:
-
+            case 20:
+                this.image.src = "../images/SpaceshipV3.4.png";
                 break;
-            case 4:
-
+            case 30:
+                this.image.src = "../images/SpaceshipV3.5.png";
                 break;
-            default:
-                this.imageState = 1;
+            case 40:
+                this.image.src = "../images/SpaceshipV3.4.png";
+                break;
+            case 50:
+                this.image.src = "../images/SpaceshipV3.3.png";
+                this.imageState = 10;
                 break;
         }
+        this.imageState++;
     }
 }

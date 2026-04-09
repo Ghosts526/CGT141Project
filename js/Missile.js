@@ -16,6 +16,7 @@ export class Missile
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
         this.source = source; // What object created the missile
+        this.showBox = localStorage.getItem("showCollisionBox");
     }
 
     // Updates the missile location based by its angle and speed
@@ -34,6 +35,14 @@ export class Missile
         ctx.rotate(this.angle);
 
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+
+        // Display Hitbox
+        if (this.showBox == "true") {
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.stroke();
+        }
 
         ctx.restore();
     }

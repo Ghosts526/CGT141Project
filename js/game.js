@@ -26,10 +26,11 @@ function mainMenu()
 function startGame()
 {   
     gameArea.setUp(waveSystem);
-    let playerWidth = 50, playerHeight = 50;
+    let playerWidth = 60, playerHeight = 60;
+    let widthMultiplyer = 0.4;
     startX = playerWidth + 50;
     startY = gameArea.startY - playerHeight;
-    player = new Player(startX, startY, playerWidth, playerHeight, "images/SpaceshipMoving.png");
+    player = new Player(startX, startY, playerWidth * widthMultiplyer, playerHeight, "images/SpaceshipV3.png", widthMultiplyer);
     gameArea.start(player, enemies, bullets);
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
@@ -47,23 +48,8 @@ function restartGame()
     gameArea.updateGameArea(bullets, player, enemies);
 }
 
-function godMode()
-{
-    if (isGod)
-    {
-        isGod = false;
-        player.hp = player.maxHp;
-        document.getElementById("godModeButton").innerText = "God Mode (Disabled)";
-    } else {
-        isGod = true;
-        player.hp = 99999;
-        document.getElementById("godModeButton").innerText = "God Mode (Enabled)";
-    }
-}
-
 window.mainMenu = mainMenu;
 window.startGame = startGame;
 window.restartGame = restartGame;
 window.pauseGame = gameArea.pauseGame();
 window.resumeGame = gameArea.resumeGame();
-window.godMode = godMode;

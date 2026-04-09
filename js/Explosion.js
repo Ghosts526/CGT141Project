@@ -19,6 +19,7 @@ export class Explosion
         this.switchImageTimer = 20 * 1.5; // Frames * seconds
         this.timer = 0;
         this.state = 1;
+        this.showBox = localStorage.getItem("showCollisionBox");
     }
 
     // Updates the missile location based by its angle and speed
@@ -37,6 +38,14 @@ export class Explosion
         ctx.rotate(this.angle);
 
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+
+        // Display Hitbox
+        if (this.showBox == "true") {
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.stroke();
+        }
 
         ctx.restore();
         (this.timer >= this.switchImageTimer) ? this.switchImage() : this.timer++;

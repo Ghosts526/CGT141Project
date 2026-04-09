@@ -19,6 +19,7 @@ export class Enemy
         this.shootTimer = 0;
         this.hp = 5;
         this.score = score;
+        this.showBox = localStorage.getItem("showCollisionBox");
     }
 
     // Updates the enemy location based by its angle and speed
@@ -42,6 +43,14 @@ export class Enemy
         ctx.rotate(this.angle);
 
         ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+
+        // Display Hitbox
+        if (this.showBox == "true") {
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.stroke();
+        }
         
         ctx.restore();
     }
