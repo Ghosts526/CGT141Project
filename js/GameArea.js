@@ -20,7 +20,10 @@ export class GameArea {
         this.backgroundY = 0;
         this.backgroundImage = new Image();
         this.backgroundImage.src = "images/SpaceBackground256x256.png"; // Your image path
-        this.lastTime = 0;
+        this.healthBarUI = new Image();
+        this.healthBarUI.src = "images/HealthBarDisplay.png";
+        this.shieldBarUI = new Image();
+        this.shieldBarUI.src = "images/ShieldBarDisplay.png";
     }
 
     setUp(waveSystem) {
@@ -95,15 +98,15 @@ export class GameArea {
         this.context.save();
         this.context.translate(10, 10);
 
-        let barLength = 300;
+        let barLength = 260;
         let hp = (player.hp / player.maxHp * barLength).toFixed(2);
 
         this.context.fillStyle = "red";
-        this.context.fillRect(0, 0, (hp >= 0) ? hp : 0, 30);
+        this.context.fillRect(32, 3, (hp >= 0) ? hp : 0, 26);
         this.context.fillStyle = "gray";
-        this.context.fillRect(300, 0, (hp - barLength >= -300) ? hp - barLength : -300, 30);
+        this.context.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
 
-        //this.context.drawImage(img, x, y, imgW, imgH); // Health Bar Overlay
+        this.context.drawImage(this.healthBarUI, 0, 0, 295, 32); // Health Bar Overlay
 
         this.context.restore();
     }
@@ -111,17 +114,17 @@ export class GameArea {
     drawShieldHealth(player)
     {
         this.context.save();
-        this.context.translate(10, 50);
+        this.context.translate(325, 10);
 
-        let barLength = 300;
+        let barLength = 260;
         let hp = (player.shieldHP / player.maxShieldHP * barLength).toFixed(2);
 
-        this.context.fillStyle = "blue";
-        this.context.fillRect(0, 0, (hp >= 0) ? hp : 0, 30);
+        this.context.fillStyle = "rgb(0, 0, 175)";
+        this.context.fillRect(32, 3, (hp >= 0) ? hp : 0, 26);
         this.context.fillStyle = "gray";
-        this.context.fillRect(300, 0, (hp - barLength >= -300) ? hp - barLength : -300, 30);
+        this.context.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
 
-        //this.context.drawImage(img, x, y, imgW, imgH); // Shield Bar Overlay
+        this.context.drawImage(this.shieldBarUI, 0, 0, 295, 32); // Health Bar Overlay
 
         this.context.restore();
     }
