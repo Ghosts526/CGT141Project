@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Operation Breakpoint: Game</title>
@@ -13,14 +13,20 @@
     <script type="module" src="js/Game.js" defer></script>
 </head>
 <body>
-    <canvas id="gameScreen"></canvas>
-    <div class="UI Buttons">
-        <button class="MyButton" id="menuButton" onclick="mainMenu()" type="button">Main Menu</button>
-        <button class="MyButton" id="gameButton" onclick="startGame()" type="button">Start Game</button>
-        <button class="MyButton" id="pauseButton" onclick="pauseGame()" type="button">Pause Game</button>
-    </div>
-    <div class="UI Display">
-        <div id="score">Score: 0</div>
-    </div>
+    <header>
+        <h1 class="visually-hidden">Game Screen</h1>
+    </header>
+
+    <main>
+        <canvas id="gameScreen"></canvas>
+        <div class="UI-Buttons">
+            <button class="MyButton" id="menuButton" onclick="mainMenu()" type="button">Main Menu</button>
+            <button class="MyButton" id="gameButton" onclick="startGame()" type="button">Start Game</button>
+            <button class="MyButton" id="pauseButton" onclick="pauseGame()" type="button">Pause Game</button>
+        </div>
+        <div class="UI-Display">
+            <div id="score">Score: 0</div>
+        </div>
+    </main>
 </body>
 </html>

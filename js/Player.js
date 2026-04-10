@@ -41,6 +41,7 @@ export class Player {
         this.shieldDelay = 20 * (31 - parseInt(localStorage.getItem("shieldCooldownLV")));
         this.shieldTimer = 0;
         this.showBox = localStorage.getItem("showCollisionBox");
+        this.isShieldRegen = false;
     }
 
     // Updates the position and angle of the player
@@ -115,5 +116,26 @@ export class Player {
                 break;
         }
         this.imageState++;
+    }
+
+    damaged(amount)
+    {
+        if (this.shieldHP > 0 && amount <= this.shieldHP)
+        {
+            this.shieldHP -= amount;
+        } else if (this.shieldHP > 0 && amount > this.shieldHP) {
+            amount -= this.shieldHP;
+            this.shieldHP = 0;
+            this.hp -= amount;
+        } else {
+            this.hp -= amount;
+        }
+    }
+
+    shieldRegen()
+    {
+        if (this.isShieldRegen) {
+            
+        }
     }
 }

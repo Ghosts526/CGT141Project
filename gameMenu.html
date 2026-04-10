@@ -1,19 +1,24 @@
 <!DOCTYPE html>
-<html>
+<!--This is the game menu page-->
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Operation Breakpoint: Game Menu</title>
     <link rel="stylesheet" href="css/master.css">
-    <script src="js/Script.js" defer></script>
     <script src="js/GameMenu.js" defer></script>
 </head>
 <body>
-    <h1 id="topScore">Top Score: 0000</h1>
-    <div class="buttons">
-        <button class="button" id="playGameButton" onclick="playGame()" type="button">Play Game</button>
-        <button class="button" id="upgradesButton" onclick="upgrades()" type="button">Upgrades</button>
-        <button class="button" id="settingsButton" onclick="settings()" type="button">Settings</button>
-        <button class="button" id="backButton" onclick="mainMenu()" type="button">Back</button>
-    </div>
+    <header>
+        <h1 id="topScore">Top Score: 0000</h1>
+    </header>
+    
+    <main>
+        <nav class="menu-nav">
+            <a href="game.html" class="button">Play Game</a>
+            <a href="upgrades.html" class="button">Upgrades</a>
+            <a href="settings.html" class="button">Settings</a>
+            <a href="index.html" class="button">Back</a>
+        </nav>
+    </main>
 </body>
 </html>

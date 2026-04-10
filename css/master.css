@@ -10,14 +10,13 @@ body
 
 h1
 {
-    width: 500px;
+    width: auto;
     height: 120px;
     color: yellow;
     font-size: 40pt;
     font-family: serif;
     text-align: center;
     margin-top: 80px;
-    margin-left: calc(50vw - 250px);
     margin-bottom: 25px;   
     border-width: 0;
     text-shadow: 1px 1px 3px gray; 
@@ -61,59 +60,47 @@ a, p, li
     font-size: 15pt; 
 }
 
-.buttons
+form
 {
-    margin-left: calc(50vw - 150px);
-    justify-content: center;
-    align-items: center;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
+    color: black;
+    background-color: white;
 }
 
-.buttonsLeft
+.menu-nav
 {
-    margin-left: calc(50px);
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 10px;
-}
-
-.buttonsRight
-{
-    float: right;
-    margin-right: calc(50px);
-    justify-content: center;
-    align-items: center;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
     gap: 10px;
 }
 
 .button
 {
     width: 300px;
-    height: 65px;
+    height: 30px;
     background: darkgray;
     border: solid;
     border-color: gray;
     border-width: 5px;
     border-radius: 15px;
-    padding: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     cursor: pointer;
     transition: background 0.5s;
     font-weight: bold;
     font-family: sans-serif;
     font-size: x-large;
     text-shadow: 1px 1px 3px white;
+    text-align: center;
+    text-decoration: none;
 }
 
 .button:hover
 {
     background: gold;
     border-color: goldenrod;
+    color: black;
+    text-decoration: none;
 }
 
 .staticButton

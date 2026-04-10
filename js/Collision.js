@@ -15,7 +15,7 @@ export class Collision {
         for (let i = bullets.length - 1; i >= 0; i--) {
             if (bullets[i].source == "Enemy") { // Enemy bullet
                 if (this.overlap(bullets[i], player)) {
-                    player.hp -= 1;
+                    player.damaged(1);
                     bullets.splice(i, 1);
 
                     if (player.hp <= 0)
@@ -39,7 +39,7 @@ export class Collision {
                     break;
                 }
                 if (this.overlap(bullets[i], player)) {
-                    player.hp -= 25;
+                    player.damaged(25);
 
                     if (player.hp <= 0)
                     {
@@ -48,7 +48,7 @@ export class Collision {
                 }
                 for (let j = enemies.length - 1; j >= 0; j--) {
                     if (this.overlap(bullets[i], enemies[j])) {
-                        enemies[j].hp -= 25;
+                        enemies[j].damaged(25);
 
                         if (enemies[j].hp <= 0) {
                             this.score += enemies[j].score;
@@ -61,7 +61,7 @@ export class Collision {
                 // Check all enemies collision
                 for (let j = enemies.length - 1; j >= 0; j--) {
                     if (this.overlap(bullets[i], enemies[j])) {
-                        enemies[j].hp -= 5;
+                        enemies[j].damaged(5);
                         bullets.splice(i, 1);
 
                         if (enemies[j].hp <= 0) {

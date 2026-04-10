@@ -27,9 +27,9 @@ function howToPlay()
     window.location.href = "howToPlay.html"
 }
 
-function leaderBoard()
+function bugReport()
 {
-    window.location.href = "leaderBoard.html"
+    window.location.href = "bugReport.html"
 }
 
 function credits()

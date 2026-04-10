@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operation Breakpoint: Bug Report</title>
+    <link rel="stylesheet" href="css/master.css">
+</head>
+<body>
+    <header>
+        <h1>Bug Report</h1>
+    </header>
+
+    <main>
+        <a href="index.html" class="button" id="menuButton">Back</a>
+
+        <!-- Causes an error when submitted due to action_page.php hasn't been created yet -->
+        <fieldset>
+            <legend>Report a Bug Form</legend>
+
+            <form action="/action_page.php" method="post"> 
+                <label for="username">User Name: </label>
+                <input type="text" id="username" name="username" autocomplete="off">
+                <br/> <br/> <!--Remove and replace with CSS-->
+
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" autocomplete="off" required>
+                <br/> <br/>
+
+                <label for="bugType">Bug Type: </label>
+                <select id="bugType" name="bugType">
+                    <option value="Gameplay/Mechanics">Gameplay/Mechanics</option>
+                    <option value="User Interface">User Interface</option>
+                    <option value="Performance">Performance</option>
+                    <option value="Visual/Graphics">Visual/Graphics</option>
+                    <option value="Audio">Audio</option>
+                    <option value="Rendering">Rendering</option>
+                    <option value="Others">Others (Please Describe)</option>
+                </select>
+                <br/> <br/>
+
+                <label for="description">Description: </label>
+                <br/>
+                <textarea id="description" name="description" rows="10" cols="50" required placeholder="Please describe the problem/issue you are encountering and what steps you took that caused it."></textarea>
+                <br/> <br/>
+                
+                <input type="submit" value="Submit">
+            </form>
+        </fieldset>
+    </main>
+</body>
+</html>

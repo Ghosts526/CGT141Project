@@ -64,4 +64,9 @@ export class Enemy
             this.shootTimer = 0;
         }
     }
+
+    damaged(amount)
+    {
+        this.hp -= amount;
+    }
 }

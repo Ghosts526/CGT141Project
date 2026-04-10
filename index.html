@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <!--This is the main menu page-->
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Operation Breakpoint: Main Menu</title>
     <link rel="stylesheet" href="css/master.css">
-    <script src="js/Script.js" defer></script>
-    <script src="js/LocalStorageSetup.js" defer></script>
+    <script src="js/LocalStorageSetup.js" defer></script> 
 </head>
 <body>
-    <div id="mainMenu">
+    <header>
         <h1>OPERATION BREAKPOINT</h1>
-        <div class="buttons">
-            <button class="button" onclick="gameMenu()" type="button">PLAY</button>
-            <button class="button" onclick="howToPlay()" type="button">HOW TO PLAY</button>
-            <button class="button" onclick="leaderBoard()" type="button">LEADERBOARDS</button>
-            <button class="button" onclick="credits()" type="button">CREDITS</button>
-        </div>
-    </div>
+    </header>
+
+    <main>
+        <nav class="menu-nav">
+            <a href="gameMenu.html" class="button">PLAY</a>
+            <a href="howToPlay.html" class="button">HOW TO PLAY</a>
+            <a href="bugReport.html" class="button">BUG REPORT</a>
+            <a href="credits.html" class="button">CREDITS</a>
+        </nav>
+    </main>
 </body>
 </html>
