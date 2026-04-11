@@ -1,0 +1,13 @@
+To Do List:
+1. Implement Mobile Buttons
+2. Update the UI 
+3. Complete the howToPlay.html
+4. Complete credits.html
+5. Implement the Shield function to the player
+6. Adjust the cost price in upgrades
+7. Implement a perk system
+8. Add more enemies and different movement and actions
+9. Implement the php form
+10. Set up a server to hold bug report forms
+11. Update most images to pixel art
+12. Add audio such as: Shooting, explosion, missiles, background music, button noise, etc.
