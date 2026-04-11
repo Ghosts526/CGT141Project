@@ -8,7 +8,7 @@ import { GameArea } from "./GameArea.js";
  * Handles game state, player/enemy/bullet management, and coordinates
  * the start, pause, and restart of the game
  * 
- * Connects all other modules together
+ * Connects all other javascript files together
  */
 
 var player;
@@ -16,7 +16,6 @@ var startX, startY;
 const bullets = [], enemies = [];
 var gameArea = new GameArea(document);
 var waveSystem = new WaveSystem();
-var isGod = false;
 
 function mainMenu()
 {
@@ -30,7 +29,7 @@ function startGame()
     let widthMultiplyer = 0.4;
     startX = playerWidth + 50;
     startY = gameArea.startY - playerHeight;
-    player = new Player(startX, startY, playerWidth * widthMultiplyer, playerHeight, "images/SpaceshipV3.png", widthMultiplyer);
+    player = new Player(startX, startY, playerWidth * widthMultiplyer, playerHeight, "images/SpaceshipV3", widthMultiplyer);
     gameArea.start(player, enemies, bullets);
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";

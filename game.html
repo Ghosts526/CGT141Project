@@ -19,6 +19,21 @@
 
     <main>
         <canvas id="gameScreen"></canvas>
+        <div class="Action-Buttons">
+            <button class="ActionButton" id="moveUp" onclick="moveUp()" type="button">
+                <img src="" alt="Move Up">
+            </button>
+            <button class="ActionButton" id="moveDown" onclick="moveDown()" type="button">
+                <img src="" alt="Move Down">
+            </button>
+            <button class="ActionButton" id="fire" onclick="shootPrimary()" type="button">
+                <img src="" alt="Fire">
+            </button>
+            <button class="ActionButton" id="missile" onclick="shootSecondary()" type="button">
+                <img src="" alt="Missile">
+            </button>
+        </div>
+
         <div class="UI-Buttons">
             <button class="MyButton" id="menuButton" onclick="mainMenu()" type="button">Main Menu</button>
             <button class="MyButton" id="gameButton" onclick="startGame()" type="button">Start Game</button>

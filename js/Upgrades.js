@@ -65,8 +65,8 @@ function updateDisplay()
 
     // Current effect
     document.getElementById(currStat[0]).innerText = (4 + parseInt(localStorage.getItem("healthLV"))).toString();
-    document.getElementById(currStat[1]).innerText = (1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1)).toString();
-    document.getElementById(currStat[2]).innerText = (10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3).toString();
+    document.getElementById(currStat[1]).innerText = (1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1)).toFixed(1);
+    document.getElementById(currStat[2]).innerText = (10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3).toFixed(1);
     document.getElementById(currStat[3]).innerText = (parseInt(localStorage.getItem("shieldHealthLV")) - 1).toString();
     document.getElementById(currStat[4]).innerText = (31 - parseInt(localStorage.getItem("shieldCooldownLV"))).toString();
 

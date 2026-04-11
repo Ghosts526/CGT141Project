@@ -6,13 +6,14 @@ import { Missile } from "./Missile.js";
  */
 
 export class Player {
-    constructor(x, y, width, height, image, widthMultiplyer) {
+    constructor(x, y, width, height, image, widthMultiplier) {
         // Set up variables for the player
         this.restart(x, y);
         this.width = width, this.height = height;
         this.speed = 7;
-        this.image = new Image(), this.image.src = image;
-        this.widthMultiplyer = widthMultiplyer;
+        this.image = new Image(), this.image.src = (image + ".1.png");
+        this.widthMultiplier = widthMultiplier;
+        this.sprite = image;
     }
     // const names = ["topScore", "credits", "healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
     // Restarts the player location
@@ -59,7 +60,7 @@ export class Player {
 
         this.movingEffect();
 
-        ctx.drawImage(this.image, -this.width / 2 / this.widthMultiplyer, -this.height / 2, this.width / this.widthMultiplyer, this.height);
+        ctx.drawImage(this.image, -this.width / 2 / this.widthMultiplier, -this.height / 2, this.width / this.widthMultiplier, this.height);
 
         // Display Hitbox
         if (this.showBox == "true") {
@@ -96,22 +97,22 @@ export class Player {
     {
         switch (this.imageState) {
             case 1:
-                this.image.src = "../images/SpaceshipV3.2.png";
+                this.image.src = this.sprite + ".2.png";
                 break;
             case 10:
-                this.image.src = "../images/SpaceshipV3.3.png";
+                this.image.src = this.sprite + ".3.png";
                 break;
             case 20:
-                this.image.src = "../images/SpaceshipV3.4.png";
+                this.image.src = this.sprite + ".4.png";
                 break;
             case 30:
-                this.image.src = "../images/SpaceshipV3.5.png";
+                this.image.src = this.sprite + ".5.png";
                 break;
             case 40:
-                this.image.src = "../images/SpaceshipV3.4.png";
+                this.image.src = this.sprite + ".4.png";
                 break;
             case 50:
-                this.image.src = "../images/SpaceshipV3.3.png";
+                this.image.src = this.sprite + ".3.png";
                 this.imageState = 10;
                 break;
         }

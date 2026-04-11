@@ -16,6 +16,7 @@ export class Bullet
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
         this.source = source; // What object created the bullet
+        this.showBox = localStorage.getItem("showCollisionBox");
     }
 
     // Updates the bullet location based by its angle and speed

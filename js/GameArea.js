@@ -27,7 +27,7 @@ export class GameArea {
     }
 
     setUp(waveSystem) {
-        this.canvas.width = 980;
+        this.canvas.width = 1200;
         this.canvas.height = 600;
         this.startX = this.canvas.width/2;
         this.startY = this.canvas.height/2;
@@ -58,6 +58,16 @@ export class GameArea {
             if (e.key.toLowerCase() === 'e') player.shootMissile = false;
                
         })
+
+        // Add an eventlistener for touch buttons to detect onPress and onRelease
+    }
+
+    moveUp() {
+
+    }
+
+    moveDown() {
+
     }
 
     clearGameArea() {
@@ -211,12 +221,11 @@ export class GameArea {
         ctx.fillText("Game Over!", ctx.canvas.width/2, ctx.canvas.height/2);
         ctx.fillStyle = "yellow";
         ctx.font = "30px Arial";
-        ctx.fillText("Credits Earned: " + parseInt(this.collision.score / 3, 10), ctx.canvas.width/2, ctx.canvas.height/2 + 60);
-        "Credits Earned: " + parseInt(this.collision.score / 3, 10)
+        ctx.fillText("Credits Earned: " + parseInt(this.collision.score / 2, 10), ctx.canvas.width/2, ctx.canvas.height/2 + 60);
         if (parseInt(localStorage.getItem("topScore"), 10) < this.collision.score) 
         {
             localStorage.setItem("topScore", this.collision.score.toString());
         }
-        localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + parseInt(this.collision.score / 3, 10)).toString());
+        localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + parseInt(this.collision.score / 2, 10)).toString());
     }
 }
