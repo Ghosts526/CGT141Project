@@ -46,6 +46,7 @@ export class GameArea {
     }
 
     start(player, enemies, bullets) {
+        // Uses frames instead of DeltaTime
         this.interval = setInterval(() => this.updateGameArea(bullets, player, enemies), 20);
 
         this.document.addEventListener('contextmenu', function (event) {

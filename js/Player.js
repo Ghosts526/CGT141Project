@@ -48,13 +48,8 @@ export class Player {
 
     // Updates the position and angle of the player
     newPos() {
-        if (this.moveUp || this.moveUpTouch) {
-            this.y -= this.speed;
-        }
-
-        if (this.moveDown || this.moveDownTouch) {
-            this.y += this.speed;
-        }
+        let movement = (this.moveDown || this.moveDownTouch) - (this.moveUp || this.moveUpTouch);
+        this.y += movement * this.speed;
     }
 
     // Updates the player image to its current position
