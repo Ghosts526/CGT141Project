@@ -20,9 +20,10 @@ export class Player {
     restart(x, y) {
         this.x = x, this.y = y;
         this.angle = Math.PI/2, this.moveAngle = 0;
-        this.moveUp = 0, this.moveDown = 0;
-        this.shoot = false;
-        this.shootMissile = false;
+        this.moveUp = false, this.moveDown = false;
+        this.moveUpTouch = false, this.moveDownTouch = false;
+        this.shoot = false, this.shootMissile = false;
+        this.shootTouch = false, this.shootMissileTouch = false;
         this.missileReady = true;
         if (localStorage.getItem("godMode") == "false") {
             this.maxHp = 4 + parseInt(localStorage.getItem("healthLV"));
@@ -47,7 +48,13 @@ export class Player {
 
     // Updates the position and angle of the player
     newPos() {
-        this.y += (this.moveUp + this.moveDown) * this.speed;
+        if (this.moveUp || this.moveUpTouch) {
+            this.y -= this.speed;
+        }
+
+        if (this.moveDown || this.moveDownTouch) {
+            this.y += this.speed;
+        }
     }
 
     // Updates the player image to its current position
@@ -70,16 +77,16 @@ export class Player {
             ctx.stroke();
         }
 
-        if (this.shoot && this.fireTimer == 0) {
+        if ((this.shoot || this.shootTouch) && this.fireTimer == 0) {
             this.fireTimer++;
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
-        } else if (this.shoot && this.fireTimer >= this.fireDelay) {
+        } else if ((this.shoot || this.shootTouch) && this.fireTimer >= this.fireDelay) {
             this.fireTimer = 0;
-        } else if (this.shoot || (!this.shoot && this.fireTimer != 0)) {
+        } else if ((this.shoot || this.shootTouch) || (!(this.shoot || this.shootTouch) && this.fireTimer != 0)) {
             this.fireTimer++;
         } 
 
-        if (this.shootMissile && this.missileReady)
+        if ((this.shootMissile || this.shootMissileTouch) && this.missileReady)
         {
             this.missileReady = false;
             bullets.push(new Missile(this.x, this.y, 5, 20, this.angle, "images/MissileProjectile.png", "Player Missile"));

@@ -24,6 +24,16 @@ export class GameArea {
         this.healthBarUI.src = "images/HealthBarDisplay.png";
         this.shieldBarUI = new Image();
         this.shieldBarUI.src = "images/ShieldBarDisplay.png";
+        this.moveUp = false;
+        this.moveDown = false;
+        this.shoot = false;
+        this.shootMissile = false;
+        this.upButton = { x: 10, y: 450, width: 50, height: 50 };
+        this.downButton = { x: 10, y: 510, width: 50, height: 50 };
+        this.fireButton = { x: 500, y: 510, width: 50, height: 50 };
+        this.missileButton = { x: 560, y: 510, width: 50, height: 50 };
+        this.xLoc = null;
+        this.yLoc = null;
     }
 
     setUp(waveSystem) {
@@ -38,40 +48,86 @@ export class GameArea {
     start(player, enemies, bullets) {
         this.interval = setInterval(() => this.updateGameArea(bullets, player, enemies), 20);
 
-        window.addEventListener('keydown', function(e) {
-            if (e.key.toLowerCase() === 'w') player.moveUp = -1;
-            if (e.key.toLowerCase() === 's') player.moveDown = 1;
+        this.document.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+            console.log('Right-click disabled');
+        });
+        
+        window.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'w') player.moveUp = true;
+            if (e.key.toLowerCase() === 's') player.moveDown = true;
             if (e.key === ' ') {
                 e.preventDefault();
                 player.shoot = true;
             }
             if (e.key.toLowerCase() === 'e') player.shootMissile = true;
-        })
+        });
 
-        window.addEventListener('keyup', function(e) {
-            if (e.key.toLowerCase() === 'w') player.moveUp = 0;
-            if (e.key.toLowerCase() === 's') player.moveDown = 0;
+        window.addEventListener('keyup', (e) => {
+            if (e.key.toLowerCase() === 'w') player.moveUp = false;
+            if (e.key.toLowerCase() === 's') player.moveDown = false;
             if (e.key === ' ') {
                 player.shoot = false;
                 player.fireTimer = 0;
             }
             if (e.key.toLowerCase() === 'e') player.shootMissile = false;
                
-        })
+        });
 
         // Add an eventlistener for touch buttons to detect onPress and onRelease
-    }
+        window.addEventListener("touchstart", (e) => {
+            this.xLoc = e.touches[0].pageX;
+            this.yLoc = e.touches[0].pageY;
+        });
 
-    moveUp() {
+        window.addEventListener("mousedown", (e) => {
+            this.xLoc = e.pageX;
+            this.yLoc = e.pageY;
+        });
 
-    }
+        window.addEventListener("touchend", (e) => {
+            this.xLoc = false;
+            this.yLoc = false;
+        });
 
-    moveDown() {
-
+        window.addEventListener("mouseup", (e) => {
+            this.xLoc = false;
+            this.yLoc = false;
+        }); 
     }
 
     clearGameArea() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);     
+    }
+
+    checkTouch(player) {
+        if (this.xLoc >= this.upButton.x && this.xLoc <= this.upButton.x + this.upButton.width && 
+        this.yLoc >= this.upButton.y && this.yLoc <= this.upButton.y + this.upButton.height) {
+            player.moveUpTouch = true;
+        } else {
+            player.moveUpTouch = false;
+        }
+            
+        if (this.xLoc >= this.downButton.x && this.xLoc <= this.downButton.x + this.downButton.width && 
+        this.yLoc >= this.downButton.y && this.yLoc <= this.downButton.y + this.downButton.height) {
+            player.moveDownTouch = true;
+        } else {
+            player.moveDownTouch = false;
+        }
+            
+        if (this.xLoc >= this.fireButton.x && this.xLoc <= this.fireButton.x + this.fireButton.width && 
+        this.yLoc >= this.fireButton.y && this.yLoc <= this.fireButton.y + this.fireButton.height) {
+            player.shootTouch = true;
+        } else {
+            player.shootTouch = false;
+        }
+            
+        if (this.xLoc >= this.missileButton.x && this.xLoc <= this.missileButton.x + this.missileButton.width && 
+        this.yLoc >= this.missileButton.y && this.yLoc <= this.missileButton.y + this.missileButton.height) {
+            player.shootMissileTouch = true;
+        } else {
+            player.shootMissileTouch = false;
+        }
     }
 
     drawBackground() {
@@ -102,11 +158,27 @@ export class GameArea {
         }
     }
 
+    drawButtons()
+    {
+        const buttons = [this.upButton, this.downButton, this.fireButton, this.missileButton];
+
+        for(let i = 0; i < buttons.length; i++) {
+            this.context.save();
+            this.context.translate(buttons[i].x, buttons[i].y);
+            this.context.globalAlpha = 0.5;
+
+            this.context.fillStyle = "gray";
+            this.context.fillRect(0, 0, buttons[i].width, buttons[i].height);
+            this.context.restore();
+        }
+    }
+
     // Bars is 10:1 ratio
     drawHealth(player)
     {
         this.context.save();
         this.context.translate(10, 10);
+        this.context.globalAlpha = 0.5;
 
         let barLength = 260;
         let hp = (player.hp / player.maxHp * barLength).toFixed(2);
@@ -191,6 +263,10 @@ export class GameArea {
         this.drawHealth(player);
 
         this.drawShieldHealth(player);
+
+        this.drawButtons();
+
+        this.checkTouch(player);
     }
 
 

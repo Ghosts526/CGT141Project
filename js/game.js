@@ -14,7 +14,7 @@ import { GameArea } from "./GameArea.js";
 var player;
 var startX, startY;
 const bullets = [], enemies = [];
-var gameArea = new GameArea(document);
+const gameArea = new GameArea(document);
 var waveSystem = new WaveSystem();
 
 function mainMenu()
