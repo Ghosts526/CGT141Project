@@ -23,7 +23,7 @@ export class Explosion
     }
 
     // Updates the missile location based by its angle and speed
-    newPos()
+    newPos(dt)
     {
         this.x += this.addX;
         this.y += this.addY;

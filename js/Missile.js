@@ -13,6 +13,7 @@ export class Missile
         this.width = width * 3, this.height = height * 3;
         this.angle = angle
         this.speed = 15;
+        this.pixelScale = 50;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
         this.source = source; // What object created the missile
@@ -20,16 +21,16 @@ export class Missile
     }
 
     // Updates the missile location based by its angle and speed
-    newPos()
+    newPos(dt)
     {
-        this.x += this.addX;
-        this.y += this.addY;
+        this.x += this.addX * dt * this.pixelScale;
+        this.y += this.addY * dt * this.pixelScale;
     }
 
     // Draws the missile to its current position and rotation
     update(context) 
     {
-        let ctx = context;
+        const ctx = context;
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);

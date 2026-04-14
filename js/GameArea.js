@@ -34,6 +34,8 @@ export class GameArea {
         this.missileButton = { x: 560, y: 510, width: 50, height: 50 };
         this.xLoc = null;
         this.yLoc = null;
+        this.lastTime = 0;
+        this.pixelScale = 50;
     }
 
     setUp(waveSystem) {
@@ -46,8 +48,26 @@ export class GameArea {
     }
 
     start(player, enemies, bullets) {
-        // Uses frames instead of DeltaTime
-        this.interval = setInterval(() => this.updateGameArea(bullets, player, enemies), 20);
+        // Uses deltaTime to get the time between frames
+        const loop = (timestamp) => {
+            if(!this.lastTime) this.lastTime = timestamp;
+
+            let dt = (timestamp - this.lastTime) / 1000;
+            this.lastTime = timestamp;
+
+            if (this.pause) {
+                dt = 0;
+            }
+
+            this.updateGameArea(dt, bullets, player, enemies);
+
+            // Update the game every frame with accurate deltaTime
+            if (!this.isGameOver) {
+                requestAnimationFrame(loop);
+            }
+        };
+
+        requestAnimationFrame(loop);
 
         this.document.addEventListener('contextmenu', function (event) {
             event.preventDefault();
@@ -69,7 +89,6 @@ export class GameArea {
             if (e.key.toLowerCase() === 's') player.moveDown = false;
             if (e.key === ' ') {
                 player.shoot = false;
-                player.fireTimer = 0;
             }
             if (e.key.toLowerCase() === 'e') player.shootMissile = false;
                
@@ -81,14 +100,14 @@ export class GameArea {
             this.yLoc = e.touches[0].pageY;
         });
 
-        window.addEventListener("mousedown", (e) => {
-            this.xLoc = e.pageX;
-            this.yLoc = e.pageY;
-        });
-
         window.addEventListener("touchend", (e) => {
             this.xLoc = false;
             this.yLoc = false;
+        });
+
+        window.addEventListener("mousedown", (e) => {
+            this.xLoc = e.pageX;
+            this.yLoc = e.pageY;
         });
 
         window.addEventListener("mouseup", (e) => {
@@ -131,7 +150,7 @@ export class GameArea {
         }
     }
 
-    drawBackground() {
+    drawBackground(dt) {
         // 256 x 256 image
         const img = this.backgroundImage;
         const imgW = img.width;
@@ -151,7 +170,7 @@ export class GameArea {
         }
 
         // Scroll
-        this.backgroundX -= this.backgroundSpeed;
+        this.backgroundX -= this.backgroundSpeed * dt * this.pixelScale;
 
         // Reset when one tile fully leaves the screen
         if (this.backgroundX <= -imgW) {
@@ -213,7 +232,7 @@ export class GameArea {
     }
 
     // Draws all the images on the canvas
-    updateGameArea(bullets, player, enemies)
+    updateGameArea(dt, bullets, player, enemies)
     {
         if (this.pause)
         {
@@ -222,10 +241,10 @@ export class GameArea {
 
         this.clearGameArea();
 
-        this.drawBackground();
+        this.drawBackground(dt);
 
         for (let i = bullets.length - 1; i >= 0; i--) {
-            bullets[i].newPos();
+            bullets[i].newPos(dt);
             bullets[i].update(this.context);
 
             // Remove if off-screen
@@ -235,7 +254,7 @@ export class GameArea {
             }
         }
 
-        player.newPos();
+        player.newPos(dt);
         if (player.y - player.height/2 <= 0) {
             player.y = player.height/2;
         }
@@ -248,7 +267,7 @@ export class GameArea {
         this.waveSystem.waves(this.context, enemies);
 
         for (let i = enemies.length - 1; i >= 0; i--) {
-            enemies[i].newPos();
+            enemies[i].newPos(dt);
             enemies[i].update(this.context, bullets);
             enemies[i].tryShoot(bullets, player);
 
@@ -290,7 +309,7 @@ export class GameArea {
     {
         this.isGameOver = true;
         this.pauseGame();
-        let ctx = this.context;
+        const ctx = this.context;
         ctx.font = "60px Arial";
         ctx.fillStyle = "red";
         ctx.textAlign = "center";

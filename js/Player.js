@@ -14,6 +14,7 @@ export class Player {
         this.image = new Image(), this.image.src = (image + ".1.png");
         this.widthMultiplier = widthMultiplier;
         this.sprite = image;
+        this.pixelScale = 50;
     }
     // const names = ["topScore", "credits", "healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
     // Restarts the player location
@@ -33,7 +34,6 @@ export class Player {
             this.hp = 99999;
         }
         this.imageState = 1;
-        // Time is using frames which is at 20
         this.fireDelay = 20 * (1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1)); // (Sec) Delay between shooting
         this.fireTimer = 0; // Current time for shooting
         this.missileDelay = 20 * (10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3);
@@ -47,14 +47,14 @@ export class Player {
     }
 
     // Updates the position and angle of the player
-    newPos() {
-        let movement = (this.moveDown || this.moveDownTouch) - (this.moveUp || this.moveUpTouch);
-        this.y += movement * this.speed;
+    newPos(dt) {
+        const movement = (this.moveDown || this.moveDownTouch) - (this.moveUp || this.moveUpTouch);
+        this.y += movement * this.speed * dt * this.pixelScale;
     }
 
     // Updates the player image to its current position
     update(context, bullets) {
-        let ctx = context;
+        const ctx = context;
         ctx.save();
 
         ctx.translate(this.x, this.y);

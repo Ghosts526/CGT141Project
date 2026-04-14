@@ -37,6 +37,7 @@ function startGame()
 
 function restartGame()
 {
+    gameArea.lastTime = null;
     player.restart(startX, startY);
     bullets.length = 0;
     enemies.length = 0;
@@ -44,11 +45,10 @@ function restartGame()
     gameArea.isGameOver = false;
     gameArea.collision.score = 0;
     gameArea.resumeGame();
-    gameArea.updateGameArea(bullets, player, enemies);
 }
 
 window.mainMenu = mainMenu;
 window.startGame = startGame;
 window.restartGame = restartGame;
-window.pauseGame = gameArea.pauseGame();
-window.resumeGame = gameArea.resumeGame();
+window.pauseGame = () => gameArea.pauseGame();
+window.resumeGame = () => gameArea.resumeGame();

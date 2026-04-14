@@ -1,3 +1,5 @@
+/*HTML files: bugReport, credits, gameMenu, howToPlay, index, settings*/
+
 body
 {
     min-width: 500px;
@@ -8,32 +10,40 @@ body
     background-repeat: repeat;
 }
 
-h1
-{
-    width: auto;
-    height: 120px;
-    color: yellow;
-    font-size: 40pt;
-    font-family: serif;
-    text-align: center;
-    margin-top: 80px;
-    margin-bottom: 25px;   
-    border-width: 0;
-    text-shadow: 1px 1px 3px gray; 
-}
-
-h2
+h1, h2
 {
     width: auto;
     height: auto;
     color: yellow;
-    font-size: 30pt;
     font-family: serif;
     text-align: center;
     margin-top: 80px;
+    border-width: 0;
+    text-shadow: 1px 1px 3px gray; 
+}
+
+h1
+{
+    font-size: 40pt;
+    margin-bottom: 75px;
+}
+
+h2
+{
+    font-size: 30pt;
     margin-bottom: 25px;   
-    border-width: 0; 
-    text-shadow: 1px 1px 3px gray;
+}
+
+ul {
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+a, p, li
+{
+    color: white;
+    text-shadow: 1px 1px 3px lightskyblue;    
+    font-size: 15pt; 
 }
 
 a:visited
@@ -46,18 +56,6 @@ a:visited
 a:hover
 {
     color: yellow;
-}
-
-ul {
-    margin-left: 20%;
-    margin-right: 20%;
-}
-
-a, p, li
-{
-    color: white;
-    text-shadow: 1px 1px 3px lightskyblue;    
-    font-size: 15pt; 
 }
 
 form
@@ -74,10 +72,9 @@ form
     gap: 10px;
 }
 
-.button
+.button, .buttonLink
 {
     width: 300px;
-    height: 30px;
     background: darkgray;
     border: solid;
     border-color: gray;
@@ -86,6 +83,7 @@ form
     padding-top: 15px;
     padding-bottom: 15px;
     cursor: pointer;
+    user-select: none;
     transition: background 0.5s;
     font-weight: bold;
     font-family: sans-serif;
@@ -95,7 +93,7 @@ form
     text-decoration: none;
 }
 
-.button:hover
+.button:hover, .buttonLink:hover
 {
     background: gold;
     border-color: goldenrod;
@@ -103,8 +101,12 @@ form
     text-decoration: none;
 }
 
-.staticButton
+.button
 {
-    position:static;
-    float: left;
+    height: 65px;
+}
+
+.buttonLink
+{
+    height: 30px;
 }

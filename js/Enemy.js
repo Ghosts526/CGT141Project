@@ -13,6 +13,7 @@ export class Enemy
         this.width = width, this.height = height;
         this.angle = angle
         this.speed = 4;
+        this.pixelScale = 50;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image + ".1.png";
         this.sprite = image;
@@ -26,15 +27,15 @@ export class Enemy
     }
 
     // Updates the enemy location based by its angle and speed
-    newPos()
+    newPos(dt)
     {
-        this.x += this.addX, this.y += this.addY;
+        this.x += this.addX * dt * this.pixelScale, this.y += this.addY * dt * this.pixelScale;
     }
 
     // Draws the enemy to its current position and rotation
     update(context) 
     {
-        let ctx = context;
+        const ctx = context;
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);

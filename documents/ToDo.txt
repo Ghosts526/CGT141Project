@@ -1,8 +1,7 @@
 To Do List:
-- Implement DeltaTime instead of Intervals
+- Fix deltaTime with shooting and animation delays
 - Update the UI 
-- Complete the howToPlay.html
-- Complete credits.html
+- Complete the howToPlay.html + credits.html
 - Implement the Shield function to the player
 - Adjust the cost price in upgrades
 - Implement a perk system
