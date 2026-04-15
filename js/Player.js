@@ -34,7 +34,7 @@ export class Player {
             this.hp = this.maxHp;
         }
         this.imageState = 1;
-        this.fireDelay = 1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1); // (Sec) Delay between shooting
+        this.fireDelay = 1.5 - 0.05 * (parseInt(localStorage.getItem("fireRateLV")) - 1); // (Sec) Delay between shooting
         this.fireTimer = 0; // Current time for shooting
         this.missileDelay = 10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3;
         this.missileTimer = 0;
@@ -75,7 +75,7 @@ export class Player {
         if ((this.shoot || this.shootTouch) && this.fireTimer == 0) {
             this.fireTimer += dt;
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
-        } else if ((this.shoot || this.shootTouch) && this.fireTimer >= this.fireDelay) {
+        } else if (this.fireTimer >= this.fireDelay) {
             this.fireTimer = 0;
         } else if ((this.shoot || this.shootTouch) || (!(this.shoot || this.shootTouch) && this.fireTimer != 0)) {
             this.fireTimer += dt;

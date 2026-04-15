@@ -1,0 +1,29 @@
+h1 {
+    margin-bottom: 30px;
+}
+
+form {
+    color: black;
+    background-color: white;
+    margin: 20px;
+    padding: 15px;
+    display: grid;
+    gap: 10px;
+}
+
+legend {
+    color: white;   
+    font-size: 15pt; 
+}
+
+input {
+    width: 100px;
+}
+
+#name, #email {
+    width: 250px;
+}
+
+#bugType {
+    width: 200px;
+}

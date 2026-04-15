@@ -97,24 +97,29 @@ export class GameArea {
 
         // Add an eventlistener for touch buttons to detect onPress and onRelease
         window.addEventListener("touchstart", (e) => {
-            this.xLoc = e.touches[0].pageX;
-            this.yLoc = e.touches[0].pageY;
+            const rect = this.canvas.getBoundingClientRect();
+            this.xLoc = e.touches[0].pageX - rect.left;
+            this.yLoc = e.touches[0].pageY - rect.top;
+            console.log("touch");
         });
 
         window.addEventListener("touchend", (e) => {
             this.xLoc = false;
             this.yLoc = false;
         });
-
+        
         window.addEventListener("mousedown", (e) => {
-            this.xLoc = e.pageX;
-            this.yLoc = e.pageY;
+            const rect = this.canvas.getBoundingClientRect();
+            this.xLoc = e.pageX - rect.left;
+            this.yLoc = e.pageY - rect.top;
+            console.log("mouse touch")
         });
 
         window.addEventListener("mouseup", (e) => {
             this.xLoc = false;
             this.yLoc = false;
         }); 
+
     }
 
     clearGameArea() {
@@ -179,7 +184,7 @@ export class GameArea {
         }
     }
 
-    drawButtons()
+    drawButtons(player)
     {
         const buttons = [this.upButton, this.downButton, this.fireButton, this.missileButton];
 
@@ -190,6 +195,29 @@ export class GameArea {
 
             this.context.fillStyle = "gray";
             this.context.fillRect(0, 0, buttons[i].width, buttons[i].height);
+
+            if (i == 2 || i == 3) {
+                let startAngle = Math.PI / -2;
+                let endAngle = Math.PI * 1.5;
+                let length = 2 * Math.PI;
+                let center = { x: buttons[i].width / 2, y: buttons[i].height / 2};
+                let duration = (i == 2) ? player.fireTimer / player.fireDelay : player.missileTimer / player.missileDelay;
+                
+                let currentAngle = length * duration + startAngle;
+                
+                if (currentAngle < endAngle && currentAngle > startAngle) {
+                    this.context.fillStyle = "gray";
+                    this.context.strokeStyle = "gray";
+                    this.context.globalAlpha = 0.75;
+                    this.context.beginPath();
+                    this.context.moveTo(center.x, center.y);
+                    this.context.arc(center.x, center.y, center.x, currentAngle, endAngle);
+                    this.context.closePath;
+                    this.context.fill();
+                    this.context.stroke();
+                }
+            }
+
             this.context.restore();
         }
     }
@@ -280,7 +308,7 @@ export class GameArea {
 
         this.drawShieldHealth(player);
 
-        this.drawButtons();
+        this.drawButtons(player);
 
         this.checkTouch(player);
     }

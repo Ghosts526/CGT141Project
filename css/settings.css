@@ -1,0 +1,76 @@
+.settingsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.settingsTable td {
+    padding: 15px;
+    border-bottom: 2px solid gray;
+    color: white;
+    font-size: 18pt;
+}
+
+.settingName {
+    width: 60%;
+    text-shadow: 1px 1px 3px lightskyblue;
+    border-right: 2px solid gray;
+}
+
+.settingControl {
+    width: 40%;
+    text-align: center;
+}
+
+.buttonSettings {
+    width: 200px;
+    border-color: gray;
+    border-width: 5px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.5s;
+    font-weight: bold;
+    font-family: sans-serif;
+    font-size: x-large;
+    text-shadow: 1px 1px 3px white;
+    text-align: center;
+    text-decoration: none;
+}
+
+.buttonSettings:hover {
+    background: gold;
+    border-color: goldenrod;
+    color: black;
+    text-decoration: none;
+}
+
+/* Tablet Screens (≤ 900px) */
+@media (max-width: 900px) {
+    
+    .button, .buttonLink {
+        width: 250px;
+        font-size: large;
+    }
+
+    .buttonSettings {
+        font-size: large;
+        width: 150px;
+    }
+
+}
+
+/* Mobile Screens (≤ 600px) */
+@media (max-width: 600px) {
+    
+    .button, .buttonLink {
+        width: 100%;
+        max-width: 300px;
+        font-size: medium;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .buttonSettings {
+        font-size: medium;
+        width: 100px;
+    }
+}

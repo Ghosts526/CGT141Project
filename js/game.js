@@ -17,9 +17,9 @@ const bullets = [], enemies = [];
 const gameArea = new GameArea(document);
 const waveSystem = new WaveSystem();
 
-function mainMenu()
+function gameMenu()
 {
-    window.location.href = 'index.html';
+    window.location.href = 'gameMenu.html';
 }
 
 function startGame()
@@ -50,7 +50,7 @@ function restartGame()
     gameArea.resumeGame();
 }
 
-window.mainMenu = mainMenu;
+window.gameMenu = gameMenu;
 window.startGame = startGame;
 window.restartGame = restartGame;
 window.pauseGame = () => gameArea.pauseGame();

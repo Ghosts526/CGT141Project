@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Operation Breakpoint: Settings</title>
     <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="css/settings.css">
     <script src="js/Script.js" defer></script>
     <script src="js/Settings.js" defer></script>
 </head>
@@ -12,15 +13,30 @@
         <h1>Settings</h1>
     </header>
 
-    <main>
+    <main class="content">
         <a href="gameMenu.html" class="buttonLink" id="backButton">Back</a>
-        <section id="settings-section">
-            <button class="button" id="clearButton" onclick="clearData()" type="button">Clear Data</button>
-            <button class="button" id="printButton" onclick="printData()" type="button">Print Data</button>
-            <button class="button" id="addMoneyButton" onclick="addMoney(9999)" type="button">Add 9999 Credits</button>
-            <button class="button" id="showCollisionBox" onclick="showCollisionBox()" type="button">Show Collision Box [Off]</button>
-            <button class="button" id="godMode" onclick="godMode()" type="button">God Mode [Off]</button>
-        </section>
+        <table class="settingsTable">
+            <tr>
+                <td class="settingName">Clear Data</td>
+                <td class="settingControl"><button class="buttonSettings" id="clearButton" onclick="clearData()" type="button">Clear</button></td>
+            </tr>
+            <tr>
+                <td class="settingName">Print Data (Console Terminal)</td>
+                <td class="settingControl"><button class="buttonSettings" id="printButton" onclick="printData()" type="button">Print</button></td>
+            </tr>
+            <tr>
+                <td class="settingName">Add 9999 Credits</td>
+                <td class="settingControl"><button class="buttonSettings" id="addMoneyButton" onclick="addMoney(9999)" type="button">Add</button></td>
+            </tr>
+            <tr>
+                <td class="settingName">Show Collision Box</td>
+                <td class="settingControl"><button class="buttonSettings" id="showCollisionBox" onclick="showCollisionBox()" type="button">Off</button></td>
+            </tr>
+            <tr>
+                <td class="settingName">God Mode</td>
+                <td class="settingControl"><button class="buttonSettings" id="godMode" onclick="godMode()" type="button">Off</button></td>
+            </tr>
+        </table>
     </main>
 </body>
 </html>

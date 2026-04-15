@@ -1,12 +1,13 @@
 To Do List:
 - Update the UI and add responsive layout using flexbox & media queries
+- Fix CSS setups
 - Complete the howToPlay.html + credits.html
 - Implement the Shield function to the player
-- Adjust the cost price in upgrades
-- Implement a perk system
-- Add more enemies and different movement and actions
-- Add special drops such as: Health, Shield, Invisibiltity, Double Points, etc.
+- Adjust the cost price in upgrades and add the max limit
 - Implement the php form
 - Set up a server to hold bug report forms
+- Add more enemies and different movement and actions
+- Add special drops such as: Health, Shield, Invisibiltity, Double Points, etc.
+- Implement a perk system?
 - Update most images to pixel art
 - Add audio such as: Shooting, explosion, missiles, background music, button noise, etc.

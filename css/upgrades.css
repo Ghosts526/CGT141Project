@@ -1,13 +1,15 @@
-#backButton
-{
-    width: 65px;
-    height: 65px;
+h1 {
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+#backButton, #nextButton {
     background: darkgray;
-    border: solid;
-    border-color: gray;
-    border-width: 5px;
+    border: 5px solid gray;
     border-radius: 15px;
-    padding: 0px;
     cursor: pointer;
     transition: background 0.5s;
     font-weight: bold;
@@ -15,55 +17,25 @@
     font-size: x-large;
     text-shadow: 1px 1px 3px white;
     position: absolute;
-    margin: 0;
     top: 80px;
+}
+
+#backButton {
     left: 8%;
 }
 
-#backButton:hover
-{
-    background: gold;
-    border-color: goldenrod;
-}
-
-#nextButton
-{
-    width: 130px;
-    height: 65px;
-    background: darkgray;
-    border: solid;
-    border-color: gray;
-    border-width: 5px;
-    border-radius: 15px;
-    padding: 0px;
-    cursor: pointer;
-    transition: background 0.5s;
-    font-weight: bold;
-    font-family: sans-serif;
-    font-size: x-large;
-    text-shadow: 1px 1px 3px white;
-    position: absolute;
-    margin: 0;
-    top: 80px;
+#nextButton {
     right: 8%;
 }
 
-#nextButton:hover
-{
-    background: gold;
-    border-color: goldenrod;
-}
-
-.upgradesList
-{
+.upgradesList {
     justify-content: center;
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
 }
 
-.upgradeButton
-{
+.upgradeButton {
     width: 750px;
     height: 65px;
     background: darkgray;
@@ -79,10 +51,12 @@
     position: relative;
     left: 50%;
     transform: translate(-50%, 0);
+    display: grid;
+    grid-template-columns: 40% 15% 10% 10% 25%;
+    align-items: center;
 }
 
-.buyButton
-{
+.buyButton {
     width: 175px;
     height: 50px;
     background: darkgray;
@@ -98,57 +72,76 @@
     font-size: x-large;
     color: yellow;
     margin: 0;
-    position: absolute;
-    top: 50%;
-    right: 1%;
-    transform: translate(0, -50%);
     text-shadow: 1px 1px 3px black;
 }
 
-.buyButton:hover
-{
+.buyButton:hover, #backButton:hover, #nextButton:hover {
     background: gold;
     border-color: goldenrod;
 }
 
-.statTitle
-{
-    position: absolute;
+.statTitle, .statLV, .currentStat, .nextStat {
     margin: 0;
-    top: 50%;
-    left: 1%;
-    transform: translate(0, -50%);
     text-shadow: 1px 1px 3px black;
 }
 
-.statLV
-{
-    position: absolute;
-    margin: 0;
-    top: 50%;
-    left: 40%;
-    transform: translate(0, -50%);
-    text-shadow: 1px 1px 3px black;
+.statLV, .currentStat, .nextStat {
+    text-align: center;
 }
 
-.currentStat
-{
-    position: absolute;
-    margin: 0;
-    top: 50%;
-    left: 55%;
-    transform: translate(0%, -50%);
+.statTitle {
+    padding-left: 5%;
+}
+
+.currentStat {
     color: limegreen;
-    text-shadow: 1px 1px 3px black;
 }
 
-.nextStat
-{
-    position: absolute;
-    margin: 0;
-    top: 50%;
-    left: 65%;
-    transform: translate(0%, -50%);
+.nextStat {
     color: yellow;
-    text-shadow: 1px 1px 3px black;
+}
+
+/* Tablet Screens (≤ 900px) */
+@media (max-width: 900px) {
+    
+    .upgradeButton {
+        width: 500px;
+        height: 75px;
+        font-size: large;
+    }
+
+    .buyButton {
+        width: 100px;
+        height: 60px;
+        font-size: large;
+        margin-left: 5%;
+    }
+}
+
+/* Mobile Screens (≤ 600px) */
+@media (max-width: 600px) {
+    
+    #backButton, #nextButton {
+        width: 55px;
+        height: 55px;
+        font-size: large;
+        top: 50px;
+    }
+
+    #nextButton {
+        width: 110px;
+    }
+
+    .upgradeButton {
+        width: 450px;
+        height: 70px;
+        font-size: large;
+    }
+
+    .buyButton {
+        width: 100px;
+        height: 60px;
+        font-size: large;
+    }
+
 }

@@ -47,17 +47,17 @@ function printData()
 
 function addMoney(amount)
 {
-    localStorage.setItem("credits", amount.toString());
+    localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + amount).toString());
 }
 
 function showCollisionBox()
 {
     if (localStorage.getItem("showCollisionBox") == "false") {
         localStorage.setItem("showCollisionBox", "true")
-        document.getElementById("showCollisionBox").innerText = "Show Collision Box [On]"
+        document.getElementById("showCollisionBox").innerText = "On"
     } else {
         localStorage.setItem("showCollisionBox", "false")
-        document.getElementById("showCollisionBox").innerText = "Show Collision Box [Off]"
+        document.getElementById("showCollisionBox").innerText = "Off"
     }
 }
 
@@ -65,25 +65,25 @@ function godMode()
 {
     if (localStorage.getItem("godMode") == "false") {
         localStorage.setItem("godMode", "true")
-        document.getElementById("godMode").innerText = "God Mode [On]"
+        document.getElementById("godMode").innerText = "On"
     } else {
         localStorage.setItem("godMode", "false")
-        document.getElementById("godMode").innerText = "God Mode [Off]"
+        document.getElementById("godMode").innerText = "Off"
     }
 }
 
 function updateDisplay()
 {
     if (localStorage.getItem("showCollisionBox") == "false") {
-        document.getElementById("showCollisionBox").innerText = "Show Collision Box [Off]"
+        document.getElementById("showCollisionBox").innerText = "Off"
     } else {
-        document.getElementById("showCollisionBox").innerText = "Show Collision Box [On]"
+        document.getElementById("showCollisionBox").innerText = "On"
     }
 
     if (localStorage.getItem("godMode") == "false") {
-        document.getElementById("godMode").innerText = "God Mode [Off]"
+        document.getElementById("godMode").innerText = "Off"
     } else {
-        document.getElementById("godMode").innerText = "God Mode [On]"
+        document.getElementById("godMode").innerText = "On"
     }
 }
 

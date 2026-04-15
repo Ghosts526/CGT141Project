@@ -1,79 +1,68 @@
-/*HTML files: bugReport, credits, gameMenu, howToPlay, index, settings*/
+/*HTML files: bugReport, credits, gameMenu, howToPlay, index, settings, upgrades*/
 
-body
-{
-    min-width: 500px;
-    min-height: 500px;
-    margin: 10px;
+body {
+    margin: 0;
+    background-color: black;
     background-image: url("../images/SpaceBackground256x256.png");
-    background-size: auto;
     background-repeat: repeat;
 }
 
-h1, h2
-{
-    width: auto;
-    height: auto;
+h1, h2 {
     color: yellow;
     font-family: serif;
     text-align: center;
-    margin-top: 80px;
-    border-width: 0;
+    margin-top: 60px;
     text-shadow: 1px 1px 3px gray; 
 }
 
-h1
-{
+h1 {
     font-size: 40pt;
     margin-bottom: 75px;
 }
 
-h2
-{
+h2 {
     font-size: 30pt;
     margin-bottom: 25px;   
 }
 
-ul {
-    margin-left: 150px;
-    margin-right: 150px;
-}
-
-a, p, li
-{
+a, p, li {
     color: white;
     text-shadow: 1px 1px 3px lightskyblue;    
     font-size: 15pt; 
 }
 
-a:visited
-{
+a:visited {
     color: inherit;
     text-decoration: none;
-    outline: none;
 }
 
-a:hover
-{
+a:hover {
     color: yellow;
 }
 
-form
-{
-    color: black;
-    background-color: white;
+/*Works correctly when inside a content class*/
+#headerLeft, #headerRight{
+    position: absolute;
+    top: 75px;
 }
 
-.menu-nav
-{
+#headerRight {
+    right: 150px;
+}
+
+.content {
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+.menu-nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.button, .buttonLink
-{
+.button, .buttonLink {
     width: 300px;
     background: darkgray;
     border: solid;
@@ -82,6 +71,9 @@ form
     border-radius: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
     user-select: none;
     transition: background 0.5s;
@@ -93,20 +85,114 @@ form
     text-decoration: none;
 }
 
-.button:hover, .buttonLink:hover
-{
+.button {
+    height: 65px;
+}
+
+.buttonLink {
+    height: 30px;
+}
+
+.button:hover, .buttonLink:hover {
     background: gold;
     border-color: goldenrod;
     color: black;
     text-decoration: none;
 }
 
-.button
-{
-    height: 65px;
+.smallButton {
+    width: 100px;
+    height: 15px;
+    font-size: medium;
 }
 
-.buttonLink
-{
-    height: 30px;
+/* Tablet Screens (≤ 900px) */
+@media (max-width: 900px) {
+    
+    ul {
+        margin-left: 80px;
+        margin-right: 80px;
+    }
+
+    h1 {
+        font-size: 32pt;
+    }
+
+    h2 {
+        font-size: 24pt;
+    }
+
+    .button, .buttonLink {
+        width: 250px;
+        font-size: large;
+    }
+
+}
+
+/* Mobile Screens (≤ 600px) */
+@media (max-width: 600px) {
+    
+    body {
+        min-width: 0;
+        margin: 5px;
+    }
+
+    ul {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    h1 {
+        font-size: 26pt;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    h2 {
+        font-size: 20pt;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .button, .buttonLink {
+        width: 100%;
+        max-width: 300px;
+        font-size: medium;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .menu-nav {
+        gap: 5px;
+    }
+}
+
+@media (orientation: portrait) {
+    .rotate {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: lightgrey;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        z-index: 9999;
+    }
+
+    #rotateMessage {
+        color: red;
+        text-align: center;
+        text-shadow: none;
+        font-size: 40pt;
+        font-weight: bold;
+    }
+}
+
+@media (orientation: landscape) {
+    .rotate {
+        display: none;
+    }
 }
