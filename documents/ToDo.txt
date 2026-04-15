@@ -1,6 +1,5 @@
 To Do List:
-- Fix deltaTime with shooting and animation delays
-- Update the UI 
+- Update the UI and add responsive layout using flexbox & media queries
 - Complete the howToPlay.html + credits.html
 - Implement the Shield function to the player
 - Adjust the cost price in upgrades

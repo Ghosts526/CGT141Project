@@ -11,11 +11,11 @@ import { GameArea } from "./GameArea.js";
  * Connects all other javascript files together
  */
 
-var player;
-var startX, startY;
+let player;
+let startX, startY;
 const bullets = [], enemies = [];
 const gameArea = new GameArea(document);
-var waveSystem = new WaveSystem();
+const waveSystem = new WaveSystem();
 
 function mainMenu()
 {
@@ -37,13 +37,16 @@ function startGame()
 
 function restartGame()
 {
-    gameArea.lastTime = null;
+    gameArea.lastTime = 0;
     player.restart(startX, startY);
     bullets.length = 0;
     enemies.length = 0;
     waveSystem.restart();
-    gameArea.isGameOver = false;
     gameArea.collision.score = 0;
+    if (gameArea.isGameOver) {
+        gameArea.isGameOver = false;
+        gameArea.start(player, enemies, bullets)
+    }
     gameArea.resumeGame();
 }
 

@@ -28,19 +28,19 @@ export class Player {
         this.missileReady = true;
         if (localStorage.getItem("godMode") == "false") {
             this.maxHp = 4 + parseInt(localStorage.getItem("healthLV"));
-            this.hp = 4 + parseInt(localStorage.getItem("healthLV"));
+            this.hp = this.maxHp;
         } else {
             this.maxHp = 99999;
-            this.hp = 99999;
+            this.hp = this.maxHp;
         }
         this.imageState = 1;
-        this.fireDelay = 20 * (1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1)); // (Sec) Delay between shooting
+        this.fireDelay = 1.5 - 0.5 * (parseInt(localStorage.getItem("fireRateLV")) - 1); // (Sec) Delay between shooting
         this.fireTimer = 0; // Current time for shooting
-        this.missileDelay = 20 * (10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3);
+        this.missileDelay = 10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3;
         this.missileTimer = 0;
         this.maxShieldHP = parseInt(localStorage.getItem("shieldHealthLV")) - 1;
         this.shieldHP = parseInt(localStorage.getItem("shieldHealthLV")) - 1;
-        this.shieldDelay = 20 * (31 - parseInt(localStorage.getItem("shieldCooldownLV")));
+        this.shieldDelay = 31 - parseInt(localStorage.getItem("shieldCooldownLV"));
         this.shieldTimer = 0;
         this.showBox = localStorage.getItem("showCollisionBox");
         this.isShieldRegen = false;
@@ -53,7 +53,7 @@ export class Player {
     }
 
     // Updates the player image to its current position
-    update(context, bullets) {
+    update(context, bullets, dt) {
         const ctx = context;
         ctx.save();
 
@@ -73,12 +73,12 @@ export class Player {
         }
 
         if ((this.shoot || this.shootTouch) && this.fireTimer == 0) {
-            this.fireTimer++;
+            this.fireTimer += dt;
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
         } else if ((this.shoot || this.shootTouch) && this.fireTimer >= this.fireDelay) {
             this.fireTimer = 0;
         } else if ((this.shoot || this.shootTouch) || (!(this.shoot || this.shootTouch) && this.fireTimer != 0)) {
-            this.fireTimer++;
+            this.fireTimer += dt;
         } 
 
         if ((this.shootMissile || this.shootMissileTouch) && this.missileReady)
@@ -89,7 +89,7 @@ export class Player {
             this.missileTimer = 0;
             this.missileReady = true;
         } else if (!this.missileReady && this.missileTimer < this.missileDelay) {
-            this.missileTimer++;
+            this.missileTimer += dt;
         }
 
         ctx.restore();

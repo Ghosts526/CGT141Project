@@ -59,7 +59,9 @@ export class GameArea {
                 dt = 0;
             }
 
-            this.updateGameArea(dt, bullets, player, enemies);
+            if (!this.pause) {
+                this.updateGameArea(dt, bullets, player, enemies);
+            }
 
             // Update the game every frame with accurate deltaTime
             if (!this.isGameOver) {
@@ -71,7 +73,6 @@ export class GameArea {
 
         this.document.addEventListener('contextmenu', function (event) {
             event.preventDefault();
-            console.log('Right-click disabled');
         });
         
         window.addEventListener('keydown', (e) => {
@@ -234,11 +235,6 @@ export class GameArea {
     // Draws all the images on the canvas
     updateGameArea(dt, bullets, player, enemies)
     {
-        if (this.pause)
-        {
-            return;
-        }
-
         this.clearGameArea();
 
         this.drawBackground(dt);
@@ -261,15 +257,15 @@ export class GameArea {
         if (player.y + player.height/2 >= this.canvas.height) {
             player.y = this.canvas.height - player.height/2;
         }
-        player.update(this.context, bullets);
+        player.update(this.context, bullets, dt);
 
 
-        this.waveSystem.waves(this.context, enemies);
+        this.waveSystem.waves(this.context, enemies, dt);
 
         for (let i = enemies.length - 1; i >= 0; i--) {
             enemies[i].newPos(dt);
             enemies[i].update(this.context, bullets);
-            enemies[i].tryShoot(bullets, player);
+            enemies[i].tryShoot(bullets, dt);
 
             if (enemies[i].x + (enemies[i].width / 2) <= 0) {
                 enemies[i].x = this.canvas.width + (enemies[i].width / 2);

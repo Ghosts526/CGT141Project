@@ -12,7 +12,8 @@ export class Explosion
         this.x = x, this.y = y;
         this.width = width, this.height = height;
         this.angle = angle
-        this.speed = 3;
+        this.speed = 5;
+        this.pixelScale = 50;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
         this.source = source; // What object created the explosion
@@ -25,8 +26,8 @@ export class Explosion
     // Updates the missile location based by its angle and speed
     newPos(dt)
     {
-        this.x += this.addX;
-        this.y += this.addY;
+        this.x += this.addX * dt * this.pixelScale;
+        this.y += this.addY * dt * this.pixelScale;
     }
 
     // Draws the missile to its current position and rotation

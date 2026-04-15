@@ -17,7 +17,7 @@ export class Enemy
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image + ".1.png";
         this.sprite = image;
-        this.shootAt = (Math.floor(Math.random() * 2) + 1) * 20; // 1-2 seconds
+        this.shootAt = (Math.floor(Math.random() * 2) + 1); // 1-2 seconds
         this.shootTimer = 0;
         this.hp = 5;
         this.score = score;
@@ -55,12 +55,12 @@ export class Enemy
         ctx.restore();
     }
 
-    tryShoot(bullets)
+    tryShoot(bullets, dt)
     {
-        this.shootTimer++;
+        this.shootTimer += dt;
         if (this.shootTimer >= this.shootAt) {
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
-            this.shootAt = (Math.floor(Math.random() * 2) + 2) * 20; // 2-3 seconds
+            this.shootAt = (Math.floor(Math.random() * 2) + 2); // 2-3 seconds
             this.shootTimer = 0;
         }
     }
