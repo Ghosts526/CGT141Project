@@ -15,28 +15,45 @@
 
     <main id="content">
         <a href="gameMenu.html" class="buttonLink smallButton" id="headerLeft">Back</a>
-        <table class="settingsTable">
-            <tr>
-                <td class="settingName">Clear Data</td>
-                <td class="settingControl"><button class="buttonSettings" id="clearButton" onclick="clearData()" type="button">Clear</button></td>
-            </tr>
-            <tr>
-                <td class="settingName">Print Data (Console Terminal)</td>
-                <td class="settingControl"><button class="buttonSettings" id="printButton" onclick="printData()" type="button">Print</button></td>
-            </tr>
-            <tr>
-                <td class="settingName">Add 9999 Credits</td>
-                <td class="settingControl"><button class="buttonSettings" id="addMoneyButton" onclick="addMoney(9999)" type="button">Add</button></td>
-            </tr>
-            <tr>
-                <td class="settingName">Show Collision Box</td>
-                <td class="settingControl"><button class="buttonSettings" id="showCollisionBox" onclick="showCollisionBox()" type="button">Off</button></td>
-            </tr>
-            <tr>
-                <td class="settingName">God Mode</td>
-                <td class="settingControl"><button class="buttonSettings" id="godMode" onclick="godMode()" type="button">Off</button></td>
-            </tr>
-        </table>
+
+        <section id="settingLayout">
+            <nav id="settingsNav">
+                <!--gameplayButton is selected by default-->
+                <button class="button mediumButton buttonSelected" id="gameplayButton" onclick="gameplayButton()" type="button">Gameplay</button>
+                <button class="button mediumButton" id="dataManagementButton" onclick="dataManagementButton()" type="button">Data Management</button>
+                <button class="button mediumButton" id="devToolkitButton" onclick="devToolkitButton()" type="button">Dev Toolkit</button>
+            </nav>
+
+            <table class="settingsTable" id="gameplayTable">
+                
+            </table>
+
+            <table class="settingsTable hidden" id="dataManagementTable">
+                <tr>
+                    <td class="settingName">Clear Data</td>
+                    <td class="settingControl"><button class="buttonSettings" id="clearButton" onclick="clearData()" type="button">Clear</button></td>
+                </tr>
+                <tr>
+                    <td class="settingName">Print Data (Console Terminal)</td>
+                    <td class="settingControl"><button class="buttonSettings" id="printButton" onclick="printData()" type="button">Print</button></td>
+                </tr>
+                <tr>
+                    <td class="settingName">Add 9999 Credits</td>
+                    <td class="settingControl"><button class="buttonSettings" id="addMoneyButton" onclick="addMoney(9999)" type="button">Add</button></td>
+                </tr>
+            </table>
+
+            <table class="settingsTable hidden" id="devToolkitTable">
+                <tr>
+                    <td class="settingName">Show Collision Box</td>
+                    <td class="settingControl"><button class="buttonSettings" id="showCollisionBox" onclick="showCollisionBox()" type="button">Off</button></td>
+                </tr>
+                <tr>
+                    <td class="settingName">God Mode</td>
+                    <td class="settingControl"><button class="buttonSettings" id="godMode" onclick="godMode()" type="button">Off</button></td>
+                </tr>
+            </table>
+        </section>
     </main>
 </body>
 </html>

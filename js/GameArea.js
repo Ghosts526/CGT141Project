@@ -103,7 +103,6 @@ export class GameArea {
             const rect = this.canvas.getBoundingClientRect();
             this.xLoc = e.touches[0].pageX - rect.left;
             this.yLoc = e.touches[0].pageY - rect.top;
-            console.log("touch");
         });
 
         window.addEventListener("touchend", (e) => {
@@ -115,7 +114,6 @@ export class GameArea {
             const rect = this.canvas.getBoundingClientRect();
             this.xLoc = e.pageX - rect.left;
             this.yLoc = e.pageY - rect.top;
-            console.log("mouse touch")
         });
 
         window.addEventListener("mouseup", (e) => {

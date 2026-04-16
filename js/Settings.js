@@ -87,4 +87,31 @@ function updateDisplay()
     }
 }
 
+function gameplayButton() {
+    document.getElementById("gameplayTable").classList.remove("hidden");
+    document.getElementById("gameplayButton").classList.add("buttonSelected");
+    document.getElementById("dataManagementTable").classList.add("hidden");
+    document.getElementById("dataManagementButton").classList.remove("buttonSelected");
+    document.getElementById("devToolkitTable").classList.add("hidden");
+    document.getElementById("devToolkitButton").classList.remove("buttonSelected");
+}
+
+function dataManagementButton() {
+    document.getElementById("dataManagementTable").classList.remove("hidden");
+    document.getElementById("dataManagementButton").classList.add("buttonSelected");
+    document.getElementById("gameplayTable").classList.add("hidden");
+    document.getElementById("gameplayButton").classList.remove("buttonSelected");
+    document.getElementById("devToolkitTable").classList.add("hidden");
+    document.getElementById("devToolkitButton").classList.remove("buttonSelected");
+}
+
+function devToolkitButton() {
+    document.getElementById("devToolkitTable").classList.remove("hidden");
+    document.getElementById("devToolkitButton").classList.add("buttonSelected");
+    document.getElementById("gameplayTable").classList.add("hidden");
+    document.getElementById("gameplayButton").classList.remove("buttonSelected");
+    document.getElementById("dataManagementTable").classList.add("hidden");
+    document.getElementById("dataManagementButton").classList.remove("buttonSelected");
+}
+
 window.onload = function(){updateDisplay()};

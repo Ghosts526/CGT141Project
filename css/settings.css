@@ -1,6 +1,20 @@
-.settingsTable {
+#settingsNav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;;
+}
+
+#settingLayout {
+    display: flex;
     width: 100%;
-    border-collapse: collapse;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.settingsTable {
+    width: 75%;
+    border-collapse: collapse;    
 }
 
 .settingsTable td {
@@ -41,6 +55,12 @@
     border-color: goldenrod;
     color: black;
     text-decoration: none;
+}
+
+.buttonSelected {
+    background: gold;
+    border-color: goldenrod;
+    color: black;
 }
 
 /* Tablet Screens (≤ 900px) */
