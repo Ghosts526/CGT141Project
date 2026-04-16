@@ -116,7 +116,7 @@ a:hover {
 }
 
 /* Tablet Screens (≤ 900px) */
-@media (max-height: 900px) {
+@media (max-width: 900px) {
     
     ul {
         margin-left: 80px;
@@ -140,7 +140,7 @@ a:hover {
 }
 
 /* Mobile Screens (≤ 600px) */
-@media (max-height: 600px) {
+@media (max-width: 600px) {
     
     body {
         min-width: 0;

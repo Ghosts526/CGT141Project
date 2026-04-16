@@ -1,13 +1,21 @@
 To Do List:
-- Update the UI and add responsive layout using flexbox & media queries
-- Fix CSS setups
-- Complete the howToPlay.html + credits.html
-- Implement the Shield function to the player
-- Adjust the cost price in upgrades and add the max limit
+
+(Important)
+- Update the UI and add responsive layout
+- Finish the howToPlay.html + credits.html
+- Complete the Shield function to the player
+- Adjust the cost price in upgrades and add a max limit
 - Implement the php form
 - Set up a server to hold bug report forms
+
+(Non-Important)
+- Adjust WaveSystem Spawn Rate
+- Update most images to pixel art
+    - Don't have to if time doesn't allow
+- Add audio such as: Shooting, explosion, missiles, background music, button noise, etc.
+    - Can just add simple effects if needed
+
+(Extra)
 - Add more enemies and different movement and actions
 - Add special drops such as: Health, Shield, Invisibiltity, Double Points, etc.
-- Implement a perk system?
-- Update most images to pixel art
-- Add audio such as: Shooting, explosion, missiles, background music, button noise, etc.
+- Implement a perk system
