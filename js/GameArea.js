@@ -232,7 +232,7 @@ export class GameArea {
     {
         this.context.save();
         this.context.translate(10, 10);
-        this.context.globalAlpha = 0.5;
+        this.context.globalAlpha = 0.75;
 
         let barLength = 260;
         let hp = (player.hp / player.maxHp * barLength).toFixed(2);
@@ -251,14 +251,18 @@ export class GameArea {
     {
         this.context.save();
         this.context.translate(325, 10);
+        this.context.globalAlpha = 0.75;
 
         let barLength = 260;
         let hp = (player.shieldHP / player.maxShieldHP * barLength).toFixed(2);
+        let regenHp = (player.shieldTimer / player.shieldDelay * barLength).toFixed(2);
 
         this.context.fillStyle = "rgb(0, 0, 175)";
         this.context.fillRect(32, 3, (hp >= 0) ? hp : 0, 26);
         this.context.fillStyle = "gray";
         this.context.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
+        this.context.fillStyle = "yellow";
+        this.context.fillRect(32, 3, (regenHp >= 0) ? regenHp : 0, 26);
 
         this.context.drawImage(this.shieldBarUI, 0, 0, 295, 32); // Health Bar Overlay
 

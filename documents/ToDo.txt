@@ -2,7 +2,6 @@ To Do List:
 
 (Important)
 - Update the UI and add responsive layout
-- Complete the Shield function to the player
 - Adjust the cost price in upgrades and add a max limit
 - Implement the php form
 - Set up a server to hold bug report forms

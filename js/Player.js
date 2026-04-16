@@ -92,6 +92,8 @@ export class Player {
             this.missileTimer += dt;
         }
 
+        this.shieldRegen(dt);
+
         ctx.restore();
     }
 
@@ -133,12 +135,23 @@ export class Player {
         } else {
             this.hp -= amount;
         }
+
+        if (this.isShieldRegen) {
+            this.shieldTimer = 0;
+        }else if (this.shieldHP == 0) {
+            this.isShieldRegen = true;
+        }
     }
 
-    shieldRegen()
+    shieldRegen(dt)
     {
         if (this.isShieldRegen) {
-            
+            this.shieldTimer += dt;
+            if (this.shieldTimer >= this.shieldDelay) {
+                this.shieldHP = this.maxShieldHP;
+                this.isShieldRegen = false;
+                this.shieldTimer = 0;
+            }
         }
     }
 }
