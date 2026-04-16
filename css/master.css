@@ -40,7 +40,7 @@ a:hover {
     color: yellow;
 }
 
-/*Works correctly when inside a content class*/
+/*Works correctly when inside a content id*/
 #headerLeft, #headerRight{
     position: absolute;
     top: 75px;
@@ -50,7 +50,7 @@ a:hover {
     right: 150px;
 }
 
-.content {
+#content {
     margin-left: 150px;
     margin-right: 150px;
 }

@@ -83,6 +83,9 @@ export class GameArea {
                 player.shoot = true;
             }
             if (e.key.toLowerCase() === 'e') player.shootMissile = true;
+            if (e.key === 'Escape') {
+                this.pauseGame();
+            }
         });
 
         window.addEventListener('keyup', (e) => {
