@@ -13,7 +13,7 @@ export class GameArea {
         this.canvas = this.document.getElementById("gameScreen");
         this.context = this.canvas.getContext("2d");
         this.collision = new Collision();
-        this.pause = false; 
+        this.pause = true; 
         this.isGameOver = false;
         this.backgroundSpeed = 5;
         this.backgroundX = 0;
@@ -84,7 +84,11 @@ export class GameArea {
             }
             if (e.key.toLowerCase() === 'e') player.shootMissile = true;
             if (e.key === 'Escape') {
-                this.pauseGame();
+                if (this.pause) {
+                    this.resumeGame();
+                } else {
+                    this.pauseGame();
+                }
             }
         });
 
@@ -320,6 +324,7 @@ export class GameArea {
         this.pause = true;
         this.document.getElementById("pauseButton").onclick = () => this.resumeGame();
         this.document.getElementById("pauseButton").innerText = "Resume Game";
+        this.document.getElementById("uiNav").classList.remove("visuallyHidden");
     }
 
     resumeGame()
@@ -328,6 +333,7 @@ export class GameArea {
         this.pause = false;
         this.document.getElementById("pauseButton").onclick = () => this.pauseGame();
         this.document.getElementById("pauseButton").innerText = "Pause Game";
+        this.document.getElementById("uiNav").classList.add("visuallyHidden");
     }
 
     gameOver()

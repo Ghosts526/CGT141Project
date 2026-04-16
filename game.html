@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Operation Breakpoint: Game</title>
+    <link rel="stylesheet" href="css/master.css">
     <link rel="stylesheet" href="css/game.css">
     <script type="module" src="js/GameArea.js" defer></script>
     <script type="module" src="js/Bullet.js" defer></script>
@@ -14,17 +15,17 @@
 </head>
 <body>
     <header>
-        <h1 class="visually-hidden">Game Screen</h1>
+        <h1 class="hidden">Game Screen</h1>
     </header>
 
     <main>
         <canvas id="gameScreen"></canvas>
 
-        <div class="UI-Buttons">
-            <button class="MyButton" id="menuButton" onclick="gameMenu()" type="button">Back</button>
-            <button class="MyButton" id="gameButton" onclick="startGame()" type="button">Start Game</button>
-            <button class="MyButton" id="pauseButton" onclick="pauseGame()" type="button">Pause Game</button>
-        </div>
+        <nav class="uiButtons" id="uiNav">
+            <button class="button mediumButton" id="pauseButton" onclick="pauseGame()" type="button">Resume Game</button>
+            <button class="button mediumButton" id="gameButton" onclick="startGame()" type="button">Start Game</button>
+            <button class="button mediumButton" id="menuButton" onclick="gameMenu()" type="button">Exit</button>
+        </nav>
         <div class="UI-Display">
             <div id="score">Score: 0</div>
         </div>

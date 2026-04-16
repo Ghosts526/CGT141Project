@@ -24,6 +24,7 @@ function gameMenu()
 
 function startGame()
 {   
+    gameArea.resumeGame();
     gameArea.setUp(waveSystem);
     let playerWidth = 60, playerHeight = 60;
     let widthMultiplyer = 0.4;

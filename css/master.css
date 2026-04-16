@@ -69,8 +69,7 @@ a:hover {
     border-color: gray;
     border-width: 5px;
     border-radius: 15px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,7 +116,7 @@ a:hover {
 }
 
 /* Tablet Screens (≤ 900px) */
-@media (max-width: 900px) {
+@media (max-height: 900px) {
     
     ul {
         margin-left: 80px;
@@ -126,6 +125,7 @@ a:hover {
 
     h1 {
         font-size: 32pt;
+        color: green;
     }
 
     h2 {
@@ -140,7 +140,7 @@ a:hover {
 }
 
 /* Mobile Screens (≤ 600px) */
-@media (max-width: 600px) {
+@media (max-height: 600px) {
     
     body {
         min-width: 0;
@@ -156,6 +156,7 @@ a:hover {
         font-size: 26pt;
         margin-top: 40px;
         margin-bottom: 40px;
+        color: red;
     }
 
     h2 {
@@ -184,7 +185,7 @@ a:hover {
         top: 0;
         width: 100vw;
         height: 100vh;
-        background-color: gray;
+        background-color: rgba(128, 128, 128, 0.75);
         display: flex;
         flex-direction: column;
         justify-content: center;
