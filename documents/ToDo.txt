@@ -2,7 +2,6 @@ To Do List:
 
 (Important)
 - Update the UI and add responsive layout
-- Finish the howToPlay.html + credits.html
 - Complete the Shield function to the player
 - Adjust the cost price in upgrades and add a max limit
 - Implement the php form
@@ -14,6 +13,8 @@ To Do List:
     - Don't have to if time doesn't allow
 - Add audio such as: Shooting, explosion, missiles, background music, button noise, etc.
     - Can just add simple effects if needed
+- Complete the howToPlay.html + credits.html
+    - Add new things that need to be added
 
 (Extra)
 - Add more enemies and different movement and actions

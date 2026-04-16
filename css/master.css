@@ -55,6 +55,17 @@ a:hover {
     margin-right: 150px;
 }
 
+#content2 {
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-bottom: 200px;
+}
+
+.alignTextCenter {
+    text-align: center;
+    list-style: none;
+}
+
 .menuNav {
     display: flex;
     flex-direction: column;

@@ -16,46 +16,106 @@
     <main id="content">
         <a href="index.html" class="buttonLink smallButton" id="headerLeft">Back</a>
 
-        <h2>Contents</h2>
-        <ul>
-            <li><a href="#controls">Controls</a></li>
-            <li><a href="#objectives">Objectives</a></li>
-            <li><a href="#upgrades-progression">Upgrades & Progression</a></li>
-            <li><a href="#additional-pages">Additional Pages</a></li>
-        </ul>
+        <article id="content2">
+            <h2>Table of Contents</h2>
+            <ul class="alignTextCenter">
+                <li><a href="#objectives">Objectives</a></li>
+                <li><a href="#controls">Controls</a></li>
+                <li><a href="#coreGameplay">Core Gameplay</a></li>
+                <li><a href="#progression">Progression</a></li>
+                <li><a href="#healthAndShieldSystem">Health and Shield System</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#hudExplanation">HUD Explanation</a></li>
+                <li><a href="#saving">Saving</a></li>
+            </ul>
 
-        <h2 id="controls">Controls</h2>
-        <ul>
-            <li>W - Moves your ship up</li>
-            <li>S - Moves your ship down</li>
-            <li>Space - Fires your primary weapon (Blaster)</li>
-            <li>E - Fires your secondary weapon (Missile)</li>
-            <li>Left Click - Interact with buttons</li>
-        </ul>
+            <h2 id="objectives">Objectives</h2>
+            <ul>
+                <li>Main Goal: Survive as long as possible while defeating waves of enemy ships.</li>
+                <li>Challenge: Each wave becomes progressively harder, introducing tougher enemies, higher enemy count, and faster spawn rates.</li>
+            </ul>
 
-        <h2 id="objectives">Objectives</h2>
-        <ul>
-            <li>Survive as long as possible while defeating waves of enemy ships.</li>
-            <li>Each wave becomes progressively harder, introducing tougher enemies and faster spawn rates.</li>
-        </ul>
+            <h2 id="controls">Controls</h2>
+            <ul>
+                <p>Keyboard / Mouse</p>
+                <li>W - Moves your ship up</li>
+                <li>S - Moves your ship down</li>
+                <li>Space - Fires your primary weapon (Blaster)</li>
+                <li>E - Fires your secondary weapon (Missile)</li>
+                <li>Left Click - Interact with buttons</li>
+                <li>ESC - Open and close the pause menu within the game</li>
+            </ul>
 
-        <h2 id="upgrades-progression">Upgrades & Progression</h2>
-        <p>Between runs, you can enhance your ship with permanent upgrades such as:</p>
-        <ul>
-            <li>Increase Health</li>
-            <li>Increade Firerate</li>
-            <li>Decrease Missile Cooldown</li>
-            <li>Increase Shield Health</li>
-            <li>Decrease Shield Cooldown</li>
-        </ul>
-        
-        <h2 id="additional-pages">Additional Pages</h2>
-        <ul>
-            <li>How to Play - Quick reference for controls and mechanics</li>
-            <li>Settings - Adjust audio and gameplay preferences</li>
-            <li>Upgrades - Improve your spaceship between runs</li>
-            <li>Credits - Acknowledgements and project contributors</li>
-        </ul>
+            <h2 id="coreGameplay">Core Gameplay</h2>
+            <ul>
+                <li>Shoot down enemy spaceship by dodging incoming fire</li>
+            </ul>
+
+            <h2>Game Mechanics</h2>
+            <p>Combat</p>
+            <ul>
+                <li>Primary Weapon: Blaster Cannon</li>
+                <li>Secondary Weapon: Missile Launcher</li>
+                <li>Enemy Weapon: Blaster Cannon</li>
+            </ul>
+            <p>Movement</p>
+            <ul>
+                <li>Player: Moves up and down</li>
+                <li>Enemy: Moves toward the player in a stright line</li>
+            </ul>
+
+            <h2 id="progression">Progression</h2>
+            <p>After each run, you recieve a certain amount of credits based on how many ships you destory.</p>
+            <p>You can use credits to upgrade your ship to survive longer in each playthrough.</p>
+            <p>Upgradeable Stats:</p>
+            <ul>
+                <li>Increase Health by 1 Point</li>
+                <li>Decrease Fire Delay by 0.05 Sec</li>
+                <li>Decrease Missile Cooldown by 0.3 Sec</li>
+                <li>Increase Shield Health by 1 Point</li>
+                <li>Decrease Shield Cooldown by 1 Sec</li>
+            </ul>
+            <p>Max Stats:</p>
+            <ul>
+                <li>Increase Health by 1 Point</li>
+                <li>Decrease Fire Delay by 0.05 Sec</li>
+                <li>Decrease Missile Cooldown by 0.3 Sec</li>
+                <li>Increase Shield Health by 1 Point</li>
+                <li>Decrease Shield Cooldown by 1 Sec</li>
+            </ul>
+            
+            <h2 id="healthAndShieldSystem">Health and Shield System</h2>
+            <p>Health:</p>
+            <ul>
+                <li>HP is determine by the level of your health stat.</li>
+                <li>Each damage you take decreases your HP by 1 point.</li>
+                <li>When your HP reaches 0 it is game over.</li>
+            </ul>
+            <p>Shields:</p>
+            <ul>
+                <li>Shield is determine by the level of your shield stat.</li>
+                <li>Each damage you take decreases your shield by 1 point.</li>
+                <li>Shields takes in all damage recieved, which then transfers it to your HP.</li>
+                <li>When shield reaches 0, it starts a cooldown phase.</li>
+                <li>During the cooldown phase, any damage you recieve will restart the cooldown process.</li>
+                <li>Once the cooldown phase is complete, all your shields will be replenish back up.</li>
+            </ul>
+
+            <h2 id="tips">Tips for New Players</h2>
+            <ul>
+                <li>Don't shoot missile too close to yourself as it causes an explosion radius.</li>
+            </ul>
+
+            <h2 id="hudExplanation">HUD Explanation</h2>
+            <p>Health and Shield Bar</p>
+            <ul>
+                <li>Displays current HP and shields.</li>
+                <li>Left is 0% and right is 100%</li>
+            </ul>
+
+            <h2 id="saving">Saving</h2>
+            <p>Saving is done automatically by the system. But, exiting the game before the Game Over screen pops up, will cause you to lose all of your progress.</p>
+        </article>
     </main>
 </body>
 </html>
