@@ -10,7 +10,7 @@ function upgrade(buttonNum)
     let newLV = "";
     let lv = parseInt(localStorage.getItem(statLV[buttonNum]), 10)
 
-    if (!isMax(lv, buttonNum) && purchase((5 * (lv ** 1.2)).toFixed(0))) {
+    if (!(lv == maxLV[buttonNum]) && purchase((5 * (lv ** 1.2)).toFixed(0))) {
         newLV = (parseInt(localStorage.getItem(statLV[buttonNum]), 10) + 1).toString();
         localStorage.setItem(statLV[buttonNum], newLV);
     }
@@ -35,6 +35,11 @@ function updateDisplay()
 
     for(let i = 0; i < statLV.length; i++) {
         let lv = parseInt(localStorage.getItem(statLV[i]), 10)
+        if (lv > maxLV[i]) { // If the player get lv > max it sets it to the max
+            localStorage.setItem(statLV[i], maxLV[i])
+            lv = maxLV[i];
+        }
+        
         document.getElementById(statLV[i]).innerText = "LV: " + lv;
         document.getElementById(costStat[i]).innerText = (5 * (lv ** 1.2)).toFixed(0) + " Credits"; // Cost for upgrade
 
@@ -42,7 +47,7 @@ function updateDisplay()
         document.getElementById(currStat[i]).innerText = stat.curr;
         document.getElementById(nextStat[i]).innerText = stat.next;
        
-        if (lv >= maxLV[i]) {
+        if (lv == maxLV[i]) {
             document.getElementById(nextStat[i]).innerText = ""; //Don't display next stat
             document.getElementById(costStat[i]).innerText = "Max Level"; // Inform the player they reached the max level
         }
@@ -86,12 +91,6 @@ function getStat(lv, index) { //Returns the current stat and the increase or dec
     effectDifference = (effectDifference <= 0) ? effectDifference : "+" + effectDifference;
 
     return { curr: currentEffect, next: effectDifference};
-}
-
-function isMax(lv, index) {
-    if (lv >= maxLV[index]) {
-        return true;
-    }
 }
 
 window.onload = function(){updateDisplay()};
