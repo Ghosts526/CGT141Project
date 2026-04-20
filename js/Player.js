@@ -34,13 +34,13 @@ export class Player {
             this.hp = this.maxHp;
         }
         this.imageState = 1;
-        this.fireDelay = 1.5 - 0.05 * (parseInt(localStorage.getItem("fireRateLV")) - 1); // (Sec) Delay between shooting
+        this.fireDelay = 1.5 * (0.92 ** (parseInt(localStorage.getItem("fireRateLV")) - 1)); // (Sec) Delay between shooting
         this.fireTimer = 0; // Current time for shooting
-        this.missileDelay = 10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3;
+        this.missileDelay = 10 * (0.95 ** (parseInt(localStorage.getItem("missileCooldownLV")) - 1));
         this.missileTimer = 0;
-        this.maxShieldHP = parseInt(localStorage.getItem("shieldHealthLV")) - 1;
-        this.shieldHP = parseInt(localStorage.getItem("shieldHealthLV")) - 1;
-        this.shieldDelay = 31 - parseInt(localStorage.getItem("shieldCooldownLV"));
+        this.maxShieldHP = (parseInt(localStorage.getItem("shieldHealthLV")) - 1) * 0.5;
+        this.shieldHP = this.maxShieldHP;
+        this.shieldDelay = 30 * (0.96 ** (parseInt(localStorage.getItem("shieldCooldownLV")) - 1));
         this.shieldTimer = 0;
         this.showBox = localStorage.getItem("showCollisionBox");
         this.isShieldRegen = false;
@@ -138,7 +138,7 @@ export class Player {
 
         if (this.isShieldRegen) {
             this.shieldTimer = 0;
-        }else if (this.shieldHP == 0) {
+        }else if (this.shieldHP == 0 && this.maxShieldHP != 0) {
             this.isShieldRegen = true;
         }
     }

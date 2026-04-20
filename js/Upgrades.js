@@ -1,38 +1,19 @@
+const statLV = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
+
+const currStat = ["currHealth", "currFireRate", "currMissileCooldown", "currShieldHealth", "currShieldCooldown"];
+
+const costStat = ["costHealthButton", "costFireRateButton", "costMissileCooldownButton", "costShieldHealthButton", "costShieldCooldownButton"];
+
+const nextStat = ["nextHealth", "nextFireRate", "nextMissileCooldown", "nextShieldHealth", "nextShieldCooldown"];
+
 function upgrade(buttonNum)
 {
     let newCredits = "";
     let newLV = "";
-    switch(buttonNum) {
-        case 1: // Upgrade Health
-            if (purchase(50 * parseInt(localStorage.getItem("healthLV")))) {
-                newLV = (parseInt(localStorage.getItem("healthLV"), 10) + 1).toString();
-                localStorage.setItem("healthLV", newLV);
-            }
-            break;
-        case 2: // Upgrade Fire Rate
-            if (purchase(150 * (parseInt(localStorage.getItem("fireRateLV"))))) {
-                newLV = (parseInt(localStorage.getItem("fireRateLV"), 10) + 1).toString();
-                localStorage.setItem("fireRateLV", newLV);
-            }
-            break;
-        case 3: // Upgrade Missile Cooldown
-            if (purchase(150 + (parseInt(localStorage.getItem("missileCooldownLV")) * 100))) {
-                newLV = (parseInt(localStorage.getItem("missileCooldownLV"), 10) + 1).toString();
-                localStorage.setItem("missileCooldownLV", newLV);
-            }
-            break;
-        case 4: // Upgrade Shield Health
-            if (purchase(100 + (parseInt(localStorage.getItem("shieldHealthLV")) * 150))) {
-                newLV = (parseInt(localStorage.getItem("shieldHealthLV"), 10) + 1).toString();
-                localStorage.setItem("shieldHealthLV", newLV);
-            }
-            break;
-        case 5: // Upgrade Shield Cooldown
-            if (purchase(100 * parseInt(localStorage.getItem("shieldCooldownLV")))) {
-                newLV = (parseInt(localStorage.getItem("shieldCooldownLV"), 10) + 1).toString();
-                localStorage.setItem("shieldCooldownLV", newLV);
-            }
-            break;
+
+    if (purchase((5 * (parseInt(localStorage.getItem(statLV[buttonNum]), 10) ** 1.2)).toFixed(0))) {
+        newLV = (parseInt(localStorage.getItem(statLV[buttonNum]), 10) + 1).toString();
+        localStorage.setItem(statLV[buttonNum], newLV);
     }
     updateDisplay();
 }
@@ -53,29 +34,54 @@ function updateDisplay()
 {
     document.getElementById("creditsDisplay").innerText = "Credits: " + localStorage.getItem("credits");
 
-    const statLV = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
-    const currStat = ["currHealth", "currFireRate", "currMissileCooldown", "currShieldHealth", "currShieldCooldown"];
-    const costStat = ["costHealthButton", "costFireRateButton", "costMissileCooldownButton", "costShieldHealthButton", "costShieldCooldownButton"];
-
     // Current Level
-    for(let i = 0; i < statLV.length; i++)
-    {
+    for(let i = 0; i < statLV.length; i++) {
         document.getElementById(statLV[i]).innerText = "LV: " + localStorage.getItem(statLV[i]);
+        document.getElementById(costStat[i]).innerText = (5 * (parseInt(localStorage.getItem(statLV[i]), 10) ** 1.2)).toFixed(0) + " Credits"; // Cost for upgrade
+
+        let stat = getStat(parseInt(localStorage.getItem(statLV[i]), 10), i);
+        document.getElementById(currStat[i]).innerText = stat.curr;
+        document.getElementById(nextStat[i]).innerText = stat.next;
+    }
+}
+
+
+function getStat(lv, index) { //Returns the current stat and the increase or decrease to the next stat
+    let currentEffect = 0, nextEffect = 0, effectDifference = 0;
+
+    switch (index) {
+        case 0:
+            currentEffect = (4 + lv);
+            nextEffect = (5 + lv);
+            effectDifference = nextEffect - currentEffect;
+            break;
+        case 1:
+            currentEffect = (1.5 * (0.92 ** (lv - 1))).toFixed(2);
+            nextEffect = (1.5 * (0.92 ** (lv))).toFixed(2);
+            effectDifference = (nextEffect - currentEffect).toFixed(2);
+            break;
+        case 2:
+            currentEffect = (10 * (0.95 ** (lv - 1))).toFixed(2);
+            nextEffect = (10 * (0.95 ** (lv))).toFixed(2);
+            effectDifference = (nextEffect - currentEffect).toFixed(2);
+            break;
+        case 3:
+            currentEffect = ((lv - 1) * 0.5).toFixed(1);
+            nextEffect = ((lv) * 0.5).toFixed(1);
+            effectDifference = (nextEffect - currentEffect).toFixed(1);
+            break;
+        case 4:
+            currentEffect = (30 * (0.96 ** (lv - 1))).toFixed(2);
+            nextEffect = (30 * (0.96 ** (lv))).toFixed(2);
+            effectDifference = (nextEffect - currentEffect).toFixed(2);
+            break;
+        default:
+
     }
 
-    // Current effect
-    document.getElementById(currStat[0]).innerText = (4 + parseInt(localStorage.getItem("healthLV"))).toString();
-    document.getElementById(currStat[1]).innerText = (1.5 - 0.05 * (parseInt(localStorage.getItem("fireRateLV")) - 1)).toFixed(2);
-    document.getElementById(currStat[2]).innerText = (10 - (parseInt(localStorage.getItem("missileCooldownLV")) - 1) * 0.3).toFixed(1);
-    document.getElementById(currStat[3]).innerText = (parseInt(localStorage.getItem("shieldHealthLV")) - 1).toString();
-    document.getElementById(currStat[4]).innerText = (31 - parseInt(localStorage.getItem("shieldCooldownLV"))).toString();
+    effectDifference = (effectDifference <= 0) ? effectDifference : "+" + effectDifference;
 
-    // Cost for upgrade
-    document.getElementById(costStat[0]).innerText = (50 * parseInt(localStorage.getItem("healthLV"))).toString() + " Credits";
-    document.getElementById(costStat[1]).innerText = (150 * (parseInt(localStorage.getItem("fireRateLV")))).toString() + " Credits";
-    document.getElementById(costStat[2]).innerText = (150 + (parseInt(localStorage.getItem("missileCooldownLV")) * 100)).toString() + " Credits";
-    document.getElementById(costStat[3]).innerText = (100 + (parseInt(localStorage.getItem("shieldHealthLV")) * 150)).toString() + " Credits";
-    document.getElementById(costStat[4]).innerText = (100 * parseInt(localStorage.getItem("shieldCooldownLV"))).toString() + " Credits";
+    return { curr: currentEffect, next: effectDifference};
 }
 
 window.onload = function(){updateDisplay()};

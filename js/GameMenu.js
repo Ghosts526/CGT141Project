@@ -10,7 +10,7 @@ function updateDisplay()
     {
         reset();
     }
-    document.getElementById("topScore").innerText = "Score: " + localStorage.getItem("topScore");
+    document.getElementById("topScore").innerText = "High Score: " + localStorage.getItem("topScore");
 }
 
 window.onload = function(){updateDisplay()};

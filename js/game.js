@@ -1,5 +1,5 @@
 import { Player } from "./Player.js";
-import { WaveSystem } from "./WaveSystem.js";
+import { EnemySpawner } from "./EnemySpawner.js";
 import { GameArea } from "./GameArea.js";
 
 /**
@@ -15,7 +15,7 @@ let player;
 let startX, startY;
 const bullets = [], enemies = [];
 const gameArea = new GameArea(document);
-const waveSystem = new WaveSystem();
+const enemySpawner = new EnemySpawner();
 
 function gameMenu()
 {
@@ -25,7 +25,7 @@ function gameMenu()
 function startGame()
 {   
     gameArea.resumeGame();
-    gameArea.setUp(waveSystem);
+    gameArea.setUp(enemySpawner);
     let playerWidth = 60, playerHeight = 60;
     let widthMultiplyer = 0.4;
     startX = playerWidth + 50;
@@ -42,7 +42,7 @@ function restartGame()
     player.restart(startX, startY);
     bullets.length = 0;
     enemies.length = 0;
-    waveSystem.restart();
+    enemySpawner.restart();
     gameArea.collision.score = 0;
     if (gameArea.isGameOver) {
         gameArea.isGameOver = false;

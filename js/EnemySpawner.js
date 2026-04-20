@@ -4,7 +4,7 @@ import { Enemy } from "./Enemy.js";
  * Manages enemy wave spawing and progression logic
  */
 
-export class WaveSystem {
+export class EnemySpawner {
     constructor() {
         this.restart();
     }
@@ -15,6 +15,7 @@ export class WaveSystem {
         this.enemiesSpawning = 0;
     }
 
+    // Used by GameArea.js
     waves(gameArea, enemies, dt) {
         if (enemies.length == 0 && this.enemiesSpawning == 0)
         {

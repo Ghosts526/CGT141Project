@@ -38,13 +38,13 @@ export class GameArea {
         this.pixelScale = 50;
     }
 
-    setUp(waveSystem) {
+    setUp(enemySpawner) {
         this.canvas.width = 1200;
         this.canvas.height = 600;
         this.startX = this.canvas.width/2;
         this.startY = this.canvas.height/2;
         this.document.body.insertBefore(this.canvas, this.document.body.childNodes[0]);
-        this.waveSystem = waveSystem;
+        this.enemySpawner = enemySpawner;
     }
 
     start(player, enemies, bullets) {
@@ -297,7 +297,7 @@ export class GameArea {
         player.update(this.context, bullets, dt);
 
 
-        this.waveSystem.waves(this.context, enemies, dt);
+        this.enemySpawner.waves(this.context, enemies, dt);
 
         for (let i = enemies.length - 1; i >= 0; i--) {
             enemies[i].newPos(dt);
@@ -352,11 +352,11 @@ export class GameArea {
         ctx.fillText("Game Over!", ctx.canvas.width/2, ctx.canvas.height/2);
         ctx.fillStyle = "yellow";
         ctx.font = "30px Arial";
-        ctx.fillText("Credits Earned: " + parseInt(this.collision.score / 2, 10), ctx.canvas.width/2, ctx.canvas.height/2 + 60);
+        ctx.fillText("Credits Earned: " + parseInt(this.collision.score, 10), ctx.canvas.width/2, ctx.canvas.height/2 + 60);
         if (parseInt(localStorage.getItem("topScore"), 10) < this.collision.score) 
         {
             localStorage.setItem("topScore", this.collision.score.toString());
         }
-        localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + parseInt(this.collision.score / 2, 10)).toString());
+        localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + parseInt(this.collision.score, 10)).toString());
     }
 }
