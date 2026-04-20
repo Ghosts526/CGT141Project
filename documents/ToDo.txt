@@ -2,7 +2,6 @@ To Do List:
 
 (Important)
 - Update the UI and add responsive layout
-- Add a max limit to the stats
 - Implement the php form
 - Set up a server to hold bug report forms
 
@@ -14,7 +13,9 @@ To Do List:
     - Can just add simple effects if needed
 - Complete the howToPlay.html + credits.html
     - Add new things that need to be added
-- Add a notification system in settings to alert the player the system has adjusted it
+- Add a notification system in settings and upgrades
+    - to alert the player the system has adjusted it
+    - to alert the player they can't do that
 
 (Extra)
 - Add more enemies and different movement and actions

@@ -1,17 +1,16 @@
 const statLV = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
-
 const currStat = ["currHealth", "currFireRate", "currMissileCooldown", "currShieldHealth", "currShieldCooldown"];
-
 const costStat = ["costHealthButton", "costFireRateButton", "costMissileCooldownButton", "costShieldHealthButton", "costShieldCooldownButton"];
-
 const nextStat = ["nextHealth", "nextFireRate", "nextMissileCooldown", "nextShieldHealth", "nextShieldCooldown"];
+const maxLV = [26, 25, 28, 21, 28];
 
 function upgrade(buttonNum)
 {
     let newCredits = "";
     let newLV = "";
+    let lv = parseInt(localStorage.getItem(statLV[buttonNum]), 10)
 
-    if (purchase((5 * (parseInt(localStorage.getItem(statLV[buttonNum]), 10) ** 1.2)).toFixed(0))) {
+    if (!isMax(lv, buttonNum) && purchase((5 * (lv ** 1.2)).toFixed(0))) {
         newLV = (parseInt(localStorage.getItem(statLV[buttonNum]), 10) + 1).toString();
         localStorage.setItem(statLV[buttonNum], newLV);
     }
@@ -34,14 +33,19 @@ function updateDisplay()
 {
     document.getElementById("creditsDisplay").innerText = "Credits: " + localStorage.getItem("credits");
 
-    // Current Level
     for(let i = 0; i < statLV.length; i++) {
-        document.getElementById(statLV[i]).innerText = "LV: " + localStorage.getItem(statLV[i]);
-        document.getElementById(costStat[i]).innerText = (5 * (parseInt(localStorage.getItem(statLV[i]), 10) ** 1.2)).toFixed(0) + " Credits"; // Cost for upgrade
+        let lv = parseInt(localStorage.getItem(statLV[i]), 10)
+        document.getElementById(statLV[i]).innerText = "LV: " + lv;
+        document.getElementById(costStat[i]).innerText = (5 * (lv ** 1.2)).toFixed(0) + " Credits"; // Cost for upgrade
 
-        let stat = getStat(parseInt(localStorage.getItem(statLV[i]), 10), i);
+        let stat = getStat(lv, i);
         document.getElementById(currStat[i]).innerText = stat.curr;
         document.getElementById(nextStat[i]).innerText = stat.next;
+       
+        if (lv >= maxLV[i]) {
+            document.getElementById(nextStat[i]).innerText = ""; //Don't display next stat
+            document.getElementById(costStat[i]).innerText = "Max Level"; // Inform the player they reached the max level
+        }
     }
 }
 
@@ -50,27 +54,27 @@ function getStat(lv, index) { //Returns the current stat and the increase or dec
     let currentEffect = 0, nextEffect = 0, effectDifference = 0;
 
     switch (index) {
-        case 0:
+        case 0: //hp
             currentEffect = (4 + lv);
             nextEffect = (5 + lv);
             effectDifference = nextEffect - currentEffect;
             break;
-        case 1:
+        case 1: //fire rate
             currentEffect = (1.5 * (0.92 ** (lv - 1))).toFixed(2);
             nextEffect = (1.5 * (0.92 ** (lv))).toFixed(2);
             effectDifference = (nextEffect - currentEffect).toFixed(2);
             break;
-        case 2:
+        case 2: //missle cooldown
             currentEffect = (10 * (0.95 ** (lv - 1))).toFixed(2);
             nextEffect = (10 * (0.95 ** (lv))).toFixed(2);
             effectDifference = (nextEffect - currentEffect).toFixed(2);
             break;
-        case 3:
+        case 3: //shield hp
             currentEffect = ((lv - 1) * 0.5).toFixed(1);
             nextEffect = ((lv) * 0.5).toFixed(1);
             effectDifference = (nextEffect - currentEffect).toFixed(1);
             break;
-        case 4:
+        case 4: //shield cooldown
             currentEffect = (30 * (0.96 ** (lv - 1))).toFixed(2);
             nextEffect = (30 * (0.96 ** (lv))).toFixed(2);
             effectDifference = (nextEffect - currentEffect).toFixed(2);
@@ -82,6 +86,12 @@ function getStat(lv, index) { //Returns the current stat and the increase or dec
     effectDifference = (effectDifference <= 0) ? effectDifference : "+" + effectDifference;
 
     return { curr: currentEffect, next: effectDifference};
+}
+
+function isMax(lv, index) {
+    if (lv >= maxLV[index]) {
+        return true;
+    }
 }
 
 window.onload = function(){updateDisplay()};
