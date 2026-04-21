@@ -17,13 +17,11 @@ const bullets = [], enemies = [];
 const gameArea = new GameArea(document);
 const enemySpawner = new EnemySpawner();
 
-function gameMenu()
-{
+function gameMenu() {
     window.location.href = 'gameMenu.html';
 }
 
-function startGame()
-{   
+function startGame() {   
     gameArea.resumeGame();
     gameArea.setUp(enemySpawner);
     let playerWidth = 60, playerHeight = 60;
@@ -34,10 +32,10 @@ function startGame()
     gameArea.start(player, enemies, bullets);
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
+    gameArea.setupControls(player);
 }
 
-function restartGame()
-{
+function restartGame() {
     gameArea.lastTime = 0;
     player.restart(startX, startY);
     bullets.length = 0;

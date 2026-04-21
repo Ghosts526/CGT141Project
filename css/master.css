@@ -3,7 +3,7 @@
 body {
     margin: 0;
     background-color: black;
-    background-image: url("../images/SpaceBackground256x256.png");
+    background-image: url("../images/SpaceBackground256x256.jpg");
     background-repeat: repeat;
 }
 
@@ -51,19 +51,17 @@ a:hover {
 }
 
 #content {
-    margin-left: 150px;
-    margin-right: 150px;
+    margin: 0 150px;
 }
 
 #content2 {
-    margin-left: 150px;
-    margin-right: 150px;
-    margin-bottom: 200px;
+    margin: 0 150px 200px 150px;
 }
 
 .alignTextCenter {
     text-align: center;
     list-style: none;
+    padding: 0;
 }
 
 .menuNav {
@@ -90,6 +88,7 @@ a:hover {
     font-weight: bold;
     font-family: sans-serif;
     font-size: x-large;
+    color: black;
     text-shadow: 1px 1px 3px white;
     text-align: center;
     text-decoration: none;
@@ -112,14 +111,14 @@ a:hover {
 
 .smallButton {
     width: 100px;
-    height: 15px;
-    font-size: medium;
+    height: 30px;
+    font-size: large;
 }
 
 .mediumButton {
     width: 150px;
     height: 60px;
-    font-size: medium;
+    font-size: large;
 }
 
 .hidden {
@@ -127,7 +126,7 @@ a:hover {
 }
 
 /* Tablet Screens (≤ 900px) */
-@media (max-width: 900px) {
+@media (min-height: 1200px) {
     
     ul {
         margin-left: 80px;
@@ -136,6 +135,7 @@ a:hover {
 
     h1 {
         font-size: 32pt;
+        margin-bottom: 30px;
         color: green;
     }
 
@@ -151,7 +151,7 @@ a:hover {
 }
 
 /* Mobile Screens (≤ 600px) */
-@media (max-width: 600px) {
+@media (max-height: 600px) {
     
     body {
         min-width: 0;
@@ -164,9 +164,9 @@ a:hover {
     }
 
     h1 {
-        font-size: 26pt;
+        font-size: 40pt;
         margin-top: 40px;
-        margin-bottom: 40px;
+        margin-bottom: 15px;
         color: red;
     }
 
@@ -176,16 +176,43 @@ a:hover {
         margin-bottom: 20px;
     }
 
+    a, p, li {
+        font-size: 25pt;
+    }
+
+    #content {
+        margin: 0;
+    }
+
+    #tableOfContents {
+        line-height: 2;
+        column-count: 2;
+    }
+
+    #headerRight {
+        right: 5px;
+    }
+
     .button, .buttonLink {
-        width: 100%;
-        max-width: 300px;
-        font-size: medium;
-        padding-top: 12px;
-        padding-bottom: 12px;
+        width: 200px;
+        height: 50px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-size: x-large;
     }
 
     .menuNav {
-        gap: 5px;
+        flex-wrap: wrap;
+        height: 230px;
+        align-content: center;
+        column-gap: 50px;
+        row-gap: 50px;
+    }
+
+    .mediumButton {
+        width: 150px;
+        height: 60px;
+        align-self: center;
     }
 }
 

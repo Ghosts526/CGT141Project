@@ -2,15 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Operation Breakpoint: Game</title>
     <link rel="stylesheet" href="css/master.css">
     <link rel="stylesheet" href="css/game.css">
-    <script type="module" src="js/GameArea.js" defer></script>
-    <script type="module" src="js/Bullet.js" defer></script>
-    <script type="module" src="js/Player.js" defer></script>
-    <script type="module" src="js/Enemy.js" defer></script>
-    <script type="module" src="js/WaveSystem.js" defer></script>
-    <script type="module" src="js/Collision.js" defer></script>
     <script type="module" src="js/Game.js" defer></script>
 </head>
 <body>
@@ -26,9 +21,6 @@
             <button class="button mediumButton" id="gameButton" onclick="startGame()" type="button">Start Game</button>
             <button class="button mediumButton" id="menuButton" onclick="gameMenu()" type="button">Exit</button>
         </nav>
-        <div class="UI-Display">
-            <div id="score">Score: 0</div>
-        </div>
     </main>
 </body>
 </html>

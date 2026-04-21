@@ -102,7 +102,7 @@ h2 {
 }
 
 /* Tablet Screens (≤ 900px) */
-@media (max-width: 900px) {
+@media (min-height: 1200px) {
     
     .upgradeButton {
         width: 500px;
@@ -119,29 +119,20 @@ h2 {
 }
 
 /* Mobile Screens (≤ 600px) */
-@media (max-width: 600px) {
-    
-    #backButton, #nextButton {
-        width: 55px;
-        height: 55px;
-        font-size: large;
-        top: 50px;
-    }
-
-    #nextButton {
-        width: 110px;
-    }
+@media (max-height: 600px) {
 
     .upgradeButton {
-        width: 450px;
-        height: 70px;
-        font-size: large;
+        width: 700px;
+        height: 80px;
     }
 
     .buyButton {
-        width: 100px;
-        height: 60px;
-        font-size: large;
+        width: 160px;
+        height: 70px;
+        font-size: larger;
     }
-
+    
+    .statTitle, .statLV, .currentStat, .nextStat {
+        font-size: larger;
+    }
 }

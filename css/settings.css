@@ -64,12 +64,7 @@
 }
 
 /* Tablet Screens (≤ 900px) */
-@media (max-width: 900px) {
-    
-    .button, .buttonLink {
-        width: 250px;
-        font-size: large;
-    }
+@media (min-height: 1200px) {
 
     .buttonSettings {
         font-size: large;
@@ -79,18 +74,16 @@
 }
 
 /* Mobile Screens (≤ 600px) */
-@media (max-width: 600px) {
-    
-    .button, .buttonLink {
-        width: 100%;
-        max-width: 300px;
-        font-size: medium;
-        padding-top: 12px;
-        padding-bottom: 12px;
-    }
+@media (max-height: 600px) {
 
     .buttonSettings {
         font-size: medium;
-        width: 100px;
+        width: 150px;
+        height: 60px;
+    }
+
+    #settingsNav {
+        gap: 15px;
+        margin-top: 75px;
     }
 }

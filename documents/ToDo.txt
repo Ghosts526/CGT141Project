@@ -1,7 +1,7 @@
 To Do List:
 
 (Important)
-- Update the UI and add responsive layout
+- Add responsive layout
 - Implement the php form
 - Set up a server to hold bug report forms
 
@@ -11,8 +11,6 @@ To Do List:
     - Don't have to if time doesn't allow
 - Add audio such as: Shooting, explosion, missiles, background music, button noise, etc.
     - Can just add simple effects if needed
-- Complete the howToPlay.html + credits.html
-    - Add new things that need to be added
 - Add a notification system in settings and upgrades
     - to alert the player the system has adjusted it
     - to alert the player they can't do that
