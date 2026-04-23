@@ -149,7 +149,7 @@ export class GameArea {
 
         // Add an eventlistener for touch buttons to detect onPress and onRelease
         window.addEventListener("touchstart", (e) => {
-            e.preventDefault();
+            e.preventDefault
             const rect = this.canvas.getBoundingClientRect();
             for (const t of e.changedTouches) {
                 this.activeTouches[t.identifier] = {
@@ -157,10 +157,9 @@ export class GameArea {
                     y: (t.clientY - rect.top) * this.scaleY
                 };
             }
-        });
+        }, {passive: false});
 
         window.addEventListener("touchend", (e) => {
-            e.preventDefault();
             for (const t of e.changedTouches) {
                 delete this.activeTouches[t.identifier];
             }
