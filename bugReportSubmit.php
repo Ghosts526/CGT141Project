@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $description = $_POST["description"] ?? "";
     
     // Database connection settings
-    require_once "/var/www/secure/config.php";
+    require_once "/var/www/html/config.php";
 
     try {
         // Connect using PDO
