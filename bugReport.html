@@ -13,11 +13,10 @@
 
     <main id="content">
         <a href="index.html" class="buttonLink smallButton" id="headerLeft">Back</a>
-        <!-- Causes an error when submitted due to action_page.php hasn't been created yet -->
         <fieldset>
             <legend>Report a Bug Form</legend>
 
-            <form action="action_page.php" method="post"> 
+            <form action="bugReportSubmit.php" method="POST"> 
                 <label for="name">Name: </label>
                 <input type="text" id="name" name="name" autocomplete="off" required>
 
@@ -34,6 +33,9 @@
                     <option value="Rendering">Rendering</option>
                     <option value="Others">Others (Please Describe)</option>
                 </select>
+
+                <label for="subject">Subject: </label>
+                <input id="subject" name="subject" required placeholder="Short Description"></input>
 
                 <label for="description">Description: </label>
                 <textarea id="description" name="description" required placeholder="Please describe the problem/issue you are encountering, what steps you took that caused the issue, and what device you are using."></textarea>
