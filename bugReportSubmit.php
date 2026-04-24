@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Prepare SQL insert statement
-        $sql = "INSERT INTO bugReport (name, email, bugType, subject, description)
-            Values (:name, :email, :bugType, :subject, :description)";
+        $sql = "INSERT INTO bugReport (name, email, bugType, subject, description, gameVersion)
+            Values (:name, :email, :bugType, :subject, :description, :gameVersion)";
 
         $stmt = $pdo->prepare($sql);
 
@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":bugType", $bugType);
         $stmt->bindParam(":subject", $subject);
         $stmt->bindParam(":description", $description);
+        $stmt->bindParam(":gameVersion", $gameVersion);
 
         // Execute insert
         $stmt->execute();
