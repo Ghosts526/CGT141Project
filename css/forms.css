@@ -29,7 +29,7 @@ textarea {
     background-color: lightgrey;
 }
 
-#name, #email {
+#name, #email, #subject {
     width: 250px;
     background-color: lightgray;
 }
@@ -61,7 +61,7 @@ textarea {
         height: 8em;
     }
 
-    #name, #email {
+    #name, #email, #subject {
         width: 500px;
     }
 

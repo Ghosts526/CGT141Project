@@ -1,47 +1,76 @@
-<?php
-// Start by checking if the form was submitted 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
+<!DOCTYPE html>
+<html lang="en">
 
-    // Collect form data safely
-    $name = $_POST["name"] ?? "";
-    $email = $_POST["email"] ?? "";
-    $bugType = $_POST["bugType"] ?? "";
-    $subject = $_POST["subject"] ?? "";
-    $description = $_POST["description"] ?? "";
-    
-    // Database connection settings
-    require_once "/var/www/html/config.php";
+<head>
+    <meta charset="UTF-8">
+    <title>Operation Breakpoint: Bug Report Submitted</title>
+    <link rel="stylesheet" href="css/master.css">
+</head>
 
-    try {
-        // Connect using PDO
-        $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+<body>
+    <header>
+        <h1>Bug Report</h1>
+    </header>
 
-        // Prepare SQL insert statement
-        $sql = "INSERT INTO bugReport (name, email, bugType, subject, description, gameVersion)
-            Values (:name, :email, :bugType, :subject, :description, :gameVersion)";
+    <main id="content">
+        <a href="index.html" class="buttonLink smallButton" id="headerLeft">Back</a>
 
-        $stmt = $pdo->prepare($sql);
+        <div id="phpEcho" class="alignTextCenter">
+        <?php
+        // Start by checking if the form was submitted 
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        // Bind values
-        $stmt->bindParam(":name", $name);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":bugType", $bugType);
-        $stmt->bindParam(":subject", $subject);
-        $stmt->bindParam(":description", $description);
-        $stmt->bindParam(":gameVersion", $gameVersion);
+            // Collect form data safely
+            $name = $_POST["name"] ?? "";
+            $email = $_POST["email"] ?? "";
+            $bugType = $_POST["bugType"] ?? "";
+            $subject = $_POST["subject"] ?? "";
+            $description = $_POST["description"] ?? "";
+            
+            // Database connection settings
+            require_once "/var/www/html/config.php";
 
-        // Execute insert
-        $stmt->execute();
+            try {
+                // Connect using PDO
+                $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Redirect or show success message
-        echo "Bug Report Submitted Successfully!";
-        // header("Location: thankyou.html"); // optional redirect
-        exit;
-    } catch (PDOException $e) {
-        die("Database Error: " . $e->getMessage());
-    }
-} else {
-    echo "Invalid Request!";
-}
-?>
+                // Prepare SQL insert statement
+                $sql = "INSERT INTO bugReport (name, email, bugType, subject, description, gameVersion)
+                    Values (:name, :email, :bugType, :subject, :description, :gameVersion)";
+
+                $stmt = $pdo->prepare($sql);
+
+                // Bind values
+                $stmt->bindParam(":name", $name);
+                $stmt->bindParam(":email", $email);
+                $stmt->bindParam(":bugType", $bugType);
+                $stmt->bindParam(":subject", $subject);
+                $stmt->bindParam(":description", $description);
+                $stmt->bindParam(":gameVersion", $gameVersion);
+
+                // Execute insert
+                $stmt->execute();
+
+                // Redirect or show success message
+                echo "<p>Bug Report Submitted Successfully!<br>
+                    <br>Thank you for your feedback!</p>";
+                // header("Location: thankyou.html"); // optional redirect
+                exit;
+            } catch (PDOException $e) {
+                die("Database Error: " . $e->getMessage());
+            }
+        } else {
+            echo "<p>Invalid Request!</p>";
+        }
+        ?>
+        </div>
+    </main>
+
+    <div id="rotate">
+        <img src="images/RotateScreen.gif" alt="rotateScreen">
+        <p id="rotateMessage">Rotate Device</p>
+    </div>
+</body>
+
+</html>
