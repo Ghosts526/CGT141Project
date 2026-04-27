@@ -1,5 +1,9 @@
-function clearData()
+async function clearData()
 {
+    if (!(await popUp("Are you sure?", "You CANNOT undo this!", "yes/no"))) {
+        return;
+    }
+
     localStorage.clear();
     console.log("Data Cleared");
 
@@ -32,22 +36,45 @@ function clearData()
     updateDisplay();
 }
 
-function printData()
+async function printData()
 {
+    let data = "";
+
     for (let i = 0; i < localStorage.length; i++)
     {
-        console.log(localStorage.key(i) + " - " + localStorage.getItem(localStorage.key(i)));
+        data += formatData(localStorage.key(i) + " - " + localStorage.getItem(localStorage.key(i))) + "\n";
     }
 
     if (localStorage.length == 0)
     {
-        console.log("Empty Data");
+        data = "Empty Data";
+    }
+
+    if (!(await popUp("User Data", data, "close"))) {
+        return;
     }
 }
 
-function addMoney(amount)
+function formatData(text) {
+    // Space out capitalize letters
+    let newText = text.replace(/([A-Z])/g, " $1");
+    // Fix LV space
+    newText = newText.replace(/L V/g, "LV");
+    // Trim if in case it has empty spaces
+    newText = newText.trim();
+    // Capitalize the first letters
+    newText = newText.replace(/\b\w/g, c => c.toUpperCase());
+    // Return the formatted string
+    return newText;
+}
+
+async function addMoney(amount)
 {
     localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + amount).toString());
+    const currentCredits = "Total Credits: " + localStorage.getItem("credits");
+    if (!(await popUp("Credits Added", currentCredits, "close"))) {
+        return;
+    }
 }
 
 function showCollisionBox()
@@ -112,6 +139,36 @@ function devToolkitButton() {
     document.getElementById("gameplayButton").classList.remove("buttonSelected");
     document.getElementById("dataManagementTable").classList.add("hidden");
     document.getElementById("dataManagementButton").classList.remove("buttonSelected");
+}
+
+function popUp(mainText, subText, actionType) { // Brings a pop to confirm or deny the action
+    document.getElementById("popUp").classList.remove("hidden");
+    if (actionType == "yes/no") {
+        document.getElementById("action1").classList.remove("hidden");
+        document.getElementById("action2").classList.remove("hidden");
+        document.getElementById("action1").innerText = "Yes";  
+        document.getElementById("action2").innerText = "No";  
+    } else if (actionType == "close") {
+        document.getElementById("action1").classList.add("hidden");
+        document.getElementById("action2").classList.remove("hidden");
+        document.getElementById("action2").innerText = "Close";  
+    }
+
+    document.getElementById("message").innerText = mainText;
+    document.getElementById("subMessage").innerText = subText;
+
+    return new Promise(resolve => {
+        window._resolvePopUp = resolve;
+    });
+}
+
+function popUpAction(num) {
+    document.getElementById("popUp").classList.add("hidden");
+
+    if (window._resolvePopUp) {
+        window._resolvePopUp(num == 1);
+        window._resolvePopUp = null;
+    }
 }
 
 window.onload = function(){updateDisplay()};

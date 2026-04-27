@@ -1,0 +1,13 @@
+/*I know that this can just be added to the master.css 
+    but I like it to be its own file to adjust the variables easier*/
+
+#popUp {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    background-color: rgb(164, 164, 113);
+    border: 5px solid gold;
+    border-radius: 15px;
+    padding: 15px;
+}
