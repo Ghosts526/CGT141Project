@@ -47,6 +47,7 @@ export class Player {
         this.shieldTimer = 0;
         this.showBox = localStorage.getItem("showCollisionBox");
         this.isShieldRegen = false;
+        this.destroyed = false;
     }
 
     // Updates the position and angle of the player
@@ -124,12 +125,21 @@ export class Player {
                 this.image.src = this.sprite + ".3.png";
                 this.imageState = 10;
                 break;
+            case 55:
+                if (this.hp <= 0) {
+                    this.destroyed = true
+                } else {
+                    this.imageState = 10;
+                }
+                break;
         }
         this.imageState++;
     }
 
     damaged(amount)
     {
+        this.image.src = this.sprite + ".hit.png";
+        this.imageState = 51;
         if (this.shieldHP > 0 && amount <= this.shieldHP)
         {
             this.shieldHP -= amount;

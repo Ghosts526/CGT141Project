@@ -37,6 +37,7 @@ export class Enemy {
                     Math.min(y, this.maxY - this.amplitude));
 
         this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 8, .75);
+        this.destroyed = false;
     }
 
     // Updates the enemy location based by its angle and speed
@@ -90,6 +91,8 @@ export class Enemy {
 
     damaged(amount) {
         this.hp -= amount;
+        this.image.src = this.sprite + ".hit.png";
+        this.imageState = 51;
     }
 
     movingEffect() {
@@ -112,6 +115,13 @@ export class Enemy {
             case 50:
                 this.image.src = this.sprite + ".3.png";
                 this.imageState = 10;
+                break;
+            case 55:
+                if (this.hp <= 0) {
+                    this.destroyed = true
+                } else {
+                    this.imageState = 10;
+                }
                 break;
         }
         this.imageState++;

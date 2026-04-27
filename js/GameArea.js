@@ -108,6 +108,8 @@ export class GameArea {
             // Update the game every frame with accurate deltaTime
             if (!this.isGameOver) {
                 requestAnimationFrame(loop);
+            } else { // Refresh the screen one last time
+                this.updateGameArea(dt, bullets, player, enemies);
             }
         };
 
@@ -345,6 +347,10 @@ export class GameArea {
         for (let i = enemies.length - 1; i >= 0; i--) {
             enemies[i].newPos(dt, this.context);
             enemies[i].update(this.context);
+            if (enemies[i].destroyed) {
+                enemies.splice(i, 1);
+                break;
+            }
             enemies[i].tryShoot(bullets, dt);
 
             if (enemies[i].x + (enemies[i].width / 2) <= 0) {

@@ -66,7 +66,6 @@ export class Collision {
 
                         if (enemies[j].hp <= 0) {
                             this.score += enemies[j].score;
-                            enemies.splice(j, 1);
                         }
                         break; // Exit enemy loop after bullet is removed
                     }
