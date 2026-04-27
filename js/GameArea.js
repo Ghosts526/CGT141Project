@@ -120,7 +120,6 @@ export class GameArea {
         });
 
         window.addEventListener('keydown', (e) => {
-            console.log(e.key);
             if (e.key.toLowerCase() === 'w') player.moveUp = true;
             if (e.key.toLowerCase() === 's') player.moveDown = true;
             if (e.key === ' ') {
@@ -344,8 +343,8 @@ export class GameArea {
         this.enemySpawner.waves(this.context, enemies, dt);
 
         for (let i = enemies.length - 1; i >= 0; i--) {
-            enemies[i].newPos(dt);
-            enemies[i].update(this.context, bullets);
+            enemies[i].newPos(dt, this.context);
+            enemies[i].update(this.context);
             enemies[i].tryShoot(bullets, dt);
 
             if (enemies[i].x + (enemies[i].width / 2) <= 0) {
