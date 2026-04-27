@@ -17,7 +17,7 @@ export class Explosion
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
         this.image = new Image(), this.image.src = image;
         this.source = source; // What object created the explosion
-        this.switchImageTimer = 20 * 1.5; // Frames * seconds
+        this.switchImageTimer = 20;// Frames * seconds
         this.timer = 0;
         this.state = 1;
         this.showBox = localStorage.getItem("showCollisionBox");
