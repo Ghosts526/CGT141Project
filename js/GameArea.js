@@ -28,11 +28,11 @@ export class GameArea {
         this.moveDown = false;
         this.shoot = false;
         this.shootMissile = false;
-        this.upButton = { x: 10, y: 380, width: 100, height: 100 };
-        this.downButton = { x: 10, y: 500, width: 100, height: 100 };
-        this.fireButton = { x: 1090, y: 380, width: 100, height: 100 };
-        this.missileButton = { x: 1090, y: 500, width: 100, height: 100 };
-        this.pauseButton = { x: 1090, y: 10, width: 100, height: 100 };
+        this.upButton = { x: 10, y: 380, width: 100, height: 100, src: "images/UpArrow.png" };
+        this.downButton = { x: 10, y: 500, width: 100, height: 100, src: "images/DownArrow.png" };
+        this.fireButton = { x: 1090, y: 380, width: 100, height: 100, src: "images/FireButton.png" };
+        this.missileButton = { x: 1090, y: 500, width: 100, height: 100, src: "images/MissileButton.png" };
+        this.pauseButton = { x: 1090, y: 10, width: 100, height: 100, src: "images/PauseButton.png" };
         this.lastTime = 0;
         this.pixelScale = 50;
         this.activeTouches = {};
@@ -243,10 +243,11 @@ export class GameArea {
         for (let i = 0; i < buttons.length; i++) {
             this.context.save();
             this.context.translate(buttons[i].x, buttons[i].y);
-            this.context.globalAlpha = 0.5;
+            this.context.globalAlpha = 0.65;
 
-            this.context.fillStyle = "gray";
-            this.context.fillRect(0, 0, buttons[i].width, buttons[i].height);
+            const image = new Image();
+            image.src = buttons[i].src;
+            this.context.drawImage(image, 0, 0, buttons[i].width, buttons[i].height);
 
             if (i == 2 || i == 3) {
                 let startAngle = Math.PI / -2;
