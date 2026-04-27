@@ -1,6 +1,7 @@
 import { Player } from "./Player.js";
 import { EnemySpawner } from "./EnemySpawner.js";
 import { GameArea } from "./GameArea.js";
+import { Sound } from "./Sound.js";
 
 /**
  * Game.js is my main script for the Game
@@ -33,6 +34,8 @@ function startGame() {
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";
     gameArea.setupControls(player);
+    const backgroundMusic = new Sound("../audio/backgroundMusic.mp3", true, 0.5, 1, 1.0);
+    backgroundMusic.restart();
 }
 
 function restartGame() {

@@ -1,4 +1,5 @@
 import { Bullet } from "./Bullet.js";
+import { Sound } from "./Sound.js";
 
 /**
  * This class handles the creation, movement, shooting, and rendering 
@@ -34,6 +35,8 @@ export class Enemy {
         this.maxY = context.canvas.height - 30;
         this.baseY = Math.max(this.minY + this.amplitude,
                     Math.min(y, this.maxY - this.amplitude));
+
+        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 8, .75);
     }
 
     // Updates the enemy location based by its angle and speed
@@ -79,6 +82,7 @@ export class Enemy {
         this.shootTimer += dt;
         if (this.shootTimer >= this.shootAt) {
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
+            this.shootSound.play();
             this.shootAt = (Math.floor(Math.random() * 2) + 2); // 2-3 seconds
             this.shootTimer = 0;
         }

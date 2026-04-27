@@ -10,8 +10,6 @@ To Do List: (Due Date: May 1st, 2026 | Days Remaining: 9)
     - Increase spawn rate and remove the wave system
 - Update most images to pixel art
     - Don't have to if time doesn't allow
-- Add audio such as: Shooting, explosion, missiles, background music, button noise, etc.
-    - Can just add simple effects if needed
 - Add a notification system in settings and upgrades
     - to alert the player the system has adjusted it
     - to alert the player they can't do that

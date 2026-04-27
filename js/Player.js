@@ -1,5 +1,6 @@
 import { Bullet } from "./Bullet.js";
 import { Missile } from "./Missile.js";
+import { Sound } from "./Sound.js";
 
 /**
  * This class handles the creation, movement, shooting, and rendering 
@@ -15,6 +16,8 @@ export class Player {
         this.widthMultiplier = widthMultiplier;
         this.sprite = image;
         this.pixelScale = 50;
+        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 25, .75);
+        this.missileSound = new Sound("../audio/missileSoundEffect.mp3", false, 0.15, 3, 1);
     }
     // const names = ["topScore", "credits", "healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
     // Restarts the player location
@@ -75,6 +78,7 @@ export class Player {
         if ((this.shoot || this.shootTouch) && this.fireTimer == 0) {
             this.fireTimer += dt;
             bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
+            this.shootSound.play();
         } else if (this.fireTimer >= this.fireDelay) {
             this.fireTimer = 0;
         } else if ((this.shoot || this.shootTouch) || (!(this.shoot || this.shootTouch) && this.fireTimer != 0)) {
@@ -85,6 +89,7 @@ export class Player {
         {
             this.missileReady = false;
             bullets.push(new Missile(this.x, this.y, 5, 20, this.angle, "images/MissileProjectile.png", "Player Missile"));
+            this.missileSound.play();
         } else if (this.missileTimer >= this.missileDelay) {
             this.missileTimer = 0;
             this.missileReady = true;
