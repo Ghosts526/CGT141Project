@@ -118,7 +118,7 @@ export class Enemy {
                 break;
             case 55:
                 if (this.hp <= 0) {
-                    this.shootSound.destory();
+                    this.shootSound.destroy();
                     this.shootSound = null;
                     this.destroyed = true
                 } else {
