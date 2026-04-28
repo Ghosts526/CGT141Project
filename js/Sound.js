@@ -46,4 +46,11 @@ export class Sound {
         }
         this.play();
     }
+
+    destroy() {
+        for (let audio of this.pool) {
+            audio.pause();
+            audio.src = "";
+        }
+    }
 }
