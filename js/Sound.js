@@ -14,7 +14,11 @@ export class Sound {
             audio.controls = false;
             audio.style.display = "none";
             audio.loop = loop;
-            audio.volume = volume;
+            if (localStorage.getItem("useAudio") == "true") {
+                audio.volume = 0;
+            } else {
+                audio.volume = volume;
+            }
             document.body.appendChild(audio);
             this.pool.push(audio);
         }

@@ -10,6 +10,7 @@ async function clearData()
     const data = ["topScore", "credits"];
     const lv = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
     const boolF = ["showCollisionBox", "godMode"];
+    const boolT = ["useAudio"];
 
     for (let i = 0; i < data.length; i++) {
         if (localStorage.getItem(data[i]) == null)
@@ -25,11 +26,17 @@ async function clearData()
         }
     }
 
-    for (let i = 0; i < boolF.length; i++)
-    {
+    for (let i = 0; i < boolF.length; i++) {
         if (localStorage.getItem(boolF[i]) == null)
         {
             localStorage.setItem(boolF[i], "false");
+        }
+    }
+
+    for (let i = 0; i < boolT.length; i++) {
+        if (localStorage.getItem(boolT[i]) == null)
+        {
+            localStorage.setItem(boolT[i], "true")
         }
     }
 
@@ -168,6 +175,16 @@ function popUpAction(num) {
     if (window._resolvePopUp) {
         window._resolvePopUp(num == 1);
         window._resolvePopUp = null;
+    }
+}
+
+function audio() {
+    if (localStorage.getItem("useAudio") == "false") {
+        localStorage.setItem("useAudio", "true")
+        document.getElementById("audioButton").innerText = "On"
+    } else {
+        localStorage.setItem("useAudio", "false")
+        document.getElementById("audioButton").innerText = "Off"
     }
 }
 
