@@ -2,10 +2,10 @@
  * This class handles adding sound to the game
 */
 export class Sound {
-    constructor(src, loop, time, poolSize, volume) { //Audio file location, is it looping, start time, how many audio will be playing, audio
+    constructor(src, loop, startTime, poolSize, volume) { //Audio file location, is it looping, start time, how many audio will be playing, audio
         this.pool = [];
         this.poolSize = poolSize;
-        this.time = time;
+        this.time = startTime;
 
         for (let i = 0; i < poolSize; i++) {
             const audio = document.createElement("audio");

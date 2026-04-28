@@ -97,20 +97,18 @@ export class GameArea {
             let dt = (timestamp - this.lastTime) / 1000;
             this.lastTime = timestamp;
 
-            if (this.pause) {
+            if (this.pause || this.isGameOver) {
                 dt = 0;
             }
 
-            if (!this.pause) {
+            if (!this.pause && !this.isGameOver) {
                 this.updateGameArea(dt, bullets, player, enemies);
             }
 
+            if (this.isGameOver) this.checkTouch(player);
+
             // Update the game every frame with accurate deltaTime
-            if (!this.isGameOver) {
-                requestAnimationFrame(loop);
-            } else { // Refresh the screen one last time
-                this.updateGameArea(dt, bullets, player, enemies);
-            }
+            requestAnimationFrame(loop);
         };
 
         requestAnimationFrame(loop);
@@ -181,24 +179,26 @@ export class GameArea {
         for (const id in this.activeTouches) {
             const t = this.activeTouches[id];
 
-            if (t.x >= this.upButton.x && t.x <= this.upButton.x + this.upButton.width &&
-                t.y >= this.upButton.y && t.y <= this.upButton.y + this.upButton.height) {
-                player.moveUpTouch = true;
-            }
+            if (!this.isGameOver) {
+                if (t.x >= this.upButton.x && t.x <= this.upButton.x + this.upButton.width &&
+                    t.y >= this.upButton.y && t.y <= this.upButton.y + this.upButton.height) {
+                    player.moveUpTouch = true;
+                }
 
-            if (t.x >= this.downButton.x && t.x <= this.downButton.x + this.downButton.width &&
-                t.y >= this.downButton.y && t.y <= this.downButton.y + this.downButton.height) {
-                player.moveDownTouch = true;
-            }
+                if (t.x >= this.downButton.x && t.x <= this.downButton.x + this.downButton.width &&
+                    t.y >= this.downButton.y && t.y <= this.downButton.y + this.downButton.height) {
+                    player.moveDownTouch = true;
+                }
 
-            if (t.x >= this.fireButton.x && t.x <= this.fireButton.x + this.fireButton.width &&
-                t.y >= this.fireButton.y && t.y <= this.fireButton.y + this.fireButton.height) {
-                player.shootTouch = true;
-            }
+                if (t.x >= this.fireButton.x && t.x <= this.fireButton.x + this.fireButton.width &&
+                    t.y >= this.fireButton.y && t.y <= this.fireButton.y + this.fireButton.height) {
+                    player.shootTouch = true;
+                }
 
-            if (t.x >= this.missileButton.x && t.x <= this.missileButton.x + this.missileButton.width &&
-                t.y >= this.missileButton.y && t.y <= this.missileButton.y + this.missileButton.height) {
-                player.shootMissileTouch = true;
+                if (t.x >= this.missileButton.x && t.x <= this.missileButton.x + this.missileButton.width &&
+                    t.y >= this.missileButton.y && t.y <= this.missileButton.y + this.missileButton.height) {
+                    player.shootMissileTouch = true;
+                }
             }
 
             if (t.x >= this.pauseButton.x && t.x <= this.pauseButton.x + this.pauseButton.width &&
