@@ -36,7 +36,7 @@ export class Enemy {
         this.baseY = Math.max(this.minY + this.amplitude,
                     Math.min(y, this.maxY - this.amplitude));
 
-        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 8, .75);
+        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 1, .75);
         this.destroyed = false;
     }
 

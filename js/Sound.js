@@ -20,15 +20,16 @@ export class Sound {
         }
     }
 
-    play() { // Play resumes the audio 
+    play() { // Plays an audio
         for (let audio of this.pool) {
-            if (audio.paused) {
+            if (audio.paused) { // Check if an audio slot is paused
                 audio.currentTime = this.time;
-                audio.play();
+                audio.play(); // If so reset it and play it
                 return;
             }
         }
 
+        // Else reset the first slot and play that
         this.pool[0].currentTime = this.time;
         this.pool[0].play();
     }
@@ -39,7 +40,7 @@ export class Sound {
         }
     }
 
-    restart() { 
+    restart() { // Restart all audios
         for (let audio of this.pool) {
             audio.currentTime = this.time;
         }

@@ -16,7 +16,7 @@ export class Player {
         this.widthMultiplier = widthMultiplier;
         this.sprite = image;
         this.pixelScale = 50;
-        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 25, .75);
+        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 5, .75);
         this.missileSound = new Sound("../audio/missileSoundEffect.mp3", false, 0.15, 3, 1);
     }
     // const names = ["topScore", "credits", "healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];

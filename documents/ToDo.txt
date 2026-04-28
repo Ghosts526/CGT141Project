@@ -1,4 +1,5 @@
-To Do List: (Due Date: May 1st, 2026 | Days Remaining: 9)
+To Do List: (Due Date: May 1st, 2026 | Days Remaining: 3)
+Game Version: (1.0.10-beta) - Don't forget to update it in the php file
 
 (Important)
 - Add responsive layout (Larger Screens)
