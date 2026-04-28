@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--This a How To Play page to tell the player how to play and understand the game-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Operation Breakpoint: How To Play</title>
+    <link rel="stylesheet" href="css/master.css">
+    <script src="js/Script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>How To Play</h1>
+    </header>
+
+    <main id="content">
+        <a href="index.html" class="buttonLink smallButton" id="headerLeft">Back</a>
+
+        <article id="content2">
+            <h2>Table of Contents</h2>
+            <ul class="alignTextCenter" id="tableOfContents">
+                <li><a href="#objectives">Objectives</a></li>
+                <li><a href="#controls">Controls</a></li>
+                <li><a href="#coreGameplay">Core Gameplay</a></li>
+                <li><a href="#progression">Progression</a></li>
+                <li><a href="#healthAndShield">Health and Shield</a></li>
+                <li><a href="#tips">Tips</a></li>
+                <li><a href="#hudExplanation">HUD Explanation</a></li>
+                <li><a href="#saving">Saving</a></li>
+            </ul>
+
+            <h2 id="objectives">Objectives</h2>
+            <ul>
+                <li>Main Goal: Survive as long as possible while defeating waves of enemy ships.</li>
+                <li>Challenge: Each wave becomes progressively harder, introducing tougher enemies, higher enemy count, and faster spawn rates.</li>
+            </ul>
+
+            <h2 id="controls">Controls</h2>
+            <p>Keyboard / Mouse:</p>
+            <ul>
+                <li>W - Moves your ship up</li>
+                <li>S - Moves your ship down</li>
+                <li>Space - Fires your primary weapon (Blaster)</li>
+                <li>E - Fires your secondary weapon (Missile)</li>
+                <li>Left Click - Interact with buttons</li>
+                <li>ESC - Open and close the pause menu within the game</li>
+            </ul>
+
+            <p>Touch Screen:</p>
+            <ul>
+                <li>Up Arrow - Moves your ship up</li>
+                <li>Down Arrow - Moves your ship down</li>
+                <li>Fire Button - Fires your primary weapon (Blaster)</li>
+                <li>Missile Button - Fires your secondary weapon (Missile)</li>
+                <li>On Screen Touch - Interact with buttons</li>
+                <li>Setting Button - Open and close the pause menu within the game</li>
+            </ul>
+
+            <h2 id="coreGameplay">Core Gameplay</h2>
+            <ul>
+                <li>Shoot down enemy spaceship by dodging incoming fire</li>
+            </ul>
+
+            <h2>Game Mechanics</h2>
+            <p>Combat:</p>
+            <ul>
+                <li>Primary Weapon: Blaster Cannon</li>
+                <li>Secondary Weapon: Missile Launcher</li>
+                <li>Enemy Weapon: Blaster Cannon</li>
+            </ul>
+            <p>Movement:</p>
+            <ul>
+                <li>Player: Moves up and down</li>
+                <li>Enemy: Moves toward the player in a stright line</li>
+            </ul>
+
+            <h2 id="progression">Progression</h2>
+            <p>After each run, you recieve a certain amount of credits based on how many ships you destory.</p>
+            <p>You can use credits to upgrade your ship to survive longer in each playthrough.</p>
+            <p>Upgradeable Stats:</p>
+            <ul>
+                <li>Increase Health by 1 Point</li>
+                <li>Decrease Fire Delay by 0.05 Sec</li>
+                <li>Decrease Missile Cooldown by 0.3 Sec</li>
+                <li>Increase Shield Health by 1 Point</li>
+                <li>Decrease Shield Cooldown by 1 Sec</li>
+            </ul>
+            <p>Max Stats:</p>
+            <ul>
+                <li>Health (LV 26) => 30 HP</li>
+                <li>Fire Delay (LV 25) => 0.2 Sec</li>
+                <li>Missile Cooldown (LV 28) => 2.5 Sec</li>
+                <li>Shield Health (LV 21) => 10 HP</li>
+                <li>Shield Cooldown (LV 28) => 9.96 Sec</li>
+            </ul>
+            
+            <h2 id="healthAndShield">Health and Shield</h2>
+            <p>Health:</p>
+            <ul>
+                <li>HP is determine by the level of your health stat.</li>
+                <li>Each damage you take decreases your HP by 1 point.</li>
+                <li>When your HP reaches 0 it is game over.</li>
+            </ul>
+            <p>Shields:</p>
+            <ul>
+                <li>Shield is determine by the level of your shield stat.</li>
+                <li>Each damage you take decreases your shield by 1 point.</li>
+                <li>Shields takes in all damage recieved, which then transfers it to your HP.</li>
+                <li>When shield reaches 0, it starts a cooldown phase.</li>
+                <li>During the cooldown phase, any damage you recieve will restart the cooldown process.</li>
+                <li>Once the cooldown phase is complete, all your shields will be replenish back up.</li>
+            </ul>
+
+            <h2 id="tips">Tips for New Players</h2>
+            <ul>
+                <li>Don't shoot missile too close to yourself as it causes an explosion radius.</li>
+            </ul>
+
+            <h2 id="hudExplanation">HUD Explanation</h2>
+            <p>Health and Shield Bar:</p>
+            <ul>
+                <li>Displays current HP and shields.</li>
+                <li>Left is 0% and right is 100%</li>
+            </ul>
+
+            <h2 id="saving">Saving</h2>
+            <p>Saving is done automatically by the system. But, exiting the game before the Game Over screen pops up, will cause you to lose all of your in-game progress.</p>
+        </article>
+    </main>
+
+    <div id="rotate">
+        <img src="images/RotateScreen.gif" alt="rotateScreen">
+        <p id="rotateMessage">Rotate Device</p>
+    </div>
+</body>
+</html>
