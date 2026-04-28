@@ -14,7 +14,7 @@ export class Sound {
             audio.controls = false;
             audio.style.display = "none";
             audio.loop = loop;
-            if (localStorage.getItem("useAudio") == "true") {
+            if (localStorage.getItem("useAudio") == "false") {
                 audio.volume = 0;
             } else {
                 audio.volume = volume;
