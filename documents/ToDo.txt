@@ -1,5 +1,5 @@
 To Do List: (Due Date: May 1st, 2026 | Days Remaining: 3)
-Game Version: (1.0.10-beta) - Don't forget to update it in the php file
+Game Version: (1.0.11-beta) - Don't forget to update it in the php file
 
 (Important)
 - Add responsive layout (Larger Screens)
@@ -7,7 +7,6 @@ Game Version: (1.0.10-beta) - Don't forget to update it in the php file
     - Double check on smaller and regular size screens
 - Update script.js
     - Remove unneeded functions
-- Resolve the audio issue
 
 (Non-Important)
 - Adjust WaveSystem Spawn Rate
