@@ -25,13 +25,11 @@ export class Sound {
             if (audio.paused) { // Check if an audio slot is paused
                 audio.currentTime = this.time;
                 audio.play(); // If so reset it and play it
-                console.log("Playing audio: " + audio.src);
                 return;
             }
         }
 
         // Else reset the first slot and play that
-        console.log("Reseting Audio: " + this.pool[0].src);
         this.pool[0].currentTime = this.time;
         this.pool[0].play();
     }
