@@ -106,6 +106,16 @@ function godMode()
     }
 }
 
+function audio() {
+    if (localStorage.getItem("useAudio") == "false") {
+        localStorage.setItem("useAudio", "true")
+        document.getElementById("audioButton").innerText = "On"
+    } else {
+        localStorage.setItem("useAudio", "false")
+        document.getElementById("audioButton").innerText = "Off"
+    }
+}
+
 function updateDisplay()
 {
     if (localStorage.getItem("showCollisionBox") == "false") {
@@ -118,6 +128,12 @@ function updateDisplay()
         document.getElementById("godMode").innerText = "Off"
     } else {
         document.getElementById("godMode").innerText = "On"
+    }
+
+    if (localStorage.getItem("useAudio") == "false") {
+        document.getElementById("audioButton").innerText = "Off"
+    } else {
+        document.getElementById("audioButton").innerText = "On"
     }
 }
 
@@ -175,16 +191,6 @@ function popUpAction(num) {
     if (window._resolvePopUp) {
         window._resolvePopUp(num == 1);
         window._resolvePopUp = null;
-    }
-}
-
-function audio() {
-    if (localStorage.getItem("useAudio") == "false") {
-        localStorage.setItem("useAudio", "true")
-        document.getElementById("audioButton").innerText = "On"
-    } else {
-        localStorage.setItem("useAudio", "false")
-        document.getElementById("audioButton").innerText = "Off"
     }
 }
 
