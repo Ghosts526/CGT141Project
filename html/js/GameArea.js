@@ -112,11 +112,11 @@ export class GameArea {
 
     // Sets up the keyboard and touch controls
     setupControls(player) {
-        this.document.addEventListener('contextmenu', function (event) {
+        this.canvas.addEventListener('contextmenu', function (event) {
             event.preventDefault();
         });
 
-        window.addEventListener('keydown', (e) => {
+        this.canvas.addEventListener('keydown', (e) => {
             if (e.key.toLowerCase() === 'w') player.moveUp = true;
             if (e.key.toLowerCase() === 's') player.moveDown = true;
             if (e.key === ' ') {
@@ -133,7 +133,7 @@ export class GameArea {
             }
         });
 
-        window.addEventListener('keyup', (e) => {
+        this.canvas.addEventListener('keyup', (e) => {
             if (e.key.toLowerCase() === 'w') player.moveUp = false;
             if (e.key.toLowerCase() === 's') player.moveDown = false;
             if (e.key === ' ') {
@@ -145,7 +145,7 @@ export class GameArea {
 
         if (this.touchMode) {
             // Add an eventlistener for touch buttons to detect onPress and onRelease
-            window.addEventListener("touchstart", (e) => {
+            this.canvas.addEventListener("touchstart", (e) => {
                 this.isTouchActive = true;
                 e.preventDefault();
                 const rect = this.canvas.getBoundingClientRect();
@@ -157,7 +157,7 @@ export class GameArea {
                 }
             }, { passive: false });
 
-            window.addEventListener("touchend", (e) => {
+            this.canvas.addEventListener("touchend", (e) => {
                 for (const t of e.changedTouches) {
                     delete this.activeTouches[t.identifier];
                 }
@@ -167,7 +167,7 @@ export class GameArea {
             });
         }
 
-        window.addEventListener("mousedown", (e) => {
+        this.canvas.addEventListener("mousedown", (e) => {
             if (this.isTouchActive) return; // Ignores mouse input if touch is active
 
             const rect = this.canvas.getBoundingClientRect();
@@ -178,7 +178,7 @@ export class GameArea {
             };
         });
 
-        window.addEventListener("mouseup", (e) => {
+        this.canvas.addEventListener("mouseup", (e) => {
             if (this.isTouchActive) return; // Ignores mouse input if touch is active
 
             delete this.activeTouches[this.MOUSE_ID];
