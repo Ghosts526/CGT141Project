@@ -51,26 +51,26 @@ export const EXPLOSION = {
 };
 
 export const UP_BUTTON = { 
-    x: 10, y: 380, 
-    width: 100, height: 100 
+    X: 10, Y: 380, 
+    WIDTH: 100, HEIGHT: 100 
 };
 
 export const DOWN_BUTTON = { 
-    x: 10, y: 500, 
-    width: 100, height: 100 
+    X: 10, Y: 500, 
+    WIDTH: 100, HEIGHT: 100 
 };
 
 export const FIRE_BUTTON = { 
-    x: 1090, y: 380, 
-    width: 100, height: 100 
+    X: 1090, Y: 380, 
+    WIDTH: 100, HEIGHT: 100 
 };
 
 export const MISSILE_BUTTON = { 
-    x: 1090, y: 500, 
-    width: 100, height: 100 
+    X: 1090, Y: 500, 
+    WIDTH: 100, HEIGHT: 100 
 };
 
 export const PAUSE_BUTTON = { 
-    x: 1090, y: 10, 
-    width: 100, height: 100 
+    X: 1090, Y: 10, 
+    WIDTH: 100, HEIGHT: 100 
 };

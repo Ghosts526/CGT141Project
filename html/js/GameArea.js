@@ -73,7 +73,7 @@ export class GameArea {
 
         // Scale the pixel size to the actual canvas size 
         const rect = this.canvas.getBoundingClientRect();
-        this.scaleX = 1200 / rect.width, this.scaleY = 675 / rect.height;
+        this.scaleX = GAME_SIZE.WIDTH / rect.width, this.scaleY = GAME_SIZE.HEIGHT / rect.height;
     }
 
     addResizeListeners() { // Calls the resizeCanvas function if the window resize or orientation changed
@@ -180,29 +180,29 @@ export class GameArea {
             const t = this.activeTouches[id];
 
             if (!this.isGameOver) {
-                if (t.x >= this.upButton.x && t.x <= this.upButton.x + this.upButton.width &&
-                    t.y >= this.upButton.y && t.y <= this.upButton.y + this.upButton.height) {
+                if (t.x >= UP_BUTTON.X && t.x <= UP_BUTTON.X + UP_BUTTON.WIDTH &&
+                    t.y >= UP_BUTTON.Y && t.y <= UP_BUTTON.Y + UP_BUTTON.HEIGHT) {
                     player.moveUpTouch = true;
                 }
 
-                if (t.x >= this.downButton.x && t.x <= this.downButton.x + this.downButton.width &&
-                    t.y >= this.downButton.y && t.y <= this.downButton.y + this.downButton.height) {
+                if (t.x >= DOWN_BUTTON.X && t.x <= DOWN_BUTTON.X + DOWN_BUTTON.WIDTH &&
+                    t.y >= DOWN_BUTTON.Y && t.y <= DOWN_BUTTON.Y + DOWN_BUTTON.HEIGHT) {
                     player.moveDownTouch = true;
                 }
 
-                if (t.x >= this.fireButton.x && t.x <= this.fireButton.x + this.fireButton.width &&
-                    t.y >= this.fireButton.y && t.y <= this.fireButton.y + this.fireButton.height) {
+                if (t.x >= FIRE_BUTTON.X && t.x <= FIRE_BUTTON.X + FIRE_BUTTON.WIDTH &&
+                    t.y >= FIRE_BUTTON.Y && t.y <= FIRE_BUTTON.Y + FIRE_BUTTON.HEIGHT) {
                     player.shootTouch = true;
                 }
 
-                if (t.x >= this.missileButton.x && t.x <= this.missileButton.x + this.missileButton.width &&
-                    t.y >= this.missileButton.y && t.y <= this.missileButton.y + this.missileButton.height) {
+                if (t.x >= MISSILE_BUTTON.X && t.x <= MISSILE_BUTTON.X + MISSILE_BUTTON.WIDTH &&
+                    t.y >= MISSILE_BUTTON.Y && t.y <= MISSILE_BUTTON.Y + MISSILE_BUTTON.HEIGHT) {
                     player.shootMissileTouch = true;
                 }
             }
 
-            if (t.x >= this.pauseButton.x && t.x <= this.pauseButton.x + this.pauseButton.width &&
-                t.y >= this.pauseButton.y && t.y <= this.pauseButton.y + this.pauseButton.height) {
+            if (t.x >= PAUSE_BUTTON.X && t.x <= PAUSE_BUTTON.X + PAUSE_BUTTON.WIDTH &&
+                t.y >= PAUSE_BUTTON.Y && t.y <= PAUSE_BUTTON.Y + PAUSE_BUTTON.HEIGHT) {
                 this.pauseGame();
             }
         }
@@ -244,18 +244,18 @@ export class GameArea {
             if (!this.touchMode && i <= 1) continue;// Does not draw up/down buttons if touchMode is false
 
             this.ctx.save();
-            this.ctx.translate(buttons[i].x, buttons[i].y);
+            this.ctx.translate(buttons[i].X, buttons[i].Y);
             this.ctx.globalAlpha = 0.65;
 
             const image = this.ui[i + 2];
-            this.ctx.drawImage(image, 0, 0, buttons[i].width, buttons[i].height);
+            this.ctx.drawImage(image, 0, 0, buttons[i].WIDTH, buttons[i].HEIGHT);
 
             if (i == 2 || i == 3) {
                 let startAngle = Math.PI / -2;
                 let endAngle = Math.PI * 1.5;
                 let length = 2 * Math.PI;
-                let center = { x: buttons[i].width / 2, y: buttons[i].height / 2 };
-                let duration = (i == 2) ? player.fireTimer / player.fireDelay : player.missileTimer / player.missileDelay;
+                let center = { x: buttons[i].WIDTH / 2, y: buttons[i].HEIGHT / 2 };
+                let duration = (i == 2) ? player.fireTimer / PLAYER.FIRE_DELAY : player.missileTimer / PLAYER.MISSILE_DELAY;
 
                 let currentAngle = length * duration + startAngle;
 
