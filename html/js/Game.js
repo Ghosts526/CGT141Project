@@ -61,7 +61,7 @@ function startGame() {
     gameArea.setUp(enemySpawner, projectileImgs, uiImgs);
     const playerWidth = 60, playerHeight = 60, widthMultiplyer = 0.4;
     startX = playerWidth + 50, startY = gameArea.startY - playerHeight;
-    player = new Player(startX, startY, playerWidth * widthMultiplyer, playerHeight, playerImgs, widthMultiplyer, projectileImgs);
+    player = new Player(playerImgs, projectileImgs);
     gameArea.start(player, enemies, bullets);
     document.getElementById("gameButton").onclick = restartGame;
     document.getElementById("gameButton").innerText = "Restart Game";

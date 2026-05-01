@@ -1,5 +1,7 @@
 import { Bullet } from "./Bullet.js";
 import { Sound } from "./Sound.js";
+import { ENEMY, PIXEL_SCALE, SHOW_HIT_BOX} from "./Constants.js";
+import { AUDIO_SRC } from "./Assets.js";
 
 /**
  * This class handles the creation, movement, shooting, and rendering 
@@ -7,18 +9,14 @@ import { Sound } from "./Sound.js";
 
 export class Enemy {
     // A constructor for the enemy class
-    constructor(x, y, width, height, angle, images, score, widthMultiplier, context, projectiles) {
-        this.x = x, this.y = y;
-        this.width = width, this.height = height, this.angle = angle
-        this.speed = 4; this.pixelScale = 50;
-        this.addX = Math.sin(angle) * this.speed, this.addY = 0;
+    constructor(y, images, score, context, projectiles) {
+        this.x = ENEMY.START_X, this.y = y;
+        this.addX = Math.sin(ENEMY.ANGLE) * ENEMY.SPEED, this.addY = 0;
         this.images = images, this.sprite = images[0], this.imageState = 1;
         this.projectiles = projectiles;
         this.shootAt = (Math.floor(Math.random() * 2) + 1); // 1-2 seconds
         this.shootTimer = 0;
-        this.hp = 5, this.score = score;
-        this.showBox = localStorage.getItem("showCollisionBox");
-        this.widthMultiplier = widthMultiplier;
+        this.hp = ENEMY.MAX_HP, this.score = score;
         this.oscillationTime = 0;
 
         // Random wave movement settings
@@ -27,10 +25,8 @@ export class Enemy {
         this.phase = Math.random() * Math.PI * 2;   // 0–2π
 
         // Safe vertical center (keeps enemy 30px from edges)
-        this.minY = 30;
-        this.maxY = context.canvas.height - 30;
-        this.baseY = Math.max(this.minY + this.amplitude,
-            Math.min(y, this.maxY - this.amplitude));
+        this.baseY = Math.max(ENEMY.MIN_Y + this.amplitude,
+            Math.min(y, ENEMY.MAX_Y - this.amplitude));
 
         this.shootSound = new Sound("audio/lazerSoundEffect.mp3", false, 0, 1, .75);
         this.destroyed = false;
@@ -38,7 +34,7 @@ export class Enemy {
 
     // Updates the enemy location based by its angle and speed
     newPos(dt) {
-        this.x += this.addX * dt * this.pixelScale;
+        this.x += this.addX * dt * PIXEL_SCALE;
 
         // Advance time
         this.oscillationTime += dt;
@@ -49,8 +45,8 @@ export class Enemy {
             this.amplitude;
 
         // Safety clamp
-        if (this.y < this.minY) this.y = this.minY;
-        if (this.y > this.maxY) this.y = this.maxY;
+        if (this.y < ENEMY.MIN_Y) this.y = ENEMY.MIN_Y;
+        if (this.y > ENEMY.MAX_Y) this.y = ENEMY.MAX_Y;
     }
 
     // Draws the enemy to its current position and rotation
@@ -58,17 +54,17 @@ export class Enemy {
         const ctx = context;
         ctx.save();
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
+        ctx.rotate(ENEMY.ANGLE);
 
         this.movingEffect();
 
-        ctx.drawImage(this.sprite, -this.width / 2 / this.widthMultiplier, -this.height / 2, this.width / this.widthMultiplier, this.height);
+        ctx.drawImage(this.sprite, -ENEMY.WIDTH / 2, -ENEMY.HEIGHT / 2, ENEMY.WIDTH, ENEMY.HEIGHT);
 
         // Display Hitbox
-        if (this.showBox == "true") {
+        if (SHOW_HIT_BOX == "true") {
             ctx.beginPath();
             ctx.strokeStyle = "red";
-            ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.rect(-ENEMY.WIDTH / 2 * ENEMY.WIDTH_MULTIPLIER, -ENEMY.HEIGHT / 2, ENEMY.WIDTH * ENEMY.WIDTH_MULTIPLIER, ENEMY.HEIGHT);
             ctx.stroke();
         }
 
@@ -78,7 +74,7 @@ export class Enemy {
     tryShoot(bullets, dt) {
         this.shootTimer += dt;
         if (this.shootTimer >= this.shootAt) {
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, this.projectiles[0], "Enemy"));
+            bullets.push(new Bullet(this.x, this.y, ENEMY.ANGLE, this.projectiles[0], "Enemy"));
             this.shootSound.play();
             this.shootAt = (Math.floor(Math.random() * 2) + 2); // 2-3 seconds
             this.shootTimer = 0;

@@ -1,4 +1,5 @@
 import { Explosion } from "./Explosion.js";
+import { PLAYER, ENEMY, BULLET, MISSILE, EXPLOSION } from "./Constants.js";
 
 /**
  * This class checks for collision between bullets, enemies, and player.
@@ -24,7 +25,7 @@ export class Collision {
                 // Check all enemies collision
                 for (let j = enemies.length - 1; j >= 0; j--) {
                     if (this.overlap(bullets[i], enemies[j])) {
-                        bullets.push(new Explosion(bullets[i].x, bullets[i].y, 200, 200, -Math.PI / 2, this.projectiles, "Explosion"));
+                        bullets.push(new Explosion(bullets[i].x, bullets[i].y, -PLAYER.ANGLE, this.projectiles, "Explosion"));
                         bullets.splice(i, 1);
                         break; // Exit enemy loop after missile explodes
                     }
@@ -85,22 +86,45 @@ export class Collision {
 
     // Returns the True width and height based on rotation
     setTrueLengths(obj) {
-        if (obj.angle % Math.PI == 0) { // If the rotations is 0 or 180 degrees
+
+        const objInfo = this.getObjInfo(obj);
+
+        if (objInfo.angle % Math.PI == 0) { // If the rotations is 0 or 180 degrees
             return {
                 center: { x: obj.x, y: obj.y },
-                hw: obj.width / 2,
-                hh: obj.height / 2
+                hw: objInfo.width / 2,
+                hh: objInfo.height / 2
             };
         } else { // If the rotations is 90 or 270 degrees
             return {
                 center: { x: obj.x, y: obj.y },
-                hw: obj.height / 2,
-                hh: obj.width / 2
+                hw: objInfo.height / 2,
+                hh: objInfo.width / 2
             };
         }
     }
 
     setProjectiles(projectiles) {
         this.projectiles = projectiles;
+    }
+
+    getObjInfo(obj) {
+        const name = obj.constructor.name;
+        
+        switch (name) {
+            case "Player":
+                return { width: PLAYER.WIDTH * PLAYER.WIDTH_MULTIPLIER, height: PLAYER.HEIGHT, angle: PLAYER.ANGLE };
+            case "Enemy":
+                return { width: ENEMY.WIDTH * ENEMY.WIDTH_MULTIPLIER, height: ENEMY.HEIGHT, angle: ENEMY.ANGLE };
+            case "Bullet":
+                return { width: BULLET.WIDTH, height: BULLET.HEIGHT, angle: obj.angle };
+            case "Missile":
+                return { width: MISSILE.WIDTH, height: MISSILE.HEIGHT, angle: obj.angle };
+            case "Explosion":
+                return { width: EXPLOSION.WIDTH, height: EXPLOSION.HEIGHT, angle: obj.angle };
+            default:
+                console.warn(name + " is an unknown class name!");
+                return { width: 0, height: 0, angle: 0 };
+        }
     }
 }

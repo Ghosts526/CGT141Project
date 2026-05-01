@@ -1,49 +1,43 @@
 import { Bullet } from "./Bullet.js";
 import { Missile } from "./Missile.js";
 import { Sound } from "./Sound.js";
+import { PLAYER, PIXEL_SCALE, SHOW_HIT_BOX} from "./Constants.js";
+import { AUDIO_SRC } from "./Assets.js";
 
 /**
  * This class handles the creation, movement, shooting, and rendering of the player
  */
 
 export class Player {
-    constructor(x, y, width, height, images, widthMultiplier, projectiles) {
+    constructor(images, projectiles) {
         // Set up variables for the player
-        this.restart(x, y);
-        this.width = width, this.height = height;
-        this.speed = 7;
-        this.widthMultiplier = widthMultiplier;
-        this.images = images, this.sprite = images[0], this.projectiles = projectiles, this.pixelScale = 50;
-        this.shootSound = new Sound("audio/lazerSoundEffect.mp3", false, 0, 5, .75);
-        this.missileSound = new Sound("audio/missileSoundEffect.mp3", false, 0.15, 1, 1);
+        this.restart();
+        this.images = images, this.sprite = images[0], this.projectiles = projectiles;
+        this.shootSound = new Sound(AUDIO_SRC.SHOOT, false, 0, 5, .75);
+        this.missileSound = new Sound(AUDIO_SRC.MISSILE, false, 0.15, 1, 1);
     }
     
     // Restarts the player location
-    restart(x, y) {
-        this.x = x, this.y = y;
-        this.angle = Math.PI / 2, this.moveAngle = 0;
+    restart() {
+        this.x = PLAYER.START_X, this.y = PLAYER.START_Y;
         this.moveUp = false, this.moveDown = false;
         this.moveUpTouch = false, this.moveDownTouch = false;
         this.shoot = false, this.shootMissile = false;
         this.shootTouch = false, this.shootMissileTouch = false;
         this.missileReady = true;
         if (localStorage.getItem("godMode") == "false") {
-            this.maxHp = 4 + parseInt(localStorage.getItem("healthLV"));
-            this.hp = this.maxHp;
+            this.maxHp = PLAYER.MAX_HP;
         } else {
-            this.maxHp = 99999;
-            this.hp = this.maxHp;
+            this.maxHp = 1_000_000;
         }
+        this.hp = this.maxHp;
         this.imageState = 1;
-        this.fireDelay = 1.5 * (0.92 ** (parseInt(localStorage.getItem("fireRateLV")) - 1)); // (Sec) Delay between shooting
         this.fireTimer = 0; // Current time for shooting
-        this.missileDelay = 10 * (0.95 ** (parseInt(localStorage.getItem("missileCooldownLV")) - 1));
         this.missileTimer = 0;
-        this.maxShieldHP = (parseInt(localStorage.getItem("shieldHealthLV")) - 1) * 0.5;
-        this.shieldHP = this.maxShieldHP;
-        this.shieldDelay = 30 * (0.96 ** (parseInt(localStorage.getItem("shieldCooldownLV")) - 1));
+        this.shieldHP = PLAYER.MAX_SHIELD;
+        PLAYER.SHIELD_DELAY = PLAYER.SHIELD_DELAY;
         this.shieldTimer = 0;
-        this.showBox = localStorage.getItem("showCollisionBox");
+        this.showBox = SHOW_HIT_BOX;
         this.isShieldRegen = false;
         this.destroyed = false;
     }
@@ -51,7 +45,7 @@ export class Player {
     // Updates the position and angle of the player
     newPos(dt) {
         const movement = (this.moveDown || this.moveDownTouch) - (this.moveUp || this.moveUpTouch);
-        this.y += movement * this.speed * dt * this.pixelScale;
+        this.y += movement * PLAYER.SPEED * dt * PIXEL_SCALE;
     }
 
     // Updates the player image to its current position
@@ -60,25 +54,25 @@ export class Player {
         ctx.save();
 
         ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
+        ctx.rotate(PLAYER.ANGLE);
 
         this.movingEffect();
 
-        ctx.drawImage(this.sprite, -this.width / 2 / this.widthMultiplier, -this.height / 2, this.width / this.widthMultiplier, this.height);
+        ctx.drawImage(this.sprite, -PLAYER.WIDTH / 2, -PLAYER.HEIGHT / 2, PLAYER.WIDTH, PLAYER.HEIGHT);
 
         // Display Hitbox
         if (this.showBox == "true") {
             ctx.beginPath();
             ctx.strokeStyle = "red";
-            ctx.rect(-this.width / 2, -this.height / 2, this.width, this.height);
+            ctx.rect(-PLAYER.WIDTH / 2 * PLAYER.WIDTH_MULTIPLIER, -PLAYER.HEIGHT / 2, PLAYER.WIDTH * PLAYER.WIDTH_MULTIPLIER, PLAYER.HEIGHT);
             ctx.stroke();
         }
 
         if ((this.shoot || this.shootTouch) && this.fireTimer == 0) {
             this.fireTimer += dt;
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, this.projectiles[0], "Player"));
+            bullets.push(new Bullet(this.x, this.y, PLAYER.ANGLE, this.projectiles[0], "Player"));
             this.shootSound.play();
-        } else if (this.fireTimer >= this.fireDelay) {
+        } else if (this.fireTimer >= PLAYER.FIRE_DELAY) {
             this.fireTimer = 0;
         } else if ((this.shoot || this.shootTouch) || (!(this.shoot || this.shootTouch) && this.fireTimer != 0)) {
             this.fireTimer += dt;
@@ -86,12 +80,12 @@ export class Player {
 
         if ((this.shootMissile || this.shootMissileTouch) && this.missileReady) {
             this.missileReady = false;
-            bullets.push(new Missile(this.x, this.y, 5, 20, this.angle, this.projectiles[1], "Player Missile"));
+            bullets.push(new Missile(this.x, this.y, PLAYER.ANGLE, this.projectiles[1], "Player Missile"));
             this.missileSound.play();
-        } else if (this.missileTimer >= this.missileDelay) {
+        } else if (this.missileTimer >= PLAYER.MISSILE_DELAY) {
             this.missileTimer = 0;
             this.missileReady = true;
-        } else if (!this.missileReady && this.missileTimer < this.missileDelay) {
+        } else if (!this.missileReady && this.missileTimer < PLAYER.MISSILE_DELAY) {
             this.missileTimer += dt;
         }
 
@@ -155,7 +149,7 @@ export class Player {
     shieldRegen(dt) {
         if (this.isShieldRegen) {
             this.shieldTimer += dt;
-            if (this.shieldTimer >= this.shieldDelay) {
+            if (this.shieldTimer >= PLAYER.SHIELD_DELAY) {
                 this.shieldHP = this.maxShieldHP;
                 this.isShieldRegen = false;
                 this.shieldTimer = 0;

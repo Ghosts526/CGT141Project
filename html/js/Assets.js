@@ -1,3 +1,5 @@
+// File with predefine image location
+
 export const IMAGE_SRC = {
     PLAYER: ["images/SpaceshipV3.1.png",
         "images/SpaceshipV3.2.png",
@@ -25,3 +27,10 @@ export const IMAGE_SRC = {
         "images/PauseButton.png"
     ]
 };
+
+export const AUDIO_SRC = {
+    SHOOT: "audio/lazerSoundEffect.mp3",
+    MISSILE: "audio/missileSoundEffect.mp3" 
+};
+
+export const MUSIC_SRC = "audio/backgroundMusic.mp3";
