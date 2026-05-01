@@ -67,14 +67,21 @@
     color: black;
 }
 
-/* Tablet Screens (≤ 900px) */
+/* Tablet Screens (>= 1200px) */
 @media (min-height: 1200px) {
-
     .buttonSettings {
-        font-size: large;
-        width: 150px;
+        font-size: 28pt;
+        width: 250px;
+    }
+    
+    .mediumButton {
+        margin-bottom: 15px;
+        height: 100px;
     }
 
+    .settingsTable td {
+        font-size: 32pt;
+    }
 }
 
 /* Mobile Screens (≤ 600px) */
@@ -92,5 +99,7 @@
 
     .mediumButton {
         margin-bottom: 15px;
+        width: 200px;
+        height: 80px;
     }
 }

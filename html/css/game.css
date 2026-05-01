@@ -41,6 +41,12 @@ body {
     visibility: hidden;
 }
 
+@media (min-height: 1200px) {
+    .uiButtons {
+        width: 400px;
+    }
+}
+
 /* Mobile Screens (≤ 600px) */
 @media (max-height: 600px) {
     .uiButtons {

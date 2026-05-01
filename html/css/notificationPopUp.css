@@ -11,3 +11,14 @@
     border-radius: 15px;
     padding: 15px;
 }
+
+@media (min-height: 1200px) {
+
+    #message, #subMessage {
+        font-size: 32pt;
+    }
+
+    #popUp {
+        padding: 60px;
+    }
+}

@@ -125,32 +125,40 @@ a:hover {
     display: none;
 }
 
-/* Tablet Screens (≤ 900px) */
+/* Large Screens (>= 1200px) */
 @media (min-height: 1200px) {
-    
     ul {
         margin-left: 80px;
         margin-right: 80px;
     }
 
     h1 {
-        font-size: 32pt;
+        font-size: 64pt;
         margin-bottom: 30px;
         color: green;
     }
 
     h2 {
-        font-size: 24pt;
+        font-size: 48pt;
     }
 
     .button, .buttonLink {
-        width: 250px;
-        font-size: large;
+        width: 400px;
+        height: 75px;
+        font-size: xx-large;
+    }
+
+    a, p, li {
+        font-size: 25pt;
+    }
+
+    #content2 {
+        margin: 0 250px 200px 250px;
     }
 
 }
 
-/* Mobile Screens (≤ 600px) */
+/* Mobile Screens (<= 600px) */
 @media (max-height: 600px) {
     
     body {

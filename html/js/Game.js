@@ -57,6 +57,7 @@ function gameMenu() {
 
 function startGame() {
     gameArea.resumeGame();
+    document.getElementById("resumeButton").classList.remove("hidden")
     enemySpawner.setImages(enemyImgs, projectileImgs);
     gameArea.setUp(enemySpawner, projectileImgs, uiImgs);
     const playerWidth = 60, playerHeight = 60, widthMultiplyer = 0.4;

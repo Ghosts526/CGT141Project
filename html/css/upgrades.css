@@ -101,24 +101,27 @@ h2 {
     color: yellow;
 }
 
-/* Tablet Screens (≤ 900px) */
+/* Large Screens (>= 1200px) */
 @media (min-height: 1200px) {
     
     .upgradeButton {
-        width: 500px;
-        height: 75px;
-        font-size: large;
+        width: 950px;
+        height:100px;
     }
 
     .buyButton {
-        width: 100px;
-        height: 60px;
-        font-size: large;
+        width: 170px;
+        height: 80px;
+        font-size: x-large;
         margin-left: 5%;
+    }
+
+    .statTitle, .statLV, .currentStat, .nextStat {
+        font-size: larger;
     }
 }
 
-/* Mobile Screens (≤ 600px) */
+/* Mobile Screens (<= 600px) */
 @media (max-height: 600px) {
 
     .upgradeButton {

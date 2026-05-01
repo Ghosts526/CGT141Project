@@ -410,15 +410,11 @@ export class GameArea {
 
     pauseGame() {
         this.pause = true;
-        this.document.getElementById("pauseButton").onclick = () => this.resumeGame();
-        this.document.getElementById("pauseButton").innerText = "Resume Game";
         this.document.getElementById("uiNav").classList.remove("visuallyHidden");
     }
 
     resumeGame() {
         this.pause = false;
-        this.document.getElementById("pauseButton").onclick = () => this.pauseGame();
-        this.document.getElementById("pauseButton").innerText = "Pause Game";
         this.document.getElementById("uiNav").classList.add("visuallyHidden");
     }
 
