@@ -26,7 +26,7 @@ export class EnemySpawner {
         this.timer += dt;
 
         if (this.enemiesSpawning > 0 && this.timer >= 1.5) {
-            let x = gameArea.canvas.width;
+            let x = 1200;
             let y = Math.floor(Math.random() * (gameArea.canvas.height - 60)) + 30;
             let angle = -Math.PI / 2;
             let widthMultiplyer = 0.8; 

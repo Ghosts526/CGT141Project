@@ -10,7 +10,7 @@ export class Enemy {
     constructor(x, y, width, height, angle, images, score, widthMultiplier, context, projectiles) {
         this.x = x, this.y = y;
         this.width = width, this.height = height, this.angle = angle
-        this.speed = 4; this.ySpeed = 2, this.pixelScale = 50;
+        this.speed = 4; this.pixelScale = 50;
         this.addX = Math.sin(angle) * this.speed, this.addY = 0;
         this.images = images, this.sprite = images[0], this.imageState = 1;
         this.projectiles = projectiles;

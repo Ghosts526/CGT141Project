@@ -2,6 +2,7 @@ import { Player } from "./Player.js";
 import { EnemySpawner } from "./EnemySpawner.js";
 import { GameArea } from "./GameArea.js";
 import { Sound } from "./Sound.js";
+import { IMAGE_SRC } from "./Assets.js"
 
 /**
  * This is the main script for the setup of the Gameplay
@@ -18,63 +19,35 @@ const bullets = [], enemies = [];
 const gameArea = new GameArea(document);
 const enemySpawner = new EnemySpawner();
 
-const imagesSrc = [
-    ["images/SpaceshipV3.1.png",
-        "images/SpaceshipV3.2.png",
-        "images/SpaceshipV3.3.png",
-        "images/SpaceshipV3.4.png",
-        "images/SpaceshipV3.5.png",
-        "images/SpaceshipV3.hit.png"],
-    ["images/EnemySpaceshipV1.1.png",
-        "images/EnemySpaceshipV1.2.png",
-        "images/EnemySpaceshipV1.3.png",
-        "images/EnemySpaceshipV1.4.png",
-        "images/EnemySpaceshipV1.5.png",
-        "images/EnemySpaceshipV1.hit.png"],
-    ["images/Blaster.png",
-        "images/MissileProjectile.png",
-        "images/ExplosionV1.png",
-        "images/ExplosionV2.png",
-        "images/ExplosionV3.png"],
-    ["images/HealthBarDisplay.png", 
-        "images/ShieldBarDisplay.png", 
-        "images/UpArrow.png", 
-        "images/DownArrow.png", 
-        "images/FireButton.png", 
-        "images/MissileButton.png",
-        "images/PauseButton.png"
-    ]
-];
-
 const playerImgs = [];
 const enemyImgs = [];
 const projectileImgs = [];
 const uiImgs = [];
 
-// Creates an image refrence that'll be used in the game (no creating multiple images objs)
+// Creates an image refrence that'll be used in the game (not creating multiple images objs)
 // and prevents flickering when loading it the first time 
 function preloadImages() {
-    for (let i = 0; i < imagesSrc.length; i++) {
-        for (let j = 0; j < imagesSrc[i].length; j++) {
+    for (const [category, imgs] of Object.entries(IMAGE_SRC)) {
+        for (const src of imgs) {
             const img = new Image();
-            img.src = imagesSrc[i][j]
-            switch (i) {
-                case 0:
+            img.src = src;
+            switch (category) {
+                case "PLAYER": 
                     playerImgs.push(img);
                     break;
-                case 1:
+                case "ENEMY": 
                     enemyImgs.push(img);
                     break;
-                case 2:
+                case "PROJECTILES": 
                     projectileImgs.push(img);
                     break;
-                case 3:
+                case "UI": 
                     uiImgs.push(img);
                     break;
-                default: // Throws a warning if there are too many arrays
-                    console.warn("No container for: " + imagesSrc[i][j]); 
+                default:
+                    console.warn("No container for: Category=" + category + " | SRC=" + src);
             }
-        }
+        }   
     }
 }
 

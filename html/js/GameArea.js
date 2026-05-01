@@ -1,3 +1,4 @@
+import { GAME_SIZE } from "./Constants.js";
 import { Collision } from "./Collision.js";
 
 /**
@@ -11,7 +12,7 @@ export class GameArea {
     constructor(doc) {
         this.document = doc;
         this.canvas = this.document.getElementById("gameScreen");
-        this.context = this.canvas.getContext("2d");
+        this.ctx = this.canvas.getContext("2d");
         this.collision = new Collision();
         this.pause = true, this.isGameOver = false;
         this.backgroundSpeed = 5;
@@ -66,6 +67,14 @@ export class GameArea {
         // Set CSS size based on calcuations to fit onto the screen
         this.canvas.style.width = displayWidth + 'px';
         this.canvas.style.height = displayHeight + 'px';
+
+        // Scale drawing buffer for mobile users
+        const dpr = window.devicePixelRatio || 1; 
+
+        this.canvas.width = 1200 * dpr;
+        this.canvas.height = 675 * dpr;
+
+        this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         // Scale the pixel size to the actual canvas size 
         const rect = this.canvas.getBoundingClientRect();
@@ -164,7 +173,8 @@ export class GameArea {
     }
 
     clearGameArea() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.canvas.width = this.canvas.width
     }
 
     checkTouch(player) {
@@ -220,7 +230,7 @@ export class GameArea {
             for (let j = 0; j < rows; j++) {
                 const x = this.backgroundX + i * imgW;
                 const y = this.backgroundY + j * imgH;
-                this.context.drawImage(img, x, y, imgW, imgH);
+                this.ctx.drawImage(img, x, y, imgW, imgH);
             }
         }
 
@@ -239,12 +249,12 @@ export class GameArea {
         for (let i = 0; i < buttons.length; i++) {
             if (!this.touchMode && i <= 1) continue;// Does not draw up/down buttons if touchMode is false
 
-            this.context.save();
-            this.context.translate(buttons[i].x, buttons[i].y);
-            this.context.globalAlpha = 0.65;
+            this.ctx.save();
+            this.ctx.translate(buttons[i].x, buttons[i].y);
+            this.ctx.globalAlpha = 0.65;
 
             const image = this.ui[i + 2];
-            this.context.drawImage(image, 0, 0, buttons[i].width, buttons[i].height);
+            this.ctx.drawImage(image, 0, 0, buttons[i].width, buttons[i].height);
 
             if (i == 2 || i == 3) {
                 let startAngle = Math.PI / -2;
@@ -256,64 +266,64 @@ export class GameArea {
                 let currentAngle = length * duration + startAngle;
 
                 if (currentAngle < endAngle && currentAngle > startAngle) {
-                    this.context.fillStyle = "gray";
-                    this.context.strokeStyle = "gray";
-                    this.context.globalAlpha = 0.75;
-                    this.context.beginPath();
-                    this.context.moveTo(center.x, center.y);
-                    this.context.arc(center.x, center.y, center.x, currentAngle, endAngle);
-                    this.context.closePath;
-                    this.context.fill();
-                    this.context.stroke();
+                    this.ctx.fillStyle = "gray";
+                    this.ctx.strokeStyle = "gray";
+                    this.ctx.globalAlpha = 0.75;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(center.x, center.y);
+                    this.ctx.arc(center.x, center.y, center.x, currentAngle, endAngle);
+                    this.ctx.closePath;
+                    this.ctx.fill();
+                    this.ctx.stroke();
                 }
             }
 
-            this.context.restore();
+            this.ctx.restore();
         }
     }
 
     // Bars is 10:1 ratio
     drawHealth(player) {
-        this.context.save();
-        this.context.translate(10, 10);
-        this.context.globalAlpha = 0.75;
+        this.ctx.save();
+        this.ctx.translate(10, 10);
+        this.ctx.globalAlpha = 0.75;
 
         let barLength = 260;
         let hp = (player.hp / player.maxHp * barLength).toFixed(2);
 
-        this.context.fillStyle = "red";
-        this.context.fillRect(32, 3, (hp >= 0) ? hp : 0, 26);
-        this.context.fillStyle = "gray";
-        this.context.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
+        this.ctx.fillStyle = "red";
+        this.ctx.fillRect(32, 3, (hp >= 0) ? hp : 0, 26);
+        this.ctx.fillStyle = "gray";
+        this.ctx.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
 
-        this.context.drawImage(this.ui[0], 0, 0, 295, 32); // Health Bar Overlay
+        this.ctx.drawImage(this.ui[0], 0, 0, 295, 32); // Health Bar Overlay
 
-        this.context.restore();
+        this.ctx.restore();
     }
 
     drawShieldHealth(player) {
-        this.context.save();
-        this.context.translate(325, 10);
-        this.context.globalAlpha = 0.75;
+        this.ctx.save();
+        this.ctx.translate(325, 10);
+        this.ctx.globalAlpha = 0.75;
 
         let barLength = 260;
         let hp = (player.shieldHP / player.maxShieldHP * barLength).toFixed(2);
         let regenHp = (player.shieldTimer / player.shieldDelay * barLength).toFixed(2);
 
-        this.context.fillStyle = "rgb(0, 0, 175)";
-        this.context.fillRect(32, 3, (hp >= 0) ? hp : 0, 26);
-        this.context.fillStyle = "gray";
-        this.context.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
-        this.context.fillStyle = "yellow";
-        this.context.fillRect(32, 3, (regenHp >= 0) ? regenHp : 0, 26);
+        this.ctx.fillStyle = "rgb(0, 0, 175)";
+        this.ctx.fillRect(32, 3, (hp >= 0) ? hp : 0, 26);
+        this.ctx.fillStyle = "gray";
+        this.ctx.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
+        this.ctx.fillStyle = "yellow";
+        this.ctx.fillRect(32, 3, (regenHp >= 0) ? regenHp : 0, 26);
 
-        this.context.drawImage(this.ui[1], 0, 0, 295, 32); // Shield Bar Overlay
+        this.ctx.drawImage(this.ui[1], 0, 0, 295, 32); // Shield Bar Overlay
 
-        this.context.restore();
+        this.ctx.restore();
     }
 
     drawScore() {
-        const ctx = this.context;
+        const ctx = this.ctx;
 
         ctx.save();
         ctx.translate(650, 26);
@@ -338,7 +348,7 @@ export class GameArea {
 
         for (let i = bullets.length - 1; i >= 0; i--) {
             bullets[i].newPos(dt);
-            bullets[i].update(this.context);
+            bullets[i].update(this.ctx);
 
             // Remove if off-screen
             if (bullets[i].x < 0 || bullets[i].x > this.canvas.width || bullets[i].y < 0 || bullets[i].y > this.canvas.height) {
@@ -353,14 +363,14 @@ export class GameArea {
         if (player.y + player.height / 2 >= this.canvas.height) {
             player.y = this.canvas.height - player.height / 2;
         }
-        player.update(this.context, bullets, dt);
+        player.update(this.ctx, bullets, dt);
 
 
-        this.enemySpawner.waves(this.context, enemies, dt);
+        this.enemySpawner.waves(this.ctx, enemies, dt);
 
         for (let i = enemies.length - 1; i >= 0; i--) {
-            enemies[i].newPos(dt, this.context);
-            enemies[i].update(this.context);
+            enemies[i].newPos(dt, this.ctx);
+            enemies[i].update(this.ctx);
             if (enemies[i].destroyed) {
                 enemies.splice(i, 1);
                 break;
@@ -400,7 +410,7 @@ export class GameArea {
 
     gameOver() {
         this.isGameOver = true;
-        const ctx = this.context;
+        const ctx = this.ctx;
         ctx.save();
         ctx.font = "60px Arial";
         ctx.fillStyle = "red";
