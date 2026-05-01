@@ -17,7 +17,7 @@
 
 <p>As players destroy enemy ships, they earn credits that can be spent on ship upgrades — improving firepower, durability, and overall survivability. Each wave becomes more challenging, pushing players to react quickly, manage positioning, and strategically invest in upgrades to progress further. Upgrading is accessible before you start the game and after the game is over.</p>
 
-<p>The game is built using HTML5, CSS, and JavaScript.</p>
+<p>The game is built using HTML5, CSS, JavaScript, and PHP.</p>
 
 ## Game Features:
 
@@ -43,7 +43,7 @@
 <p>Score is awarded every time they destroy the enemy ships. With higher rewards with tougher enemies.</p>
 
 **Multiple Pages**
-<p>Includes a main menu, game menu, game screen, upgrades, settings, how to play, leaderboards, and credits</p>
+<p>Includes a main menu, game menu, game screen, upgrades, settings, how to play, bug report form, and credits</p>
 
 ## How to Play
 
@@ -75,14 +75,12 @@
 
 <p>Upgrades persist until data has been cleared, either by the user or by the browser. These upgrades help you survive more intense waves.</p>
 
-**Leaderboard**
-<p>Your score is saved locally and in the server.</p>
-
 **Additional Pages**
 
 * How to Play - Quick reference for controls and mechanics
 * Settings - Adjust audio and gameplay preferences
 * Upgrades - Improve your shipship between runs
+* Bug Report - Reports a bug issue 
 * Credits - Acknowledgements and project contributors
 
 ## Running the Game
