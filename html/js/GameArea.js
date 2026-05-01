@@ -1,4 +1,4 @@
-import { GAME_SIZE } from "./Constants.js";
+import { DOWN_BUTTON, ENEMY, FIRE_BUTTON, GAME_SIZE, MISSILE_BUTTON, PAUSE_BUTTON, PIXEL_SCALE, PLAYER, UP_BUTTON } from "./Constants.js";
 import { Collision } from "./Collision.js";
 
 /**
@@ -21,12 +21,7 @@ export class GameArea {
         this.backgroundImage.src = "images/SpaceBackground256x256.jpg"; // Your image path
         this.moveUp = false, this.moveDown = false;
         this.shoot = false, this.shootMissile = false;
-        this.upButton = { x: 10, y: 380, width: 100, height: 100 };
-        this.downButton = { x: 10, y: 500, width: 100, height: 100 };
-        this.fireButton = { x: 1090, y: 380, width: 100, height: 100 };
-        this.missileButton = { x: 1090, y: 500, width: 100, height: 100 };
-        this.pauseButton = { x: 1090, y: 10, width: 100, height: 100 };
-        this.lastTime = 0, this.pixelScale = 50;
+        this.lastTime = 0;
         this.activeTouches = {};
         this.scaleX = 1, this.scaleY = 1;
         this.touchMode = (localStorage.getItem("touchMode") == "true");
@@ -41,8 +36,8 @@ export class GameArea {
             this.document.body.insertBefore(this.canvas, this.document.body.childNodes[0]);
         }
 
-        this.canvas.width = 1200;
-        this.canvas.height = 675;
+        this.canvas.width = GAME_SIZE.WIDTH;
+        this.canvas.height = GAME_SIZE.HEIGHT;
         this.enemySpawner = enemySpawner;
         this.addResizeListeners();
         this.startY = this.canvas.height / 2;
@@ -71,8 +66,8 @@ export class GameArea {
         // Scale drawing buffer for mobile users
         const dpr = window.devicePixelRatio || 1; 
 
-        this.canvas.width = 1200 * dpr;
-        this.canvas.height = 675 * dpr;
+        this.canvas.width = GAME_SIZE.WIDTH * dpr;
+        this.canvas.height = GAME_SIZE.HEIGHT * dpr;
 
         this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
@@ -173,7 +168,6 @@ export class GameArea {
     }
 
     clearGameArea() {
-        //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.canvas.width = this.canvas.width
     }
 
@@ -235,7 +229,7 @@ export class GameArea {
         }
 
         // Scroll
-        this.backgroundX -= this.backgroundSpeed * dt * this.pixelScale;
+        this.backgroundX -= this.backgroundSpeed * dt * PIXEL_SCALE;
 
         // Reset when one tile fully leaves the screen
         if (this.backgroundX <= -imgW) {
@@ -244,7 +238,7 @@ export class GameArea {
     }
 
     drawButtons(player) {
-        const buttons = [this.upButton, this.downButton, this.fireButton, this.missileButton, this.pauseButton];
+        const buttons = [UP_BUTTON, DOWN_BUTTON, FIRE_BUTTON, MISSILE_BUTTON, PAUSE_BUTTON];
 
         for (let i = 0; i < buttons.length; i++) {
             if (!this.touchMode && i <= 1) continue;// Does not draw up/down buttons if touchMode is false
@@ -351,17 +345,17 @@ export class GameArea {
             bullets[i].update(this.ctx);
 
             // Remove if off-screen
-            if (bullets[i].x < 0 || bullets[i].x > this.canvas.width || bullets[i].y < 0 || bullets[i].y > this.canvas.height) {
+            if (bullets[i].x < 0 || bullets[i].x > GAME_SIZE.WIDTH) {
                 bullets.splice(i, 1);
             }
         }
 
         player.newPos(dt);
-        if (player.y - player.height / 2 <= 0) {
-            player.y = player.height / 2;
+        if (player.y - PLAYER.HEIGHT / 2 <= 0) {
+            player.y = PLAYER.HEIGHT / 2;
         }
-        if (player.y + player.height / 2 >= this.canvas.height) {
-            player.y = this.canvas.height - player.height / 2;
+        if (player.y + PLAYER.HEIGHT / 2 >= GAME_SIZE.HEIGHT) {
+            player.y = GAME_SIZE.HEIGHT - PLAYER.HEIGHT / 2;
         }
         player.update(this.ctx, bullets, dt);
 
@@ -377,8 +371,8 @@ export class GameArea {
             }
             enemies[i].tryShoot(bullets, dt);
 
-            if (enemies[i].x + (enemies[i].width / 2) <= 0) {
-                enemies[i].x = this.canvas.width + (enemies[i].width / 2);
+            if (enemies[i].x + (ENEMY.WIDTH / 2) <= 0) {
+                enemies[i].x = ENEMY.START_X;
             }
         }
 
@@ -416,10 +410,10 @@ export class GameArea {
         ctx.fillStyle = "red";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText("Game Over!", ctx.canvas.width / 2, ctx.canvas.height / 2);
+        ctx.fillText("Game Over!", GAME_SIZE.WIDTH / 2, GAME_SIZE.HEIGHT / 2);
         ctx.fillStyle = "yellow";
         ctx.font = "30px Arial";
-        ctx.fillText("Credits Earned: " + parseInt(this.collision.score, 10), ctx.canvas.width / 2, ctx.canvas.height / 2 + 60);
+        ctx.fillText("Credits Earned: " + parseInt(this.collision.score, 10), GAME_SIZE.WIDTH / 2, GAME_SIZE.HEIGHT / 2 + 60);
         if (parseInt(localStorage.getItem("topScore"), 10) < this.collision.score) {
             localStorage.setItem("topScore", this.collision.score.toString());
         }

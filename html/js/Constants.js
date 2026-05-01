@@ -49,3 +49,28 @@ export const EXPLOSION = {
     SPEED: 5,
     WIDTH: 200, HEIGHT: 200
 };
+
+export const UP_BUTTON = { 
+    x: 10, y: 380, 
+    width: 100, height: 100 
+};
+
+export const DOWN_BUTTON = { 
+    x: 10, y: 500, 
+    width: 100, height: 100 
+};
+
+export const FIRE_BUTTON = { 
+    x: 1090, y: 380, 
+    width: 100, height: 100 
+};
+
+export const MISSILE_BUTTON = { 
+    x: 1090, y: 500, 
+    width: 100, height: 100 
+};
+
+export const PAUSE_BUTTON = { 
+    x: 1090, y: 10, 
+    width: 100, height: 100 
+};
