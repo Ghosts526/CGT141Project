@@ -25,6 +25,8 @@ export class GameArea {
         this.activeTouches = {};
         this.scaleX = 1, this.scaleY = 1;
         this.touchMode = (localStorage.getItem("touchMode") == "true");
+        this.isTouchActive = false;
+        this.MOUSE_ID = -1;
     }
 
     setUp(enemySpawner, projectiles, ui) {
@@ -40,7 +42,6 @@ export class GameArea {
         this.canvas.height = GAME_SIZE.HEIGHT;
         this.enemySpawner = enemySpawner;
         this.addResizeListeners();
-        this.startY = this.canvas.height / 2;
     }
 
     resizeCanvas() { // Resizes the canvas to fit onto the screen while keeping the ratio consistent
@@ -100,9 +101,7 @@ export class GameArea {
                 this.updateGameArea(dt, bullets, player, enemies);
             }
 
-            if (this.touchMode) {
-                this.checkTouch(player);
-            }
+            this.checkTouch(player);
 
             // Update the game every frame with accurate deltaTime
             requestAnimationFrame(loop);
@@ -144,12 +143,11 @@ export class GameArea {
 
         });
 
-        // Add mouse click
-
         if (this.touchMode) {
             // Add an eventlistener for touch buttons to detect onPress and onRelease
             window.addEventListener("touchstart", (e) => {
-                e.preventDefault
+                this.isTouchActive = true;
+                e.preventDefault();
                 const rect = this.canvas.getBoundingClientRect();
                 for (const t of e.changedTouches) {
                     this.activeTouches[t.identifier] = {
@@ -163,8 +161,28 @@ export class GameArea {
                 for (const t of e.changedTouches) {
                     delete this.activeTouches[t.identifier];
                 }
+                if (e.touches.length == 0) {
+                    this.isTouchActive = false;
+                }
             });
         }
+
+        window.addEventListener("mousedown", (e) => {
+            if (this.isTouchActive) return; // Ignores mouse input if touch is active
+
+            const rect = this.canvas.getBoundingClientRect();
+
+            this.activeTouches[this.MOUSE_ID] = {
+                x: (e.clientX - rect.left) * this.scaleX,
+                y: (e.clientY - rect.top) * this.scaleY
+            };
+        });
+
+        window.addEventListener("mouseup", (e) => {
+            if (this.isTouchActive) return; // Ignores mouse input if touch is active
+
+            delete this.activeTouches[this.MOUSE_ID];
+        });
     }
 
     clearGameArea() {
@@ -180,14 +198,16 @@ export class GameArea {
             const t = this.activeTouches[id];
 
             if (!this.isGameOver) {
-                if (t.x >= UP_BUTTON.X && t.x <= UP_BUTTON.X + UP_BUTTON.WIDTH &&
-                    t.y >= UP_BUTTON.Y && t.y <= UP_BUTTON.Y + UP_BUTTON.HEIGHT) {
-                    player.moveUpTouch = true;
-                }
+                if (this.touchMode) { // Only detects move up and down if they are displayed
+                    if (t.x >= UP_BUTTON.X && t.x <= UP_BUTTON.X + UP_BUTTON.WIDTH &&
+                        t.y >= UP_BUTTON.Y && t.y <= UP_BUTTON.Y + UP_BUTTON.HEIGHT) {
+                        player.moveUpTouch = true;
+                    }
 
-                if (t.x >= DOWN_BUTTON.X && t.x <= DOWN_BUTTON.X + DOWN_BUTTON.WIDTH &&
-                    t.y >= DOWN_BUTTON.Y && t.y <= DOWN_BUTTON.Y + DOWN_BUTTON.HEIGHT) {
-                    player.moveDownTouch = true;
+                    if (t.x >= DOWN_BUTTON.X && t.x <= DOWN_BUTTON.X + DOWN_BUTTON.WIDTH &&
+                        t.y >= DOWN_BUTTON.Y && t.y <= DOWN_BUTTON.Y + DOWN_BUTTON.HEIGHT) {
+                        player.moveDownTouch = true;
+                    }
                 }
 
                 if (t.x >= FIRE_BUTTON.X && t.x <= FIRE_BUTTON.X + FIRE_BUTTON.WIDTH &&

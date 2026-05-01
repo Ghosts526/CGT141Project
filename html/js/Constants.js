@@ -1,4 +1,5 @@
 // A file with pre-define variables for the game
+// Could've add more but I didn't have time to convert everything into constants
 
 export const PIXEL_SCALE = 50;
 export const SHOW_HIT_BOX = localStorage.getItem("showCollisionBox") || "false";
