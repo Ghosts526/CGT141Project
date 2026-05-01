@@ -50,6 +50,6 @@ body {
 /* Mobile Screens (≤ 600px) */
 @media (max-height: 600px) {
     .uiButtons {
-        width: 200px;
+        width: 140px;
     }
 }
