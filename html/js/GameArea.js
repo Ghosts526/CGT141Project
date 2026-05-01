@@ -13,39 +13,35 @@ export class GameArea {
         this.canvas = this.document.getElementById("gameScreen");
         this.context = this.canvas.getContext("2d");
         this.collision = new Collision();
-        this.pause = true;
-        this.isGameOver = false;
+        this.pause = true, this.isGameOver = false;
         this.backgroundSpeed = 5;
-        this.backgroundX = 0;
-        this.backgroundY = 0;
+        this.backgroundX = 0, this.backgroundY = 0;
         this.backgroundImage = new Image();
         this.backgroundImage.src = "images/SpaceBackground256x256.jpg"; // Your image path
-        this.healthBarUI = new Image();
+        this.healthBarUI = new Image(), this.shieldBarUI = new Image();
         this.healthBarUI.src = "images/HealthBarDisplay.png";
-        this.shieldBarUI = new Image();
         this.shieldBarUI.src = "images/ShieldBarDisplay.png";
-        this.moveUp = false;
-        this.moveDown = false;
-        this.shoot = false;
-        this.shootMissile = false;
+        this.moveUp = false, this.moveDown = false;
+        this.shoot = false, this.shootMissile = false;
         this.upButton = { x: 10, y: 380, width: 100, height: 100, src: "images/UpArrow.png" };
         this.downButton = { x: 10, y: 500, width: 100, height: 100, src: "images/DownArrow.png" };
         this.fireButton = { x: 1090, y: 380, width: 100, height: 100, src: "images/FireButton.png" };
         this.missileButton = { x: 1090, y: 500, width: 100, height: 100, src: "images/MissileButton.png" };
         this.pauseButton = { x: 1090, y: 10, width: 100, height: 100, src: "images/PauseButton.png" };
-        this.lastTime = 0;
-        this.pixelScale = 50;
+        this.lastTime = 0, this.pixelScale = 50;
         this.activeTouches = {};
-        this.scaleX = 1;
-        this.scaleY = 1;
+        this.scaleX = 1, this.scaleY = 1;
+        this.touchMode = (localStorage.getItem("touchMode") == "true");
     }
 
-    setUp(enemySpawner) {
+    setUp(enemySpawner, projectiles) {
+        this.collision.setProjectiles(projectiles);
+
         // Insert canvas if not already in DOM
         if (!this.canvas.parentNode) {
             this.document.body.insertBefore(this.canvas, this.document.body.childNodes[0]);
         }
-        // Set the drawing buffer size ONCE
+
         this.canvas.width = 1200;
         this.canvas.height = 675;
         this.enemySpawner = enemySpawner;
@@ -55,15 +51,13 @@ export class GameArea {
 
     resizeCanvas() { // Resizes the canvas to fit onto the screen while keeping the ratio consistent
         // Get the window width and height
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth, windowHeight = window.innerHeight;
 
         // Check if the width and height are displayed correctly with the aspect
         const aspect = 16 / 9; // 16:9 ratio
 
         // Set the width and height to be 16:9 ratio
-        let displayWidth = windowWidth;
-        let displayHeight = windowWidth / aspect;
+        let displayWidth = windowWidth, displayHeight = windowWidth / aspect;
 
         // If the height is too large for the window, make the width smaller instead
         if (displayHeight > windowHeight) {
@@ -77,8 +71,7 @@ export class GameArea {
 
         // Scale the pixel size to the actual canvas size 
         const rect = this.canvas.getBoundingClientRect();
-        this.scaleX = 1200 / rect.width;
-        this.scaleY = 675 / rect.height;
+        this.scaleX = 1200 / rect.width, this.scaleY = 675 / rect.height;
     }
 
     addResizeListeners() { // Calls the resizeCanvas function if the window resize or orientation changed
@@ -105,15 +98,18 @@ export class GameArea {
                 this.updateGameArea(dt, bullets, player, enemies);
             }
 
-            if (this.isGameOver) this.checkTouch(player);
+            if (this.touchMode) {
+                this.checkTouch(player);
+            }
 
             // Update the game every frame with accurate deltaTime
             requestAnimationFrame(loop);
         };
 
-        requestAnimationFrame(loop);
+        requestAnimationFrame(loop); // Initial recursive call
     }
 
+    // Sets up the keyboard and touch controls
     setupControls(player) {
         this.document.addEventListener('contextmenu', function (event) {
             event.preventDefault();
@@ -146,23 +142,27 @@ export class GameArea {
 
         });
 
-        // Add an eventlistener for touch buttons to detect onPress and onRelease
-        window.addEventListener("touchstart", (e) => {
-            e.preventDefault
-            const rect = this.canvas.getBoundingClientRect();
-            for (const t of e.changedTouches) {
-                this.activeTouches[t.identifier] = {
-                    x: (t.clientX - rect.left) * this.scaleX,
-                    y: (t.clientY - rect.top) * this.scaleY
-                };
-            }
-        }, {passive: false});
+        // Add mouse click
 
-        window.addEventListener("touchend", (e) => {
-            for (const t of e.changedTouches) {
-                delete this.activeTouches[t.identifier];
-            }
-        });
+        if (this.touchMode) {
+            // Add an eventlistener for touch buttons to detect onPress and onRelease
+            window.addEventListener("touchstart", (e) => {
+                e.preventDefault
+                const rect = this.canvas.getBoundingClientRect();
+                for (const t of e.changedTouches) {
+                    this.activeTouches[t.identifier] = {
+                        x: (t.clientX - rect.left) * this.scaleX,
+                        y: (t.clientY - rect.top) * this.scaleY
+                    };
+                }
+            }, { passive: false });
+
+            window.addEventListener("touchend", (e) => {
+                for (const t of e.changedTouches) {
+                    delete this.activeTouches[t.identifier];
+                }
+            });
+        }
     }
 
     clearGameArea() {
@@ -171,10 +171,8 @@ export class GameArea {
 
     checkTouch(player) {
         // Reset states before checking all touches
-        player.moveUpTouch = false;
-        player.moveDownTouch = false;
-        player.shootTouch = false;
-        player.shootMissileTouch = false;
+        player.moveUpTouch = false, player.moveDownTouch = false;
+        player.shootTouch = false, player.shootMissileTouch = false;
 
         for (const id in this.activeTouches) {
             const t = this.activeTouches[id];
@@ -241,6 +239,8 @@ export class GameArea {
         const buttons = [this.upButton, this.downButton, this.fireButton, this.missileButton, this.pauseButton];
 
         for (let i = 0; i < buttons.length; i++) {
+            if (!this.touchMode && i <= 1) continue;// Does not draw up/down buttons if touchMode is false
+
             this.context.save();
             this.context.translate(buttons[i].x, buttons[i].y);
             this.context.globalAlpha = 0.65;
@@ -310,9 +310,25 @@ export class GameArea {
         this.context.fillStyle = "yellow";
         this.context.fillRect(32, 3, (regenHp >= 0) ? regenHp : 0, 26);
 
-        this.context.drawImage(this.shieldBarUI, 0, 0, 295, 32); // Health Bar Overlay
+        this.context.drawImage(this.shieldBarUI, 0, 0, 295, 32); // Shield Bar Overlay
 
         this.context.restore();
+    }
+
+    drawScore() {
+        const ctx = this.context;
+
+        ctx.save();
+        ctx.translate(650, 26);
+        ctx.globalAlpha = 0.75;
+
+        ctx.fillStyle = "yellow";
+        ctx.font = "32pt Arial";
+        ctx.textBaseline = "middle";
+
+        ctx.fillText("Score: " + this.collision.score, 0, 4);
+
+        ctx.restore();
     }
 
     // Draws all the images on the canvas
@@ -367,7 +383,7 @@ export class GameArea {
 
         this.drawButtons(player);
 
-        this.checkTouch(player);
+        this.drawScore();
     }
 
 
@@ -388,6 +404,7 @@ export class GameArea {
     gameOver() {
         this.isGameOver = true;
         const ctx = this.context;
+        ctx.save();
         ctx.font = "60px Arial";
         ctx.fillStyle = "red";
         ctx.textAlign = "center";
@@ -400,5 +417,6 @@ export class GameArea {
             localStorage.setItem("topScore", this.collision.score.toString());
         }
         localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + parseInt(this.collision.score, 10)).toString());
+        ctx.restore();
     }
 }

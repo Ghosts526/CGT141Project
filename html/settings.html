@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="css/master.css">
     <link rel="stylesheet" href="css/settings.css">
     <link rel="stylesheet" href="css/notificationPopUp.css">
-    <script src="js/Script.js" defer></script>
     <script src="js/Settings.js" defer></script>
 </head>
 <body>
@@ -20,15 +19,27 @@
         <section id="settingLayout">
             <nav id="settingsNav">
                 <!--gameplayButton is selected by default-->
-                <button class="button mediumButton buttonSelected" id="gameplayButton" onclick="gameplayButton()" type="button">Gameplay</button>
-                <button class="button mediumButton" id="dataManagementButton" onclick="dataManagementButton()" type="button">Data Management</button>
-                <button class="button mediumButton" id="devToolkitButton" onclick="devToolkitButton()" type="button">Dev Toolkit</button>
+                <button class="button mediumButton buttonSelected" id="gameplayButton" onclick="switchSettings(0)" type="button">Gameplay</button>
+                <button class="button mediumButton" id="dataManagementButton" onclick="switchSettings(1)" type="button">Data Management</button>
+                <button class="button mediumButton" id="devToolkitButton" onclick="switchSettings(2)" type="button">Dev Toolkit</button>
             </nav>
 
             <table class="settingsTable" id="gameplayTable">
                 <tr>
                     <td class="settingName">Audio</td>
-                    <td class="settingControl"><button class="buttonSettings" id="audioButton" onclick="audio()" type="button">On</button></td>
+                    <td class="settingControl"><button class="buttonSettings" id="useAudio" onclick="audio()" type="button">On</button></td>
+                </tr>
+                <tr>
+                    <td class="settingName">Touch Mode</td>
+                    <td class="settingControl"><button class="buttonSettings" id="touchMode" onclick="touchMode()">On</button></td>
+                </tr>
+                <tr>
+                    <td class="settingName">Button Size</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="settingName">Difficulty</td>
+                    <td></td>
                 </tr>
             </table>
 

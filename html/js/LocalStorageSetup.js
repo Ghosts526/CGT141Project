@@ -1,30 +1,37 @@
-function Setup()
-{
+/**
+ * This class handles the setup for data making sure they exist
+ * If the data does not exist it setup a preset value for it
+ */
+
+function Setup() {
     const data = ["topScore", "credits"];
     const lv = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
     const boolF = ["showCollisionBox", "godMode"];
+    const boolT = ["useAudio", "touchMode"]
 
     for (let i = 0; i < data.length; i++) {
-        if (localStorage.getItem(data[i]) == null)
-        {
+        if (localStorage.getItem(data[i]) == null) {
             localStorage.setItem(data[i], "0");
         }
     }
 
     for (let i = 0; i < lv.length; i++) {
-        if (localStorage.getItem(lv[i]) == null)
-        {
+        if (localStorage.getItem(lv[i]) == null) {
             localStorage.setItem(lv[i], "1");
         }
     }
 
-    for (let i = 0; i < boolF.length; i++)
-    {
-        if (localStorage.getItem(boolF[i]) == null)
-        {
+    for (let i = 0; i < boolF.length; i++) {
+        if (localStorage.getItem(boolF[i]) == null) {
             localStorage.setItem(boolF[i], "false");
+        }
+    }
+
+    for (let i = 0; i < boolT.length; i++) {
+        if (localStorage.getItem(boolT[i]) == null) {
+            localStorage.setItem(boolT[i], "true");
         }
     }
 }
 
-window.onload = function(){Setup()};
+window.onload = function () { Setup() };

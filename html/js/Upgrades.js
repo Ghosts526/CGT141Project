@@ -1,11 +1,14 @@
+/**
+ * This file handles the display for upgrades information
+ */
+
 const statLV = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
 const currStat = ["currHealth", "currFireRate", "currMissileCooldown", "currShieldHealth", "currShieldCooldown"];
 const costStat = ["costHealthButton", "costFireRateButton", "costMissileCooldownButton", "costShieldHealthButton", "costShieldCooldownButton"];
 const nextStat = ["nextHealth", "nextFireRate", "nextMissileCooldown", "nextShieldHealth", "nextShieldCooldown"];
 const maxLV = [26, 25, 28, 21, 28];
 
-function upgrade(buttonNum)
-{
+function upgrade(buttonNum) {
     let newCredits = "";
     let newLV = "";
     let lv = parseInt(localStorage.getItem(statLV[buttonNum]), 10)
@@ -17,11 +20,9 @@ function upgrade(buttonNum)
     updateDisplay();
 }
 
-function purchase(cost)
-{
+function purchase(cost) {
     let credits = parseInt(localStorage.getItem("credits"), 10);
-    if (credits >= cost)
-    {
+    if (credits >= cost) {
         let newCredits = (credits - cost).toString();
         localStorage.setItem("credits", newCredits);
         return true;
@@ -29,24 +30,23 @@ function purchase(cost)
     return false;
 }
 
-function updateDisplay()
-{
+function updateDisplay() {
     document.getElementById("creditsDisplay").innerText = "Credits: " + localStorage.getItem("credits");
 
-    for(let i = 0; i < statLV.length; i++) {
+    for (let i = 0; i < statLV.length; i++) {
         let lv = parseInt(localStorage.getItem(statLV[i]), 10)
         if (lv > maxLV[i]) { // If the player get lv > max it sets it to the max
             localStorage.setItem(statLV[i], maxLV[i])
             lv = maxLV[i];
         }
-        
+
         document.getElementById(statLV[i]).innerText = "LV: " + lv;
         document.getElementById(costStat[i]).innerText = (5 * (lv ** 1.2)).toFixed(0) + " Credits"; // Cost for upgrade
 
         let stat = getStat(lv, i);
         document.getElementById(currStat[i]).innerText = stat.curr;
         document.getElementById(nextStat[i]).innerText = stat.next;
-       
+
         if (lv == maxLV[i]) {
             document.getElementById(nextStat[i]).innerText = ""; //Don't display next stat
             document.getElementById(costStat[i]).innerText = "Max Level"; // Inform the player they reached the max level
@@ -90,7 +90,7 @@ function getStat(lv, index) { //Returns the current stat and the increase or dec
 
     effectDifference = (effectDifference <= 0) ? effectDifference : "+" + effectDifference;
 
-    return { curr: currentEffect, next: effectDifference};
+    return { curr: currentEffect, next: effectDifference };
 }
 
-window.onload = function(){updateDisplay()};
+window.onload = function () { updateDisplay() };

@@ -7,25 +7,21 @@ import { Sound } from "./Sound.js";
 
 export class Enemy {
     // A constructor for the enemy class
-    constructor(x, y, width, height, angle, image, score, widthMultiplier, context) {
+    constructor(x, y, width, height, angle, images, score, widthMultiplier, context, projectiles) {
         this.x = x, this.y = y;
-        this.width = width, this.height = height;
-        this.angle = angle
-        this.speed = 4; this.ySpeed = 2;
-        this.pixelScale = 50;
+        this.width = width, this.height = height, this.angle = angle
+        this.speed = 4; this.ySpeed = 2, this.pixelScale = 50;
         this.addX = Math.sin(angle) * this.speed, this.addY = 0;
-        this.image = new Image(), this.image.src = image + ".1.png";
-        this.sprite = image;
+        this.images = images, this.sprite = images[0], this.imageState = 1;
+        this.projectiles = projectiles;
         this.shootAt = (Math.floor(Math.random() * 2) + 1); // 1-2 seconds
         this.shootTimer = 0;
-        this.hp = 5;
-        this.score = score;
+        this.hp = 5, this.score = score;
         this.showBox = localStorage.getItem("showCollisionBox");
         this.widthMultiplier = widthMultiplier;
-        this.imageState = 1;
         this.oscillationTime = 0;
 
-        // Random wave settings
+        // Random wave movement settings
         this.amplitude = Math.random() * 60 + 20;   // 20–60 px
         this.frequency = Math.random() * 2 + 1;     // 1–3 Hz
         this.phase = Math.random() * Math.PI * 2;   // 0–2π
@@ -34,9 +30,9 @@ export class Enemy {
         this.minY = 30;
         this.maxY = context.canvas.height - 30;
         this.baseY = Math.max(this.minY + this.amplitude,
-                    Math.min(y, this.maxY - this.amplitude));
+            Math.min(y, this.maxY - this.amplitude));
 
-        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 1, .75);
+        this.shootSound = new Sound("audio/lazerSoundEffect.mp3", false, 0, 1, .75);
         this.destroyed = false;
     }
 
@@ -49,10 +45,10 @@ export class Enemy {
 
         // Smooth sine-wave vertical motion with randomness
         this.y = this.baseY +
-                Math.sin(this.oscillationTime * this.frequency + this.phase) *
-                this.amplitude;
+            Math.sin(this.oscillationTime * this.frequency + this.phase) *
+            this.amplitude;
 
-        // Safety clamp (just in case)
+        // Safety clamp
         if (this.y < this.minY) this.y = this.minY;
         if (this.y > this.maxY) this.y = this.maxY;
     }
@@ -66,7 +62,7 @@ export class Enemy {
 
         this.movingEffect();
 
-        ctx.drawImage(this.image, -this.width / 2 / this.widthMultiplier, -this.height / 2, this.width / this.widthMultiplier, this.height);
+        ctx.drawImage(this.sprite, -this.width / 2 / this.widthMultiplier, -this.height / 2, this.width / this.widthMultiplier, this.height);
 
         // Display Hitbox
         if (this.showBox == "true") {
@@ -82,7 +78,7 @@ export class Enemy {
     tryShoot(bullets, dt) {
         this.shootTimer += dt;
         if (this.shootTimer >= this.shootAt) {
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Enemy"));
+            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, this.projectiles[0], "Enemy"));
             this.shootSound.play();
             this.shootAt = (Math.floor(Math.random() * 2) + 2); // 2-3 seconds
             this.shootTimer = 0;
@@ -91,29 +87,29 @@ export class Enemy {
 
     damaged(amount) {
         this.hp -= amount;
-        this.image.src = this.sprite + ".hit.png";
+        this.sprite = this.images[5];
         this.imageState = 51;
     }
 
     movingEffect() {
         switch (this.imageState) {
             case 1:
-                this.image.src = this.sprite + ".2.png";
+                this.sprite = this.images[1];
                 break;
             case 10:
-                this.image.src = this.sprite + ".3.png";
+                this.sprite = this.images[2];
                 break;
             case 20:
-                this.image.src = this.sprite + ".4.png";
+                this.sprite = this.images[3];
                 break;
             case 30:
-                this.image.src = this.sprite + ".5.png";
+                this.sprite = this.images[4];
                 break;
             case 40:
-                this.image.src = this.sprite + ".4.png";
+                this.sprite = this.images[3];
                 break;
             case 50:
-                this.image.src = this.sprite + ".3.png";
+                this.sprite = this.images[2];
                 this.imageState = 10;
                 break;
             case 55:

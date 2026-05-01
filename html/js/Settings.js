@@ -1,5 +1,38 @@
-async function clearData()
-{
+/**
+ * This file handles the settings buttons and confirmation buttons
+ */
+
+const data = ["topScore", "credits"];
+const lv = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
+const boolF = ["showCollisionBox", "godMode"];
+const boolT = ["useAudio", "touchMode"];
+
+const switchButtons = ["gameplayButton", "dataManagementButton", "devToolkitButton"];
+const switchTables = ["gameplayTable", "dataManagementTable", "devToolkitTable"];
+
+// Gameplay Buttons
+function audio() {
+    if (localStorage.getItem("useAudio") == "false") {
+        localStorage.setItem("useAudio", "true")
+        document.getElementById("useAudio").innerText = "On"
+    } else {
+        localStorage.setItem("useAudio", "false")
+        document.getElementById("useAudio").innerText = "Off"
+    }
+}
+
+function touchMode() {
+    if (localStorage.getItem("touchMode") == "false") {
+        localStorage.setItem("touchMode", "true")
+        document.getElementById("touchMode").innerText = "On"
+    } else {
+        localStorage.setItem("touchMode", "false")
+        document.getElementById("touchMode").innerText = "Off"
+    }
+}
+
+// Data Management Buttons
+async function clearData() {
     if (!(await popUp("Are you sure?", "You CANNOT undo this!", "yes/no"))) {
         return;
     }
@@ -7,35 +40,26 @@ async function clearData()
     localStorage.clear();
     console.log("Data Cleared");
 
-    const data = ["topScore", "credits"];
-    const lv = ["healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
-    const boolF = ["showCollisionBox", "godMode"];
-    const boolT = ["useAudio"];
-
     for (let i = 0; i < data.length; i++) {
-        if (localStorage.getItem(data[i]) == null)
-        {
+        if (localStorage.getItem(data[i]) == null) {
             localStorage.setItem(data[i], "0");
         }
     }
 
     for (let i = 0; i < lv.length; i++) {
-        if (localStorage.getItem(lv[i]) == null)
-        {
+        if (localStorage.getItem(lv[i]) == null) {
             localStorage.setItem(lv[i], "1");
         }
     }
 
     for (let i = 0; i < boolF.length; i++) {
-        if (localStorage.getItem(boolF[i]) == null)
-        {
+        if (localStorage.getItem(boolF[i]) == null) {
             localStorage.setItem(boolF[i], "false");
         }
     }
 
     for (let i = 0; i < boolT.length; i++) {
-        if (localStorage.getItem(boolT[i]) == null)
-        {
+        if (localStorage.getItem(boolT[i]) == null) {
             localStorage.setItem(boolT[i], "true")
         }
     }
@@ -43,17 +67,14 @@ async function clearData()
     updateDisplay();
 }
 
-async function printData()
-{
+async function printData() {
     let data = "";
 
-    for (let i = 0; i < localStorage.length; i++)
-    {
+    for (let i = 0; i < localStorage.length; i++) {
         data += formatData(localStorage.key(i) + " - " + localStorage.getItem(localStorage.key(i))) + "\n";
     }
 
-    if (localStorage.length == 0)
-    {
+    if (localStorage.length == 0) {
         data = "Empty Data";
     }
 
@@ -62,6 +83,7 @@ async function printData()
     }
 }
 
+// Dev Toolkit Buttons
 function formatData(text) {
     // Space out capitalize letters
     let newText = text.replace(/([A-Z])/g, " $1");
@@ -75,8 +97,7 @@ function formatData(text) {
     return newText;
 }
 
-async function addMoney(amount)
-{
+async function addMoney(amount) {
     localStorage.setItem("credits", (parseInt(localStorage.getItem("credits"), 10) + amount).toString());
     const currentCredits = "Total Credits: " + localStorage.getItem("credits");
     if (!(await popUp("Credits Added", currentCredits, "close"))) {
@@ -84,8 +105,7 @@ async function addMoney(amount)
     }
 }
 
-function showCollisionBox()
-{
+function showCollisionBox() {
     if (localStorage.getItem("showCollisionBox") == "false") {
         localStorage.setItem("showCollisionBox", "true")
         document.getElementById("showCollisionBox").innerText = "On"
@@ -95,8 +115,7 @@ function showCollisionBox()
     }
 }
 
-function godMode()
-{
+function godMode() {
     if (localStorage.getItem("godMode") == "false") {
         localStorage.setItem("godMode", "true")
         document.getElementById("godMode").innerText = "On"
@@ -106,62 +125,34 @@ function godMode()
     }
 }
 
-function audio() {
-    if (localStorage.getItem("useAudio") == "false") {
-        localStorage.setItem("useAudio", "true")
-        document.getElementById("audioButton").innerText = "On"
-    } else {
-        localStorage.setItem("useAudio", "false")
-        document.getElementById("audioButton").innerText = "Off"
+function updateDisplay() {
+    for (let i = 0; i < boolF.length; i++) {
+        if (localStorage.getItem(boolF[i]) == "false") {
+            document.getElementById(boolF[i]).innerText = "Off"
+        } else {
+            document.getElementById(boolF[i]).innerText = "On"
+        }
+    }
+
+    for (let i = 0; i < boolT.length; i++) {
+        if (localStorage.getItem(boolT[i]) == "false") {
+            document.getElementById(boolT[i]).innerText = "Off"
+        } else {
+            document.getElementById(boolT[i]).innerText = "On"
+        }
     }
 }
 
-function updateDisplay()
-{
-    if (localStorage.getItem("showCollisionBox") == "false") {
-        document.getElementById("showCollisionBox").innerText = "Off"
-    } else {
-        document.getElementById("showCollisionBox").innerText = "On"
+function switchSettings(index) {
+    document.getElementById(switchButtons[index]).classList.add("buttonSelected");
+    document.getElementById(switchTables[index]).classList.remove("hidden");
+
+    for (let i = 0; i < switchButtons.length; i++) {
+        if (i != index) {
+            document.getElementById(switchButtons[i]).classList.remove("buttonSelected");
+            document.getElementById(switchTables[i]).classList.add("hidden");
+        }
     }
-
-    if (localStorage.getItem("godMode") == "false") {
-        document.getElementById("godMode").innerText = "Off"
-    } else {
-        document.getElementById("godMode").innerText = "On"
-    }
-
-    if (localStorage.getItem("useAudio") == "false") {
-        document.getElementById("audioButton").innerText = "Off"
-    } else {
-        document.getElementById("audioButton").innerText = "On"
-    }
-}
-
-function gameplayButton() {
-    document.getElementById("gameplayTable").classList.remove("hidden");
-    document.getElementById("gameplayButton").classList.add("buttonSelected");
-    document.getElementById("dataManagementTable").classList.add("hidden");
-    document.getElementById("dataManagementButton").classList.remove("buttonSelected");
-    document.getElementById("devToolkitTable").classList.add("hidden");
-    document.getElementById("devToolkitButton").classList.remove("buttonSelected");
-}
-
-function dataManagementButton() {
-    document.getElementById("dataManagementTable").classList.remove("hidden");
-    document.getElementById("dataManagementButton").classList.add("buttonSelected");
-    document.getElementById("gameplayTable").classList.add("hidden");
-    document.getElementById("gameplayButton").classList.remove("buttonSelected");
-    document.getElementById("devToolkitTable").classList.add("hidden");
-    document.getElementById("devToolkitButton").classList.remove("buttonSelected");
-}
-
-function devToolkitButton() {
-    document.getElementById("devToolkitTable").classList.remove("hidden");
-    document.getElementById("devToolkitButton").classList.add("buttonSelected");
-    document.getElementById("gameplayTable").classList.add("hidden");
-    document.getElementById("gameplayButton").classList.remove("buttonSelected");
-    document.getElementById("dataManagementTable").classList.add("hidden");
-    document.getElementById("dataManagementButton").classList.remove("buttonSelected");
 }
 
 function popUp(mainText, subText, actionType) { // Brings a pop to confirm or deny the action
@@ -169,12 +160,12 @@ function popUp(mainText, subText, actionType) { // Brings a pop to confirm or de
     if (actionType == "yes/no") {
         document.getElementById("action1").classList.remove("hidden");
         document.getElementById("action2").classList.remove("hidden");
-        document.getElementById("action1").innerText = "Yes";  
-        document.getElementById("action2").innerText = "No";  
+        document.getElementById("action1").innerText = "Yes";
+        document.getElementById("action2").innerText = "No";
     } else if (actionType == "close") {
         document.getElementById("action1").classList.add("hidden");
         document.getElementById("action2").classList.remove("hidden");
-        document.getElementById("action2").innerText = "Close";  
+        document.getElementById("action2").innerText = "Close";
     }
 
     document.getElementById("message").innerText = mainText;
@@ -194,4 +185,4 @@ function popUpAction(num) {
     }
 }
 
-window.onload = function(){updateDisplay()};
+window.onload = function () { updateDisplay() };

@@ -17,7 +17,7 @@ echo ===============================
 echo.
 
 timeout /t 1 >nul
-start "" http://localhost:8000
+start "" http://localhost:8000/html/
 
 echo ===============================
 echo Local Game Server Is Running...

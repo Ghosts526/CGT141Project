@@ -3,27 +3,25 @@ import { Missile } from "./Missile.js";
 import { Sound } from "./Sound.js";
 
 /**
- * This class handles the creation, movement, shooting, and rendering 
+ * This class handles the creation, movement, shooting, and rendering of the player
  */
 
 export class Player {
-    constructor(x, y, width, height, image, widthMultiplier) {
+    constructor(x, y, width, height, images, widthMultiplier, projectiles) {
         // Set up variables for the player
         this.restart(x, y);
         this.width = width, this.height = height;
         this.speed = 7;
-        this.image = new Image(), this.image.src = (image + ".1.png");
         this.widthMultiplier = widthMultiplier;
-        this.sprite = image;
-        this.pixelScale = 50;
-        this.shootSound = new Sound("../audio/lazerSoundEffect.mp3", false, 0, 5, .75);
-        this.missileSound = new Sound("../audio/missileSoundEffect.mp3", false, 0.15, 1, 1);
+        this.images = images, this.sprite = images[0], this.projectiles = projectiles, this.pixelScale = 50;
+        this.shootSound = new Sound("audio/lazerSoundEffect.mp3", false, 0, 5, .75);
+        this.missileSound = new Sound("audio/missileSoundEffect.mp3", false, 0.15, 1, 1);
     }
-    // const names = ["topScore", "credits", "healthLV", "fireRateLV", "missileCooldownLV", "shieldHealthLV", "shieldCooldownLV"];
+    
     // Restarts the player location
     restart(x, y) {
         this.x = x, this.y = y;
-        this.angle = Math.PI/2, this.moveAngle = 0;
+        this.angle = Math.PI / 2, this.moveAngle = 0;
         this.moveUp = false, this.moveDown = false;
         this.moveUpTouch = false, this.moveDownTouch = false;
         this.shoot = false, this.shootMissile = false;
@@ -66,7 +64,7 @@ export class Player {
 
         this.movingEffect();
 
-        ctx.drawImage(this.image, -this.width / 2 / this.widthMultiplier, -this.height / 2, this.width / this.widthMultiplier, this.height);
+        ctx.drawImage(this.sprite, -this.width / 2 / this.widthMultiplier, -this.height / 2, this.width / this.widthMultiplier, this.height);
 
         // Display Hitbox
         if (this.showBox == "true") {
@@ -78,18 +76,17 @@ export class Player {
 
         if ((this.shoot || this.shootTouch) && this.fireTimer == 0) {
             this.fireTimer += dt;
-            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, "images/Blaster.png", "Player"));
+            bullets.push(new Bullet(this.x, this.y, 5, 20, this.angle, this.projectiles[0], "Player"));
             this.shootSound.play();
         } else if (this.fireTimer >= this.fireDelay) {
             this.fireTimer = 0;
         } else if ((this.shoot || this.shootTouch) || (!(this.shoot || this.shootTouch) && this.fireTimer != 0)) {
             this.fireTimer += dt;
-        } 
+        }
 
-        if ((this.shootMissile || this.shootMissileTouch) && this.missileReady)
-        {
+        if ((this.shootMissile || this.shootMissileTouch) && this.missileReady) {
             this.missileReady = false;
-            bullets.push(new Missile(this.x, this.y, 5, 20, this.angle, "images/MissileProjectile.png", "Player Missile"));
+            bullets.push(new Missile(this.x, this.y, 5, 20, this.angle, this.projectiles[1], "Player Missile"));
             this.missileSound.play();
         } else if (this.missileTimer >= this.missileDelay) {
             this.missileTimer = 0;
@@ -103,26 +100,25 @@ export class Player {
         ctx.restore();
     }
 
-    movingEffect()
-    {
+    movingEffect() {
         switch (this.imageState) {
             case 1:
-                this.image.src = this.sprite + ".2.png";
+                this.sprite = this.images[1];
                 break;
             case 10:
-                this.image.src = this.sprite + ".3.png";
+                this.sprite = this.images[2];
                 break;
             case 20:
-                this.image.src = this.sprite + ".4.png";
+                this.sprite = this.images[3];
                 break;
             case 30:
-                this.image.src = this.sprite + ".5.png";
+                this.sprite = this.images[4];
                 break;
             case 40:
-                this.image.src = this.sprite + ".4.png";
+                this.sprite = this.images[3];
                 break;
             case 50:
-                this.image.src = this.sprite + ".3.png";
+                this.sprite = this.images[2];
                 this.imageState = 10;
                 break;
             case 55:
@@ -136,12 +132,10 @@ export class Player {
         this.imageState++;
     }
 
-    damaged(amount)
-    {
-        this.image.src = this.sprite + ".hit.png";
+    damaged(amount) {
+        this.sprite = this.images[5];
         this.imageState = 51;
-        if (this.shieldHP > 0 && amount <= this.shieldHP)
-        {
+        if (this.shieldHP > 0 && amount <= this.shieldHP) {
             this.shieldHP -= amount;
         } else if (this.shieldHP > 0 && amount > this.shieldHP) {
             amount -= this.shieldHP;
@@ -153,13 +147,12 @@ export class Player {
 
         if (this.isShieldRegen) {
             this.shieldTimer = 0;
-        }else if (this.shieldHP == 0 && this.maxShieldHP != 0) {
+        } else if (this.shieldHP == 0 && this.maxShieldHP != 0) {
             this.isShieldRegen = true;
         }
     }
 
-    shieldRegen(dt)
-    {
+    shieldRegen(dt) {
         if (this.isShieldRegen) {
             this.shieldTimer += dt;
             if (this.shieldTimer >= this.shieldDelay) {

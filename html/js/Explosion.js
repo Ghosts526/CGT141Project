@@ -1,44 +1,36 @@
-// A missile class to create missile projectiles
-
 /**
- * This class handles bullet creation, movement, and rendering
+ * This class handles explosion creation, movement, and rendering
  */
 
-export class Explosion 
-{
-    // A constructor for the bullet class
-    constructor(x, y, width, height, angle, image, source)
-    {
+export class Explosion {
+    // A constructor for the explosion class
+    constructor(x, y, width, height, angle, images, source) {
         this.x = x, this.y = y;
         this.width = width, this.height = height;
-        this.angle = angle
-        this.speed = 5;
+        this.angle = angle, this.speed = 5;
         this.pixelScale = 50;
         this.addX = Math.sin(angle) * this.speed, this.addY = -Math.cos(angle) * this.speed;
-        this.image = new Image(), this.image.src = image;
+        this.images = images, this.sprite = images[2];
         this.source = source; // What object created the explosion
         this.switchImageTimer = 20;// Frames * seconds
-        this.timer = 0;
-        this.state = 1;
+        this.timer = 0, this.state = 1;
         this.showBox = localStorage.getItem("showCollisionBox");
     }
 
-    // Updates the missile location based by its angle and speed
-    newPos(dt)
-    {
+    // Updates the explosion location based by its angle and speed
+    newPos(dt) {
         this.x += this.addX * dt * this.pixelScale;
         this.y += this.addY * dt * this.pixelScale;
     }
 
-    // Draws the missile to its current position and rotation
-    update(context) 
-    {
+    // Draws the explosion to its current position and rotation
+    update(context) {
         let ctx = context;
         ctx.save();
         ctx.translate(this.x, this.y);
         ctx.rotate(this.angle);
 
-        ctx.drawImage(this.image, -this.width/2, -this.height/2, this.width, this.height);
+        ctx.drawImage(this.sprite, -this.width / 2, -this.height / 2, this.width, this.height);
 
         // Display Hitbox
         if (this.showBox == "true") {
@@ -52,16 +44,15 @@ export class Explosion
         (this.timer >= this.switchImageTimer) ? this.switchImage() : this.timer++;
     }
 
-    switchImage()
-    {
+    switchImage() {
         this.timer = 0;
         this.state++;
         switch (this.state) {
             case 2:
-                this.image.src = "../images/ExplosionV2.png";
+                this.sprite = this.images[3];
                 break;
             case 3:
-                this.image.src = "../images/ExplosionV3.png";
+                this.sprite = this.images[4]
                 break
         }
     }

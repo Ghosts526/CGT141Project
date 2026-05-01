@@ -44,13 +44,6 @@ export class Sound {
         }
     }
 
-    restart() { // Restart all audios
-        for (let audio of this.pool) {
-            audio.currentTime = this.time;
-        }
-        this.play();
-    }
-
     destroy() {
         for (let audio of this.pool) {
             audio.pause();

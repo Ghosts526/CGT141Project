@@ -1,2 +1,5 @@
 #Ignore the config file
 config.php
+bugReportDatabase.sql
+documents/
+extra/
