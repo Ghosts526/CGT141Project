@@ -18,24 +18,22 @@ export class GameArea {
         this.backgroundX = 0, this.backgroundY = 0;
         this.backgroundImage = new Image();
         this.backgroundImage.src = "images/SpaceBackground256x256.jpg"; // Your image path
-        this.healthBarUI = new Image(), this.shieldBarUI = new Image();
-        this.healthBarUI.src = "images/HealthBarDisplay.png";
-        this.shieldBarUI.src = "images/ShieldBarDisplay.png";
         this.moveUp = false, this.moveDown = false;
         this.shoot = false, this.shootMissile = false;
-        this.upButton = { x: 10, y: 380, width: 100, height: 100, src: "images/UpArrow.png" };
-        this.downButton = { x: 10, y: 500, width: 100, height: 100, src: "images/DownArrow.png" };
-        this.fireButton = { x: 1090, y: 380, width: 100, height: 100, src: "images/FireButton.png" };
-        this.missileButton = { x: 1090, y: 500, width: 100, height: 100, src: "images/MissileButton.png" };
-        this.pauseButton = { x: 1090, y: 10, width: 100, height: 100, src: "images/PauseButton.png" };
+        this.upButton = { x: 10, y: 380, width: 100, height: 100 };
+        this.downButton = { x: 10, y: 500, width: 100, height: 100 };
+        this.fireButton = { x: 1090, y: 380, width: 100, height: 100 };
+        this.missileButton = { x: 1090, y: 500, width: 100, height: 100 };
+        this.pauseButton = { x: 1090, y: 10, width: 100, height: 100 };
         this.lastTime = 0, this.pixelScale = 50;
         this.activeTouches = {};
         this.scaleX = 1, this.scaleY = 1;
         this.touchMode = (localStorage.getItem("touchMode") == "true");
     }
 
-    setUp(enemySpawner, projectiles) {
+    setUp(enemySpawner, projectiles, ui) {
         this.collision.setProjectiles(projectiles);
+        this.ui = ui;
 
         // Insert canvas if not already in DOM
         if (!this.canvas.parentNode) {
@@ -245,8 +243,7 @@ export class GameArea {
             this.context.translate(buttons[i].x, buttons[i].y);
             this.context.globalAlpha = 0.65;
 
-            const image = new Image();
-            image.src = buttons[i].src;
+            const image = this.ui[i + 2];
             this.context.drawImage(image, 0, 0, buttons[i].width, buttons[i].height);
 
             if (i == 2 || i == 3) {
@@ -289,7 +286,7 @@ export class GameArea {
         this.context.fillStyle = "gray";
         this.context.fillRect(barLength + 32, 3, (hp - barLength >= -barLength) ? hp - barLength : -barLength, 26);
 
-        this.context.drawImage(this.healthBarUI, 0, 0, 295, 32); // Health Bar Overlay
+        this.context.drawImage(this.ui[0], 0, 0, 295, 32); // Health Bar Overlay
 
         this.context.restore();
     }
@@ -310,7 +307,7 @@ export class GameArea {
         this.context.fillStyle = "yellow";
         this.context.fillRect(32, 3, (regenHp >= 0) ? regenHp : 0, 26);
 
-        this.context.drawImage(this.shieldBarUI, 0, 0, 295, 32); // Shield Bar Overlay
+        this.context.drawImage(this.ui[1], 0, 0, 295, 32); // Shield Bar Overlay
 
         this.context.restore();
     }

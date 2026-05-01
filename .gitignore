@@ -1,5 +1,4 @@
 #Ignore the config file
 config.php
-bugReportDatabase.sql
-documents/
+gameDocuments/
 extra/

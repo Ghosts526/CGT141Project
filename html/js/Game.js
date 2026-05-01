@@ -35,15 +35,24 @@ const imagesSrc = [
         "images/MissileProjectile.png",
         "images/ExplosionV1.png",
         "images/ExplosionV2.png",
-        "images/ExplosionV3.png"]
+        "images/ExplosionV3.png"],
+    ["images/HealthBarDisplay.png", 
+        "images/ShieldBarDisplay.png", 
+        "images/UpArrow.png", 
+        "images/DownArrow.png", 
+        "images/FireButton.png", 
+        "images/MissileButton.png",
+        "images/PauseButton.png"
+    ]
 ];
 
 const playerImgs = [];
 const enemyImgs = [];
 const projectileImgs = [];
+const uiImgs = [];
 
-// Creates an image refrence that'll be used in the game 
-// and prevents flickering when loading it the first time
+// Creates an image refrence that'll be used in the game (no creating multiple images objs)
+// and prevents flickering when loading it the first time 
 function preloadImages() {
     for (let i = 0; i < imagesSrc.length; i++) {
         for (let j = 0; j < imagesSrc[i].length; j++) {
@@ -59,8 +68,11 @@ function preloadImages() {
                 case 2:
                     projectileImgs.push(img);
                     break;
-                default:
-                    console.warn("No container for: " + imagesSrc[i][j]);
+                case 3:
+                    uiImgs.push(img);
+                    break;
+                default: // Throws a warning if there are too many arrays
+                    console.warn("No container for: " + imagesSrc[i][j]); 
             }
         }
     }
@@ -73,7 +85,7 @@ function gameMenu() {
 function startGame() {
     gameArea.resumeGame();
     enemySpawner.setImages(enemyImgs, projectileImgs);
-    gameArea.setUp(enemySpawner, projectileImgs);
+    gameArea.setUp(enemySpawner, projectileImgs, uiImgs);
     const playerWidth = 60, playerHeight = 60, widthMultiplyer = 0.4;
     startX = playerWidth + 50, startY = gameArea.startY - playerHeight;
     player = new Player(startX, startY, playerWidth * widthMultiplyer, playerHeight, playerImgs, widthMultiplyer, projectileImgs);
